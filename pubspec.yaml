@@ -84,6 +84,9 @@ dependencies:
   # Vector Math
   vector_math: ^2.1.4
 
+  # zip
+  archive: ^3.4.10
+
   ####
   # [Mobile]
   # 앱 스토어 이동
