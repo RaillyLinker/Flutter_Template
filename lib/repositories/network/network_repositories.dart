@@ -43,15 +43,17 @@ var mainServerDio = Dio(BaseOptions(
 // 아래 함수는 main 함수에서 실행됩니다.
 void setDioObjects() {
   // (로깅 인터셉터 설정)
-  mainServerDio.interceptors.add(PrettyDioLogger(
-    request: true,
-    requestHeader: true,
-    requestBody: true,
-    responseHeader: true,
-    responseBody: true,
-    error: true,
-    compact: true,
-  ));
+  if(gd_const_config.isDebugMode){
+    mainServerDio.interceptors.add(PrettyDioLogger(
+      request: true,
+      requestHeader: true,
+      requestBody: true,
+      responseHeader: true,
+      responseBody: true,
+      error: true,
+      compact: true,
+    ));
+  }
 
   // (커스텀 인터셉터 설정)
   mainServerDio.interceptors.add(InterceptorsWrapper(onRequest:
