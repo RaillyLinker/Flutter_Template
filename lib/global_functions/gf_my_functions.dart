@@ -5,7 +5,7 @@ import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 
 // (all)
-import 'package:flutter_project_template/repositories/spws/spw_auth_member_info.dart'
+import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
     as spw_sign_in_member_info;
 
 // [전역 함수 작성 파일]

@@ -7,19 +7,19 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'main_widget.dart' as main_widget;
 
 // (all)
-import 'package:flutter_project_template/global_widgets/gw_slw_page_outer_frame.dart'
+import 'package:flutter_template/global_widgets/gw_slw_page_outer_frame.dart'
     as gw_slw_page_outer_frame;
-import 'package:flutter_project_template/global_widgets/gw_sfw_wrapper.dart'
+import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
-import 'package:flutter_project_template/pages/all/all_page_input_and_output_push_test/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_input_and_output_push_test/main_widget.dart'
     as all_page_input_and_output_push_test;
-import 'package:flutter_project_template/a_templates/all_page_template/main_widget.dart'
+import 'package:flutter_template/a_templates/all_page_template/main_widget.dart'
     as all_page_template;
-import 'package:flutter_project_template/pages/all/all_page_page_transition_animation_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_page_transition_animation_sample_list/main_widget.dart'
     as all_page_page_transition_animation_sample_list;
-import 'package:flutter_project_template/pages/all/all_page_grid_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_grid_sample/main_widget.dart'
     as all_page_grid_sample;
-import 'package:flutter_project_template/pages/all/all_page_stateful_and_lifecycle_test/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_stateful_and_lifecycle_test/main_widget.dart'
     as all_page_stateful_and_lifecycle_test;
 
 // [위젯 비즈니스]

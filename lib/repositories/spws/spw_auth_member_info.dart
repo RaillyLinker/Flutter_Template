@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:sync/semaphore.dart';
 
 // (all)
-import 'package:flutter_project_template/global_data/gd_const.dart' as gd_const;
-import 'package:flutter_project_template/global_functions/gf_crypto.dart'
+import 'package:flutter_template/global_data/gd_const.dart' as gd_const;
+import 'package:flutter_template/global_functions/gf_crypto.dart'
     as gf_crypto;
 
 // [SharedPreference Wrapper 선언 파일 템플릿]

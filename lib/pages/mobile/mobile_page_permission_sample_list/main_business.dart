@@ -1,5 +1,6 @@
 // (external)
 import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -8,13 +9,13 @@ import 'package:permission_handler/permission_handler.dart';
 import 'main_widget.dart' as main_widget;
 
 // (all)
-import 'package:flutter_project_template/global_widgets/gw_slw_page_outer_frame.dart'
+import 'package:flutter_template/global_widgets/gw_slw_page_outer_frame.dart'
     as gw_slw_page_outer_frame;
-import 'package:flutter_project_template/global_widgets/gw_sfw_wrapper.dart'
+import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
-import 'package:flutter_project_template/dialogs/all/all_dialog_yes_or_no/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_yes_or_no/main_widget.dart'
     as all_dialog_yes_or_no;
-import 'package:flutter_project_template/global_data/gd_const.dart' as gd_const;
+import 'package:flutter_template/global_data/gd_const.dart' as gd_const;
 
 // [위젯 비즈니스]
 
@@ -200,7 +201,7 @@ class MainBusiness {
     } else if (Platform.isAndroid) {
       // android 일때
 
-      if (gd_const.androidApiLevel! < 33) {
+      if ((gd_const.baseDeviceInfo as AndroidDeviceInfo).version.sdkInt < 33) {
         // android 33 미만
       }
     }

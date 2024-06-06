@@ -13,19 +13,19 @@ import 'package:url_launcher/url_launcher.dart';
 import 'main_widget.dart' as main_widget;
 
 // (all)
-import 'package:flutter_project_template/repositories/network/apis/api_main_server.dart'
+import 'package:flutter_template/repositories/network/apis/api_main_server.dart'
     as api_main_server;
-import 'package:flutter_project_template/repositories/spws/spw_auth_member_info.dart'
+import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
     as spw_auth_member_info;
-import 'package:flutter_project_template/dialogs/all/all_dialog_info/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_info/main_widget.dart'
     as all_dialog_info;
-import 'package:flutter_project_template/dialogs/all/all_dialog_yes_or_no/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_yes_or_no/main_widget.dart'
     as all_dialog_yes_or_no;
-import 'package:flutter_project_template/global_data/gd_const_config.dart'
+import 'package:flutter_template/global_data/gd_const_config.dart'
     as gd_const_config;
-import 'package:flutter_project_template/pages/all/all_page_home/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_home/main_widget.dart'
     as all_page_home;
-import 'package:flutter_project_template/global_widgets/gw_sfw_wrapper.dart'
+import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
 
 // [위젯 비즈니스]

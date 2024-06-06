@@ -6,7 +6,7 @@ import 'package:focus_detector_v2/focus_detector_v2.dart';
 import 'main_business.dart' as main_business;
 
 // (all)
-import 'package:flutter_project_template/global_widgets/gw_sfw_wrapper.dart'
+import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
 
 // [위젯 뷰]

@@ -1,4 +1,4 @@
-package com.railly_linker.flutter_project_template
+package com.raillylinker.flutter_template
 
 import io.flutter.embedding.android.FlutterActivity
 

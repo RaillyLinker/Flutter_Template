@@ -6,13 +6,13 @@ import 'package:go_router/go_router.dart';
 import 'main_widget.dart' as main_widget;
 
 // (all)
-import 'package:flutter_project_template/global_widgets/gw_slw_page_outer_frame.dart'
+import 'package:flutter_template/global_widgets/gw_slw_page_outer_frame.dart'
     as gw_slw_page_outer_frame;
-import 'package:flutter_project_template/global_widgets/gw_sfw_wrapper.dart'
+import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
-import 'package:flutter_project_template/global_classes/gc_my_classes.dart'
+import 'package:flutter_template/global_classes/gc_my_classes.dart'
     as gc_my_classes;
-import 'package:flutter_project_template/global_classes/gc_animated_builder.dart'
+import 'package:flutter_template/global_classes/gc_animated_builder.dart'
     as gc_animated_builder;
 
 // [위젯 비즈니스]

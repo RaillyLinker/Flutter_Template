@@ -7,11 +7,11 @@ import 'package:go_router/go_router.dart';
 import 'main_widget.dart' as main_widget;
 
 // (all)
-import 'package:flutter_project_template/global_widgets/gw_sfw_wrapper.dart'
+import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
-import 'package:flutter_project_template/global_widgets/gw_sfw_test.dart'
+import 'package:flutter_template/global_widgets/gw_sfw_test.dart'
     as gw_sfw_test;
-import 'package:flutter_project_template/pages/all/all_page_dialog_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_dialog_sample_list/main_widget.dart'
     as all_page_dialog_sample_list;
 
 // [위젯 비즈니스]

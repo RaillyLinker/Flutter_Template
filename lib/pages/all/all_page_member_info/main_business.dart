@@ -7,19 +7,19 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'main_widget.dart' as main_widget;
 
 // (all)
-import 'package:flutter_project_template/global_widgets/gw_slw_page_outer_frame.dart'
+import 'package:flutter_template/global_widgets/gw_slw_page_outer_frame.dart'
     as gw_slw_page_outer_frame;
-import 'package:flutter_project_template/global_widgets/gw_sfw_wrapper.dart'
+import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
-import 'package:flutter_project_template/repositories/spws/spw_auth_member_info.dart'
+import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
     as spw_auth_member_info;
-import 'package:flutter_project_template/global_functions/gf_my_functions.dart'
+import 'package:flutter_template/global_functions/gf_my_functions.dart'
     as gf_my_functions;
-import 'package:flutter_project_template/pages/all/all_page_membership_withdrawal/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_membership_withdrawal/main_widget.dart'
     as all_page_membership_withdrawal;
-import 'package:flutter_project_template/pages/all/all_page_login/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_login/main_widget.dart'
     as all_page_login;
-import 'package:flutter_project_template/pages/all/all_page_change_password/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_change_password/main_widget.dart'
     as all_page_change_password;
 
 // [위젯 비즈니스]

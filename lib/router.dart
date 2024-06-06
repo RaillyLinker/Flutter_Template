@@ -4,87 +4,91 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 
 // (all)
-import 'a_templates/all_page_template/main_widget.dart' as all_page_template;
-import 'pages/all/all_page_stateful_and_lifecycle_test/main_widget.dart'
+import 'package:flutter_template/a_templates/all_page_template/main_widget.dart'
+    as all_page_template;
+import 'package:flutter_template/pages/all/all_page_stateful_and_lifecycle_test/main_widget.dart'
     as all_page_stateful_and_lifecycle_test;
-import 'pages/all/all_page_auth_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_auth_sample/main_widget.dart'
     as all_page_auth_sample;
-import 'pages/all/all_page_authorization_test_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_authorization_test_sample_list/main_widget.dart'
     as all_page_authorization_test_sample_list;
-import 'pages/all/all_page_change_password/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_change_password/main_widget.dart'
     as all_page_change_password;
-import 'pages/all/all_page_crypt_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_crypt_sample/main_widget.dart'
     as all_page_crypt_sample;
-import 'pages/all/all_page_dialog_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_dialog_sample_list/main_widget.dart'
     as all_page_dialog_sample_list;
-import 'pages/all/all_page_etc_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_etc_sample_list/main_widget.dart'
     as all_page_etc_sample_list;
-import 'pages/all/all_page_find_password_with_email/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_find_password_with_email/main_widget.dart'
     as all_page_find_password_with_email;
-import 'pages/all/all_page_get_request_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_get_request_sample/main_widget.dart'
     as all_page_get_request_sample;
-import 'pages/all/all_page_global_variable_state_test_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_global_variable_state_test_sample/main_widget.dart'
     as all_page_global_variable_state_test_sample;
-import 'pages/all/all_page_home/main_widget.dart' as all_page_home;
-import 'pages/all/all_page_input_and_output_push_test/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_home/main_widget.dart'
+    as all_page_home;
+import 'package:flutter_template/pages/all/all_page_input_and_output_push_test/main_widget.dart'
     as all_page_input_and_output_push_test;
-import 'pages/all/all_page_join_the_membership_edit_member_info/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_join_the_membership_edit_member_info/main_widget.dart'
     as all_page_join_the_membership_edit_member_info;
-import 'pages/all/all_page_join_the_membership_email_verification/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_join_the_membership_email_verification/main_widget.dart'
     as all_page_join_the_membership_email_verification;
-import 'pages/all/all_page_login/main_widget.dart' as all_page_login;
-import 'pages/all/all_page_member_info/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_login/main_widget.dart'
+    as all_page_login;
+import 'package:flutter_template/pages/all/all_page_member_info/main_widget.dart'
     as all_page_member_info;
-import 'pages/all/all_page_membership_withdrawal/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_membership_withdrawal/main_widget.dart'
     as all_page_membership_withdrawal;
-import 'pages/all/all_page_network_request_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_network_request_sample_list/main_widget.dart'
     as all_page_network_request_sample_list;
-import 'pages/all/all_page_page_and_router_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_page_and_router_sample_list/main_widget.dart'
     as all_page_page_and_router_sample_list;
-import 'pages/all/all_page_page_transition_animation_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_page_transition_animation_sample_list/main_widget.dart'
     as all_page_page_transition_animation_sample_list;
-import 'pages/all/all_page_post_request_sample1/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_post_request_sample1/main_widget.dart'
     as all_page_post_request_sample1;
-import 'pages/all/all_page_post_request_sample2/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_post_request_sample2/main_widget.dart'
     as all_page_post_request_sample2;
-import 'pages/all/all_page_post_request_sample3/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_post_request_sample3/main_widget.dart'
     as all_page_post_request_sample3;
-import 'pages/all/all_page_post_request_sample4/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_post_request_sample4/main_widget.dart'
     as all_page_post_request_sample4;
-import 'pages/all/all_page_shared_preferences_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_shared_preferences_sample/main_widget.dart'
     as all_page_shared_preferences_sample;
-import 'pages/all/all_page_url_launcher_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_url_launcher_sample/main_widget.dart'
     as all_page_url_launcher_sample;
-import 'pages/all/all_page_widget_change_animation_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_widget_change_animation_sample_list/main_widget.dart'
     as all_page_widget_change_animation_sample_list;
-import 'pages/all/all_page_gif_sample/main_widget.dart' as all_page_gif_sample;
-import 'pages/all/all_page_dialog_animation_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_gif_sample/main_widget.dart'
+    as all_page_gif_sample;
+import 'package:flutter_template/pages/all/all_page_dialog_animation_sample_list/main_widget.dart'
     as all_page_dialog_animation_sample_list;
-import 'pages/all/all_page_grid_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_grid_sample/main_widget.dart'
     as all_page_grid_sample;
-import 'pages/all/all_page_image_selector_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_image_selector_sample/main_widget.dart'
     as all_page_image_selector_sample;
-import 'pages/all/all_page_image_loading_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_image_loading_sample/main_widget.dart'
     as all_page_image_loading_sample;
-import 'pages/all/all_page_context_menu_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_context_menu_sample/main_widget.dart'
     as all_page_context_menu_sample;
-import 'pages/all/all_page_gesture_area_overlap_test/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_gesture_area_overlap_test/main_widget.dart'
     as all_page_gesture_area_overlap_test;
-import 'pages/all/all_page_form_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_form_sample/main_widget.dart'
     as all_page_form_sample;
-import 'pages/all/all_page_horizontal_scroll_test/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_horizontal_scroll_test/main_widget.dart'
     as all_page_horizontal_scroll_test;
-import 'pages/pc/pc_page_flutter_resource_image_resize/main_widget.dart'
+import 'package:flutter_template/pages/pc/pc_page_flutter_resource_image_resize/main_widget.dart'
     as pc_page_flutter_resource_image_resize;
 
 // (app)
-import 'pages/app/app_page_init_splash/main_widget.dart'
+import 'package:flutter_template/pages/app/app_page_init_splash/main_widget.dart'
     as app_page_init_splash;
-import 'pages/app/app_page_server_sample/main_widget.dart'
+import 'package:flutter_template/pages/app/app_page_server_sample/main_widget.dart'
     as app_page_server_sample;
 
 // (mobile)
-import 'pages/mobile/mobile_page_permission_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/mobile/mobile_page_permission_sample_list/main_widget.dart'
     as mobile_page_permission_sample_list;
 
 // [프로그램 라우터 설정 파일]

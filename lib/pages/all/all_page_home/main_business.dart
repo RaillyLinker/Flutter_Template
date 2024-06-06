@@ -8,25 +8,25 @@ import 'package:flutter/foundation.dart';
 import 'main_widget.dart' as main_widget;
 
 // (all)
-import 'package:flutter_project_template/global_widgets/gw_slw_page_outer_frame.dart'
+import 'package:flutter_template/global_widgets/gw_slw_page_outer_frame.dart'
     as gw_slw_page_outer_frame;
-import 'package:flutter_project_template/global_widgets/gw_sfw_wrapper.dart'
+import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
-import 'package:flutter_project_template/pages/all/all_page_page_and_router_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_page_and_router_sample_list/main_widget.dart'
     as all_page_page_and_router_sample_list;
-import 'package:flutter_project_template/pages/all/all_page_dialog_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_dialog_sample_list/main_widget.dart'
     as all_page_dialog_sample_list;
-import 'package:flutter_project_template/pages/all/all_page_dialog_animation_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_dialog_animation_sample_list/main_widget.dart'
     as all_page_dialog_animation_sample_list;
-import 'package:flutter_project_template/pages/all/all_page_network_request_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_network_request_sample_list/main_widget.dart'
     as all_page_network_request_sample_list;
-import 'package:flutter_project_template/pages/all/all_page_auth_sample/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_auth_sample/main_widget.dart'
     as all_page_auth_sample;
-import 'package:flutter_project_template/pages/all/all_page_etc_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_etc_sample_list/main_widget.dart'
     as all_page_etc_sample_list;
 
 // (mobile)
-import 'package:flutter_project_template/pages/mobile/mobile_page_permission_sample_list/main_widget.dart'
+import 'package:flutter_template/pages/mobile/mobile_page_permission_sample_list/main_widget.dart'
     as mobile_page_permission_sample_list;
 
 // [위젯 비즈니스]

@@ -7,25 +7,25 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'main_widget.dart' as main_widget;
 
 // (all)
-import 'package:flutter_project_template/global_widgets/gw_slw_page_outer_frame.dart'
+import 'package:flutter_template/global_widgets/gw_slw_page_outer_frame.dart'
     as gw_slw_page_outer_frame;
-import 'package:flutter_project_template/global_widgets/gw_sfw_wrapper.dart'
+import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
-import 'package:flutter_project_template/dialogs/all/all_dialog_info/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_info/main_widget.dart'
     as all_dialog_info;
-import 'package:flutter_project_template/a_templates/all_dialog_template/main_widget.dart'
+import 'package:flutter_template/a_templates/all_dialog_template/main_widget.dart'
     as all_dialog_template;
-import 'package:flutter_project_template/dialogs/all/all_dialog_yes_or_no/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_yes_or_no/main_widget.dart'
     as all_dialog_yes_or_no;
-import 'package:flutter_project_template/dialogs/all/all_dialog_loading_spinner/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_loading_spinner/main_widget.dart'
     as all_dialog_loading_spinner;
-import 'package:flutter_project_template/dialogs/all/all_dialog_modal_bottom_sheet_sample/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_modal_bottom_sheet_sample/main_widget.dart'
     as all_dialog_modal_bottom_sheet_sample;
-import 'package:flutter_project_template/dialogs/all/all_dialog_dialog_in_dialog/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_dialog_in_dialog/main_widget.dart'
     as all_dialog_dialog_in_dialog;
-import 'package:flutter_project_template/dialogs/all/all_dialog_context_menu_sample/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_context_menu_sample/main_widget.dart'
     as all_dialog_context_menu_sample;
-import 'package:flutter_project_template/dialogs/all/all_dialog_stateful_and_lifecycle_test/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_stateful_and_lifecycle_test/main_widget.dart'
     as all_dialog_stateful_and_lifecycle_test;
 
 // [위젯 비즈니스]

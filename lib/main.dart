@@ -11,10 +11,12 @@ import 'package:url_strategy/url_strategy.dart';
 import 'package:flutter/gestures.dart';
 
 // (all)
-import 'router.dart' as router;
-import 'repositories/network/network_repositories.dart' as network_repositories;
-import 'global_data/gd_const_config.dart' as gd_const_config;
-import 'global_data/gd_const.dart' as gd_const;
+import 'package:flutter_template/router.dart' as router;
+import 'package:flutter_template/repositories/network/network_repositories.dart'
+    as network_repositories;
+import 'package:flutter_template/global_data/gd_const_config.dart'
+    as gd_const_config;
+import 'package:flutter_template/global_data/gd_const.dart' as gd_const;
 
 // [프로그램 최초 실행 파일]
 // 본 프로그램이 실행될 때 가장 처음으로 실행되는 main 함수가 존재하는 파일입니다.
@@ -65,10 +67,6 @@ void main() async {
         // (Android 환경)
         // !!!Android 환경 프로그램 최초 실행 로직 작성!!!
 
-        // android 환경 정보 가져오기
-        AndroidDeviceInfo androidInfo = await DeviceInfoPlugin().androidInfo;
-        gd_const.androidApiLevel = androidInfo.version.sdkInt;
-
         // ---------------------------------------------------------------------
       } else if (Platform.isIOS) {
         // (Ios 환경)
@@ -99,6 +97,8 @@ void main() async {
       }
     }
   }
+
+  gd_const.baseDeviceInfo = await DeviceInfoPlugin().deviceInfo;
 
   // 첫 화면 실행
   runApp(

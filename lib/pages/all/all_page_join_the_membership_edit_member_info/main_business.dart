@@ -12,21 +12,21 @@ import 'package:image_picker/image_picker.dart';
 import 'main_widget.dart' as main_widget;
 
 // (all)
-import 'package:flutter_project_template/global_widgets/gw_slw_page_outer_frame.dart'
+import 'package:flutter_template/global_widgets/gw_slw_page_outer_frame.dart'
     as gw_slw_page_outer_frame;
-import 'package:flutter_project_template/global_widgets/gw_sfw_wrapper.dart'
+import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
-import 'package:flutter_project_template/repositories/network/apis/api_main_server.dart'
+import 'package:flutter_template/repositories/network/apis/api_main_server.dart'
     as api_main_server;
-import 'package:flutter_project_template/dialogs/all/all_dialog_image_selector_menu/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_image_selector_menu/main_widget.dart'
     as all_dialog_image_selector_menu;
-import 'package:flutter_project_template/dialogs/all/all_dialog_info/main_widget.dart'
+import 'package:flutter_template/dialogs/all/all_dialog_info/main_widget.dart'
     as all_dialog_info;
-import 'package:flutter_project_template/repositories/spws/spw_auth_member_info.dart'
+import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
     as spw_auth_member_info;
-import 'package:flutter_project_template/global_functions/gf_my_functions.dart'
+import 'package:flutter_template/global_functions/gf_my_functions.dart'
     as gf_my_functions;
-import 'package:flutter_project_template/pages/all/all_page_home/main_widget.dart'
+import 'package:flutter_template/pages/all/all_page_home/main_widget.dart'
     as all_page_home;
 
 // [위젯 비즈니스]
