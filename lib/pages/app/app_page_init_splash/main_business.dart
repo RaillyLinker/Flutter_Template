@@ -161,7 +161,6 @@ class MainBusiness {
 
   // (앱 버전 확인)
   Future<void> _checkAppVersionAsync() async {
-    print("d");
     // 플랫폼 코드 (1 : web, 2 : android, 3 : ios, 4 : windows, 5 : macos, 6 : linux)
     int platformCode;
 
