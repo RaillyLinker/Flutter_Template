@@ -98,6 +98,7 @@ void main() async {
     }
   }
 
+  // 현 디바이스 정보를 메모리에 불러오기
   gd_const.baseDeviceInfo = await DeviceInfoPlugin().deviceInfo;
 
   // 첫 화면 실행
