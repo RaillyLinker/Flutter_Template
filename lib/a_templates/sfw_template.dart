@@ -11,6 +11,7 @@ class SfwTemplate extends StatefulWidget {
 
   // !!!외부 입력 변수 선언 하기!!!
 
+  //----------------------------------------------------------------------------
   // [콜백 함수]
   @override
   SfwTemplateState createState() => SfwTemplateState();
