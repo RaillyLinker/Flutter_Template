@@ -27,9 +27,10 @@ Future<
         gc_template_classes.NetworkResponseObject<
             GetService1TkV1RequestTestGetRequestAsyncResponseHeaderVo,
             GetService1TkV1RequestTestGetRequestAsyncResponseBodyVo>>
-    getService1TkV1RequestTestGetRequestAsync(
-        {required GetService1TkV1RequestTestGetRequestAsyncRequestQueryVo
-            requestQueryVo}) async {
+    getService1TkV1RequestTestGetRequestAsync({
+  required GetService1TkV1RequestTestGetRequestAsyncRequestQueryVo
+      requestQueryVo,
+}) async {
   // !!!개발 / 배포 모드별 요청 Path 지정!!!
   String devServerUrl = "/service1/tk/v1/request-test/get-request";
   String prodServerUrl = "/service1/tk/v1/request-test/get-request";
@@ -67,16 +68,14 @@ Future<
         options: Options(headers: requestHeaders));
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     GetService1TkV1RequestTestGetRequestAsyncResponseHeaderVo responseHeader;
     GetService1TkV1RequestTestGetRequestAsyncResponseBodyVo? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
-    responseHeader = GetService1TkV1RequestTestGetRequestAsyncResponseHeaderVo(
-        apiResultCode: responseHeaderMap.containsKey("api-result-code")
-            ? responseHeaderMap["api-result-code"][0]
-            : null);
+    responseHeader =
+        GetService1TkV1RequestTestGetRequestAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
       Map<String, dynamic> responseBodyMap = response.data;
@@ -86,22 +85,22 @@ Future<
       // Object List 타입이 넘어오면 List<Map<String, dynamic>> 으로 받아서 처리
 
       responseBody = GetService1TkV1RequestTestGetRequestAsyncResponseBodyVo(
-          queryParamString: responseBodyMap["queryParamString"],
-          queryParamStringNullable: responseBodyMap["queryParamStringNullable"],
-          queryParamInt: responseBodyMap["queryParamInt"],
-          queryParamIntNullable: responseBodyMap["queryParamIntNullable"],
-          queryParamDouble: responseBodyMap["queryParamDouble"],
-          queryParamDoubleNullable: responseBodyMap["queryParamDoubleNullable"],
-          queryParamBoolean: responseBodyMap["queryParamBoolean"],
-          queryParamBooleanNullable:
-              responseBodyMap["queryParamBooleanNullable"],
-          queryParamStringList:
-              List<String>.from(responseBodyMap["queryParamStringList"]),
-          queryParamStringListNullable:
-              (responseBodyMap["queryParamStringListNullable"] == null)
-                  ? null
-                  : List<String>.from(
-                      responseBodyMap["queryParamStringListNullable"]));
+        queryParamString: responseBodyMap["queryParamString"],
+        queryParamStringNullable: responseBodyMap["queryParamStringNullable"],
+        queryParamInt: responseBodyMap["queryParamInt"],
+        queryParamIntNullable: responseBodyMap["queryParamIntNullable"],
+        queryParamDouble: responseBodyMap["queryParamDouble"],
+        queryParamDoubleNullable: responseBodyMap["queryParamDoubleNullable"],
+        queryParamBoolean: responseBodyMap["queryParamBoolean"],
+        queryParamBooleanNullable: responseBodyMap["queryParamBooleanNullable"],
+        queryParamStringList:
+            List<String>.from(responseBodyMap["queryParamStringList"]),
+        queryParamStringListNullable:
+            (responseBodyMap["queryParamStringListNullable"] == null)
+                ? null
+                : List<String>.from(
+                    responseBodyMap["queryParamStringListNullable"]),
+      );
     }
 
     return gc_template_classes.NetworkResponseObject(
@@ -144,12 +143,7 @@ class GetService1TkV1RequestTestGetRequestAsyncRequestQueryVo {
 }
 
 class GetService1TkV1RequestTestGetRequestAsyncResponseHeaderVo {
-  GetService1TkV1RequestTestGetRequestAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String? apiResultCode;
+  GetService1TkV1RequestTestGetRequestAsyncResponseHeaderVo();
 }
 
 class GetService1TkV1RequestTestGetRequestAsyncResponseBodyVo {
@@ -197,9 +191,10 @@ Future<
         gc_template_classes.NetworkResponseObject<
             PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeaderVo,
             PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBodyVo>>
-    postService1TkV1RequestTestPostRequestApplicationJsonAsync(
-        {required PostService1TkV1RequestTestPostRequestApplicationJsonAsyncRequestBodyVo
-            requestBodyVo}) async {
+    postService1TkV1RequestTestPostRequestApplicationJsonAsync({
+  required PostService1TkV1RequestTestPostRequestApplicationJsonAsyncRequestBodyVo
+      requestBodyVo,
+}) async {
   // !!!개발 / 배포 모드별 요청 Path 지정!!!
   String devServerUrl =
       "/service1/tk/v1/request-test/post-request-application-json";
@@ -241,7 +236,7 @@ Future<
         data: requestBody);
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeaderVo
         responseHeader;
@@ -250,10 +245,7 @@ Future<
 
     // !!!Response Map 을 Response Object 로 변경!!!
     responseHeader =
-        PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeaderVo(
-            apiResultCode: responseHeaderMap.containsKey("api-result-code")
-                ? responseHeaderMap["api-result-code"][0]
-                : null);
+        PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
       Map<String, dynamic> responseBodyMap = response.data;
@@ -324,12 +316,7 @@ class PostService1TkV1RequestTestPostRequestApplicationJsonAsyncRequestBodyVo {
 }
 
 class PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeaderVo {
-  PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String apiResultCode;
+  PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseHeaderVo();
 }
 
 class PostService1TkV1RequestTestPostRequestApplicationJsonAsyncResponseBodyVo {
