@@ -1,4 +1,5 @@
 [TODO]
+- 인증/인가 관련 기능 재검수
 - Splash 화면 개선, 화면별 인증 정보 처리, pc_page_flutter_resource_image_resize 개선,
     최대 길이가 정해진 입력창에서 그 이상 입력 불가능하게, 앱 권한 처리 등, 페이지 전반 개선
 

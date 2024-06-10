@@ -346,7 +346,6 @@ class MainBusiness {
 
                 if (response.dioException == null) {
                   // Dio 네트워크 응답
-
                   var networkResponseObjectOk =
                       response.networkResponseObjectOk!;
 

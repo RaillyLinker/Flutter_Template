@@ -409,7 +409,7 @@ Future<
         data: requestBody);
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeaderVo
         responseHeader;
@@ -418,10 +418,7 @@ Future<
 
     // !!!Response Map 을 Response Object 로 변경!!!
     responseHeader =
-        PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeaderVo(
-            apiResultCode: responseHeaderMap.containsKey("api-result-code")
-                ? responseHeaderMap["api-result-code"][0]
-                : null);
+        PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
       Map<String, dynamic> responseBodyMap = response.data;
@@ -492,12 +489,7 @@ class PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncRequestBodyVo
 }
 
 class PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeaderVo {
-  PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String? apiResultCode;
+  PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseHeaderVo();
 }
 
 class PostService1TkV1RequestTestPostRequestXWwwFromUrlencodedAsyncResponseBodyVo {
@@ -606,7 +598,7 @@ Future<
         options: Options(headers: requestHeaders), data: requestBody);
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeaderVo
         responseHeader;
@@ -615,10 +607,7 @@ Future<
 
     // !!!Response Map 을 Response Object 로 변경!!!
     responseHeader =
-        PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeaderVo(
-            apiResultCode: responseHeaderMap.containsKey("api-result-code")
-                ? responseHeaderMap["api-result-code"][0]
-                : null);
+        PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
       Map<String, dynamic> responseBodyMap = response.data;
@@ -693,12 +682,7 @@ class PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncRequestBodyVo 
 }
 
 class PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeaderVo {
-  PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String? apiResultCode;
+  PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseHeaderVo();
 }
 
 class PostService1TkV1RequestTestPostRequestMultipartFormDataAsyncResponseBodyVo {
@@ -785,7 +769,7 @@ Future<
         options: Options(headers: requestHeaders), data: requestBody);
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeaderVo
         responseHeader;
@@ -794,10 +778,7 @@ Future<
 
     // !!!Response Map 을 Response Object 로 변경!!!
     responseHeader =
-        PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeaderVo(
-            apiResultCode: responseHeaderMap.containsKey("api-result-code")
-                ? responseHeaderMap["api-result-code"][0]
-                : null);
+        PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
       Map<String, dynamic> responseBodyMap = response.data;
@@ -867,12 +848,7 @@ class PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncRequestBod
 }
 
 class PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeaderVo {
-  PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String? apiResultCode;
+  PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseHeaderVo();
 }
 
 class PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBodyVo {
@@ -945,7 +921,7 @@ Future<
         options: Options(headers: requestHeaders), data: requestBody);
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     PostService1TkV1RequestTestGenerateErrorAsyncResponseHeaderVo
         responseHeader;
@@ -953,10 +929,7 @@ Future<
 
     // !!!Response Map 을 Response Object 로 변경!!!
     responseHeader =
-        PostService1TkV1RequestTestGenerateErrorAsyncResponseHeaderVo(
-            apiResultCode: responseHeaderMap.containsKey("api-result-code")
-                ? responseHeaderMap["api-result-code"][0]
-                : null);
+        PostService1TkV1RequestTestGenerateErrorAsyncResponseHeaderVo();
     return gc_template_classes.NetworkResponseObject(
         networkResponseObjectOk: gc_template_classes.NetworkResponseObjectOk(
             responseStatusCode: statusCode,
@@ -972,12 +945,7 @@ Future<
 }
 
 class PostService1TkV1RequestTestGenerateErrorAsyncResponseHeaderVo {
-  PostService1TkV1RequestTestGenerateErrorAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String? apiResultCode;
+  PostService1TkV1RequestTestGenerateErrorAsyncResponseHeaderVo();
 }
 
 class PostService1TkV1RequestTestGenerateErrorAsyncResponseBodyVo {}
@@ -1010,7 +978,7 @@ Future<
         options: Options(headers: requestHeaders));
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     GetService1TkV1RequestTestReturnTextStringAsyncResponseHeaderVo
         responseHeader;
@@ -1018,10 +986,7 @@ Future<
 
     // !!!Response Map 을 Response Object 로 변경!!!
     responseHeader =
-        GetService1TkV1RequestTestReturnTextStringAsyncResponseHeaderVo(
-            apiResultCode: responseHeaderMap.containsKey("api-result-code")
-                ? responseHeaderMap["api-result-code"][0]
-                : null);
+        GetService1TkV1RequestTestReturnTextStringAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
 
@@ -1043,12 +1008,7 @@ Future<
 }
 
 class GetService1TkV1RequestTestReturnTextStringAsyncResponseHeaderVo {
-  GetService1TkV1RequestTestReturnTextStringAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String? apiResultCode;
+  GetService1TkV1RequestTestReturnTextStringAsyncResponseHeaderVo();
 }
 
 class GetRequestReturnTextStringAsyncResponseBodyVo {
@@ -1083,7 +1043,7 @@ Future<
         options: Options(headers: requestHeaders));
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeaderVo
         responseHeader;
@@ -1091,10 +1051,7 @@ Future<
 
     // !!!Response Map 을 Response Object 로 변경!!!
     responseHeader =
-        GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeaderVo(
-            apiResultCode: responseHeaderMap.containsKey("api-result-code")
-                ? responseHeaderMap["api-result-code"][0]
-                : null);
+        GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
       responseBody = response.data;
@@ -1115,12 +1072,7 @@ Future<
 }
 
 class GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeaderVo {
-  GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String? apiResultCode;
+  GetService1TkV1RequestTestReturnTextHtmlAsyncResponseHeaderVo();
 }
 
 class GetRequestReturnTextHtmlAsyncResponseBodyVo {
@@ -1140,8 +1092,7 @@ Future<
   return gc_template_classes.NetworkResponseObject(
       networkResponseObjectOk: gc_template_classes.NetworkResponseObjectOk(
           responseStatusCode: 200,
-          responseHeaders:
-              GetMobileAppVersionInfoAsyncResponseHeaderVo(apiResultCode: "0"),
+          responseHeaders: GetMobileAppVersionInfoAsyncResponseHeaderVo(),
           responseBody: GetMobileAppVersionInfoAsyncResponseBodyVo(
               minUpgradeVersion: "1.0.0", latestVersion: "1.0.0")),
       dioException: null);
@@ -1174,10 +1125,7 @@ Future<
     GetMobileAppVersionInfoAsyncResponseBodyVo? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
-    responseHeader = GetMobileAppVersionInfoAsyncResponseHeaderVo(
-        apiResultCode: responseHeaderMap.containsKey("api-result-code")
-            ? responseHeaderMap["api-result-code"][0]
-            : null);
+    responseHeader = GetMobileAppVersionInfoAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
       Map<String, dynamic> responseBodyMap = response.data;
@@ -1213,11 +1161,7 @@ class GetMobileAppVersionInfoAsyncRequestQueryVo {
 }
 
 class GetMobileAppVersionInfoAsyncResponseHeaderVo {
-  GetMobileAppVersionInfoAsyncResponseHeaderVo({required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String? apiResultCode;
+  GetMobileAppVersionInfoAsyncResponseHeaderVo();
 }
 
 class GetMobileAppVersionInfoAsyncResponseBodyVo {

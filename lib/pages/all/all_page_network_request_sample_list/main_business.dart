@@ -197,26 +197,53 @@ class MainBusiness {
 
                         if (response.dioException == null) {
                           // Dio 네트워크 응답
+                          var networkResponseObjectOk =
+                              response.networkResponseObjectOk!;
 
-                          // (확인 다이얼로그 호출)
-                          final GlobalKey<all_dialog_info.MainWidgetState>
-                              allDialogInfoStateGk =
-                              GlobalKey<all_dialog_info.MainWidgetState>();
-                          BuildContext context = mainContext;
-                          if (!context.mounted) return;
-                          showDialog(
-                              barrierDismissible: true,
-                              context: context,
-                              builder: (context) => all_dialog_info.MainWidget(
-                                    key: allDialogInfoStateGk,
-                                    inputVo: all_dialog_info.InputVo(
-                                      dialogTitle: "응답 결과",
-                                      dialogContent:
-                                          "Http Status Code : ${response.networkResponseObjectOk!.responseStatusCode}\n\nResponse Body:\n${response.networkResponseObjectOk!.responseBody}",
-                                      checkBtnTitle: "확인",
-                                      onDialogCreated: () {},
-                                    ),
-                                  )).then((outputVo) {});
+                          if (networkResponseObjectOk.responseStatusCode ==
+                              200) {
+                            // (확인 다이얼로그 호출)
+                            final GlobalKey<all_dialog_info.MainWidgetState>
+                                allDialogInfoStateGk =
+                                GlobalKey<all_dialog_info.MainWidgetState>();
+                            BuildContext context = mainContext;
+                            if (!context.mounted) return;
+                            showDialog(
+                                barrierDismissible: true,
+                                context: context,
+                                builder: (context) =>
+                                    all_dialog_info.MainWidget(
+                                      key: allDialogInfoStateGk,
+                                      inputVo: all_dialog_info.InputVo(
+                                        dialogTitle: "응답 결과",
+                                        dialogContent:
+                                            "Http Status Code : ${response.networkResponseObjectOk!.responseStatusCode}\n\nResponse Body:\n${response.networkResponseObjectOk!.responseBody}",
+                                        checkBtnTitle: "확인",
+                                        onDialogCreated: () {},
+                                      ),
+                                    )).then((outputVo) {});
+                          } else {
+                            // Dio 네트워크 에러
+                            final GlobalKey<all_dialog_info.MainWidgetState>
+                                allDialogInfoStateGk =
+                                GlobalKey<all_dialog_info.MainWidgetState>();
+                            BuildContext context = mainContext;
+                            if (!context.mounted) return;
+                            showDialog(
+                                barrierDismissible: true,
+                                context: context,
+                                builder: (context) =>
+                                    all_dialog_info.MainWidget(
+                                      key: allDialogInfoStateGk,
+                                      inputVo: all_dialog_info.InputVo(
+                                        dialogTitle: "네트워크 에러",
+                                        dialogContent:
+                                            "네트워크 상태가 불안정합니다.\n다시 시도해주세요. (500 반환)",
+                                        checkBtnTitle: "확인",
+                                        onDialogCreated: () {},
+                                      ),
+                                    ));
+                          }
                         } else {
                           // Dio 네트워크 에러
                           final GlobalKey<all_dialog_info.MainWidgetState>
@@ -269,7 +296,6 @@ class MainBusiness {
 
                         if (response.dioException == null) {
                           // Dio 네트워크 응답
-
                           var networkResponseObjectOk =
                               response.networkResponseObjectOk!;
 
@@ -375,7 +401,6 @@ class MainBusiness {
 
                         if (response.dioException == null) {
                           // Dio 네트워크 응답
-
                           var networkResponseObjectOk =
                               response.networkResponseObjectOk!;
 
