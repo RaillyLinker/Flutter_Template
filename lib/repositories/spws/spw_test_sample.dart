@@ -5,8 +5,7 @@ import 'package:sync/semaphore.dart';
 
 // (all)
 import 'package:flutter_template/global_data/gd_const.dart' as gd_const;
-import 'package:flutter_template/global_functions/gf_crypto.dart'
-    as gf_crypto;
+import 'package:flutter_template/global_functions/gf_crypto.dart' as gf_crypto;
 
 // [SharedPreference Wrapper 선언 파일 템플릿]
 // 본 파일은 SharedPreference 변수 하나에 대한 래퍼 클래스 작성용 파일입니다.
@@ -106,8 +105,10 @@ class SharedPreferenceWrapper {
 
 // !!!저장 정보 데이터 형태 작성!!!
 class SharedPreferenceWrapperVo {
-  SharedPreferenceWrapperVo(
-      {required this.sampleInt, required this.sampleString});
+  SharedPreferenceWrapperVo({
+    required this.sampleInt,
+    required this.sampleString,
+  });
 
   int sampleInt; // 샘플 int 데이터
   String sampleString; // 샘플 String 데이터

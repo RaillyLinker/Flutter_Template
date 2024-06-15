@@ -395,58 +395,8 @@ class MainBusiness {
             signInRetryCount = 0;
 
             // SSW 정보 갱신
-            List<spw_auth_info.SharedPreferenceWrapperVoOAuth2Info>
-                myOAuth2ObjectList = [];
-            for (api_main_server
-                .PostReissueAsyncResponseBodyVoOAuth2Info myOAuth2
-                in postReissueResponseBody.myOAuth2List) {
-              myOAuth2ObjectList
-                  .add(spw_auth_info.SharedPreferenceWrapperVoOAuth2Info(
-                myOAuth2.uid,
-                myOAuth2.oauth2TypeCode,
-                myOAuth2.oauth2Id,
-              ));
-            }
-
-            List<spw_auth_info.SharedPreferenceWrapperVoProfileInfo>
-                myProfileList = [];
-            for (api_main_server.PostReissueAsyncResponseBodyVoProfile myProfile
-                in postReissueResponseBody.myProfileList) {
-              myProfileList.add(
-                  spw_auth_info.SharedPreferenceWrapperVoProfileInfo(
-                myProfile.uid,
-                myProfile.imageFullUrl,
-                myProfile.front,
-              ));
-            }
-
-            List<spw_auth_info.SharedPreferenceWrapperVoEmailInfo>
-                myEmailList = [];
-            for (api_main_server.PostReissueAsyncResponseBodyVoEmail myEmail
-                in postReissueResponseBody.myEmailList) {
-              myEmailList
-                  .add(spw_auth_info.SharedPreferenceWrapperVoEmailInfo(
-                uid: myEmail.uid,
-                emailAddress: myEmail.emailAddress,
-                isFront: myEmail.front,
-              ));
-            }
-
-            List<spw_auth_info.SharedPreferenceWrapperVoPhoneInfo>
-                myPhoneNumberList = [];
-            for (api_main_server.PostReissueAsyncResponseBodyVoPhone myPhone
-                in postReissueResponseBody.myPhoneNumberList) {
-              myPhoneNumberList
-                  .add(spw_auth_info.SharedPreferenceWrapperVoPhoneInfo(
-                uid: myPhone.uid,
-                phoneNumber: myPhone.phoneNumber,
-                isFront: myPhone.front,
-              ));
-            }
 
             authInfo.memberUid = postReissueResponseBody.memberUid;
-            authInfo.nickName = postReissueResponseBody.nickName;
-            authInfo.roleList = postReissueResponseBody.roleList;
             authInfo.tokenType = postReissueResponseBody.tokenType;
             authInfo.accessToken = postReissueResponseBody.accessToken;
             authInfo.accessTokenExpireWhen =
@@ -454,15 +404,8 @@ class MainBusiness {
             authInfo.refreshToken = postReissueResponseBody.refreshToken;
             authInfo.refreshTokenExpireWhen =
                 postReissueResponseBody.refreshTokenExpireWhen;
-            authInfo.myOAuth2List = myOAuth2ObjectList;
-            authInfo.myProfileList = myProfileList;
-            authInfo.myEmailList = myEmailList;
-            authInfo.myPhoneNumberList = myPhoneNumberList;
-            authInfo.authPasswordIsNull =
-                postReissueResponseBody.authPasswordIsNull;
 
-            spw_auth_info.SharedPreferenceWrapper.set(
-                value: authInfo);
+            spw_auth_info.SharedPreferenceWrapper.set(value: authInfo);
 
             initLogicComplete = true;
             _onApplicationInitLogicComplete();
@@ -543,8 +486,7 @@ class MainBusiness {
                     // 리플래시 토큰이 사용 불가이므로 로그아웃 처리
 
                     // login_user_info SSW 비우기 (= 로그아웃 처리)
-                    spw_auth_info.SharedPreferenceWrapper.set(
-                        value: null);
+                    spw_auth_info.SharedPreferenceWrapper.set(value: null);
                     initLogicComplete = true;
                     _onApplicationInitLogicComplete();
                   }

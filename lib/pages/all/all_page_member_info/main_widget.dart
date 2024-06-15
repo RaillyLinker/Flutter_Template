@@ -176,10 +176,9 @@ class MainWidgetState extends State<MainWidget> with WidgetsBindingObserver {
                                   width: 100,
                                   height: 100,
                                   child: Image(
-                                    image: NetworkImage(mainBusiness
-                                        .myProfileList[
-                                            mainBusiness.frontProfileIdx!]
-                                        .imageFullUrl),
+                                    image: NetworkImage(
+                                        mainBusiness.myProfileList[
+                                            mainBusiness.frontProfileIdx!]),
                                     fit: BoxFit.cover,
                                     loadingBuilder: (BuildContext context,
                                         Widget child,

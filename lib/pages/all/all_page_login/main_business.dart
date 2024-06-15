@@ -301,65 +301,14 @@ class MainBusiness {
                         .responseBody! as api_main_server
                     .PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVo;
 
-                List<spw_auth_info.SharedPreferenceWrapperVoOAuth2Info>
-                    myOAuth2ObjectList = [];
-                for (var myOAuth2 in responseBody.myOAuth2List) {
-                  myOAuth2ObjectList.add(
-                      spw_auth_info.SharedPreferenceWrapperVoOAuth2Info(
-                    myOAuth2.uid,
-                    myOAuth2.oauth2TypeCode,
-                    myOAuth2.oauth2Id,
-                  ));
-                }
-
-                List<spw_auth_info.SharedPreferenceWrapperVoProfileInfo>
-                    myProfileObjectList = [];
-                for (var myProfile in responseBody.myProfileList) {
-                  myProfileObjectList.add(
-                      spw_auth_info.SharedPreferenceWrapperVoProfileInfo(
-                    myProfile.uid,
-                    myProfile.imageFullUrl,
-                    myProfile.front,
-                  ));
-                }
-
-                List<spw_auth_info.SharedPreferenceWrapperVoEmailInfo>
-                    myEmailList = [];
-                for (var myProfile in responseBody.myEmailList) {
-                  myEmailList.add(
-                      spw_auth_info.SharedPreferenceWrapperVoEmailInfo(
-                    uid: myProfile.uid,
-                    emailAddress: myProfile.emailAddress,
-                    isFront: myProfile.front,
-                  ));
-                }
-
-                List<spw_auth_info.SharedPreferenceWrapperVoPhoneInfo>
-                    myPhoneNumberList = [];
-                for (var myProfile in responseBody.myPhoneNumberList) {
-                  myPhoneNumberList.add(
-                      spw_auth_info.SharedPreferenceWrapperVoPhoneInfo(
-                    uid: myProfile.uid,
-                    phoneNumber: myProfile.phoneNumber,
-                    isFront: myProfile.front,
-                  ));
-                }
-
                 spw_auth_info.SharedPreferenceWrapper.set(
                     value: spw_auth_info.SharedPreferenceWrapperVo(
                   responseBody.memberUid,
-                  responseBody.nickName,
-                  responseBody.roleList,
                   responseBody.tokenType,
                   responseBody.accessToken,
                   responseBody.accessTokenExpireWhen,
                   responseBody.refreshToken,
                   responseBody.refreshTokenExpireWhen,
-                  myOAuth2ObjectList,
-                  myProfileObjectList,
-                  myEmailList,
-                  myPhoneNumberList,
-                  responseBody.authPasswordIsNull,
                 ));
 
                 accountLoginAsyncClicked = false;

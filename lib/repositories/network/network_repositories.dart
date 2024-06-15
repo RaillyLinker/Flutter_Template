@@ -43,7 +43,7 @@ var mainServerDio = Dio(BaseOptions(
 // 아래 함수는 main 함수에서 실행됩니다.
 void setDioObjects() {
   // (로깅 인터셉터 설정)
-  if(gd_const_config.isDebugMode){
+  if (gd_const_config.isDebugMode) {
     mainServerDio.interceptors.add(PrettyDioLogger(
       request: true,
       requestHeader: true,
@@ -168,80 +168,18 @@ void setDioObjects() {
                             .PostService1TkV1AuthReissueAsyncResponseBodyVo;
 
                     // SSW 정보 갱신
-                    List<
-                            spw_auth_info
-                            .SharedPreferenceWrapperVoOAuth2Info>
-                        myOAuth2ObjectList = [];
-                    for (api_main_server
-                        .PostReissueAsyncResponseBodyVoOAuth2Info myOAuth2
-                        in postReissueResponseBody.myOAuth2List) {
-                      myOAuth2ObjectList.add(spw_auth_info
-                          .SharedPreferenceWrapperVoOAuth2Info(myOAuth2.uid,
-                              myOAuth2.oauth2TypeCode, myOAuth2.oauth2Id));
-                    }
 
-                    List<
-                            spw_auth_info
-                            .SharedPreferenceWrapperVoProfileInfo>
-                        myProfileList = [];
-                    for (api_main_server
-                        .PostReissueAsyncResponseBodyVoProfile myProfile
-                        in postReissueResponseBody.myProfileList) {
-                      myProfileList.add(spw_auth_info
-                          .SharedPreferenceWrapperVoProfileInfo(myProfile.uid,
-                              myProfile.imageFullUrl, myProfile.front));
-                    }
-
-                    List<
-                        spw_auth_info
-                        .SharedPreferenceWrapperVoEmailInfo> myEmailList = [];
-                    for (api_main_server
-                        .PostReissueAsyncResponseBodyVoEmail myEmail
-                        in postReissueResponseBody.myEmailList) {
-                      myEmailList.add(spw_auth_info
-                          .SharedPreferenceWrapperVoEmailInfo(
-                              uid: myEmail.uid,
-                              emailAddress: myEmail.emailAddress,
-                              isFront: myEmail.front));
-                    }
-
-                    List<
-                            spw_auth_info
-                            .SharedPreferenceWrapperVoPhoneInfo>
-                        myPhoneNumberList = [];
-                    for (api_main_server
-                        .PostReissueAsyncResponseBodyVoPhone myPhone
-                        in postReissueResponseBody.myPhoneNumberList) {
-                      myPhoneNumberList.add(spw_auth_info
-                          .SharedPreferenceWrapperVoPhoneInfo(
-                              uid: myPhone.uid,
-                              phoneNumber: myPhone.phoneNumber,
-                              isFront: myPhone.front));
-                    }
-
-                    authInfo.memberUid =
-                        postReissueResponseBody.memberUid;
-                    authInfo.nickName = postReissueResponseBody.nickName;
-                    authInfo.roleList = postReissueResponseBody.roleList;
-                    authInfo.tokenType =
-                        postReissueResponseBody.tokenType;
-                    authInfo.accessToken =
-                        postReissueResponseBody.accessToken;
+                    authInfo.memberUid = postReissueResponseBody.memberUid;
+                    authInfo.tokenType = postReissueResponseBody.tokenType;
+                    authInfo.accessToken = postReissueResponseBody.accessToken;
                     authInfo.accessTokenExpireWhen =
                         postReissueResponseBody.accessTokenExpireWhen;
                     authInfo.refreshToken =
                         postReissueResponseBody.refreshToken;
                     authInfo.refreshTokenExpireWhen =
                         postReissueResponseBody.refreshTokenExpireWhen;
-                    authInfo.myOAuth2List = myOAuth2ObjectList;
-                    authInfo.myProfileList = myProfileList;
-                    authInfo.myEmailList = myEmailList;
-                    authInfo.myPhoneNumberList = myPhoneNumberList;
-                    authInfo.authPasswordIsNull =
-                        postReissueResponseBody.authPasswordIsNull;
 
-                    spw_auth_info.SharedPreferenceWrapper.set(
-                        value: authInfo);
+                    spw_auth_info.SharedPreferenceWrapper.set(value: authInfo);
 
                     // 새로운 AccessToken 으로 재요청
                     try {

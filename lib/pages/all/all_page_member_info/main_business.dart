@@ -139,8 +139,7 @@ class MainBusiness {
   final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> myProfileAreaGk =
       GlobalKey();
   late BuildContext myProfileAreaContext;
-  late List<spw_auth_info.SharedPreferenceWrapperVoProfileInfo>
-      myProfileList; // 내가 등록한 Profile 정보 리스트
+  late List<String> myProfileList; // 내가 등록한 Profile Full Url 리스트
   int? frontProfileIdx; // myProfileList 의 대표 프로필 인덱스
 
   final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> nicknameAreaGk =
@@ -151,20 +150,17 @@ class MainBusiness {
   final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> emailAreaGk =
       GlobalKey();
   late BuildContext emailAreaContext;
-  List<spw_auth_info.SharedPreferenceWrapperVoEmailInfo>?
-      myEmailList; // 내가 등록한 이메일 정보 리스트
+  List<String>? myEmailList; // 내가 등록한 이메일 리스트
 
   final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> myPhoneNumberAreaGk =
       GlobalKey();
   late BuildContext myPhoneNumberAreaContext;
-  List<spw_auth_info.SharedPreferenceWrapperVoPhoneInfo>?
-      myPhoneNumberList; // 내가 등록한 전화번호 정보 리스트
+  List<String>? myPhoneNumberList; // 내가 등록한 전화번호 리스트
 
   final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> myOAuth2AreaGk =
       GlobalKey();
   late BuildContext myOAuth2AreaContext;
-  List<spw_auth_info.SharedPreferenceWrapperVoOAuth2Info>?
-      myOAuth2List; // 내가 등록한 OAuth2 정보 리스트
+  List<String>? myOAuth2List; // 내가 등록한 OAuth2 리스트
 
   final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> roleListAreaGk =
       GlobalKey();
@@ -197,21 +193,21 @@ class MainBusiness {
       return;
     }
 
-    myProfileList = nowauthInfo.myProfileList;
-    for (int i = 0; i < myProfileList.length; i++) {
-      var myProfile = myProfileList[i];
-      if (myProfile.isFront) {
-        frontProfileIdx = i;
-        break;
-      }
-    }
-    nickName = nowauthInfo.nickName;
-    myEmailList = nowauthInfo.myEmailList;
-    myPhoneNumberList = nowauthInfo.myPhoneNumberList;
-    myOAuth2List = nowauthInfo.myOAuth2List;
-    roleList = nowauthInfo.roleList;
-
-    authPasswordIsNull = nowauthInfo.authPasswordIsNull;
+    // myProfileList = nowauthInfo.myProfileList;
+    // for (int i = 0; i < myProfileList.length; i++) {
+    //   var myProfile = myProfileList[i];
+    //   if (myProfile.isFront) {
+    //     frontProfileIdx = i;
+    //     break;
+    //   }
+    // }
+    // nickName = nowauthInfo.nickName;
+    // myEmailList = nowauthInfo.myEmailList;
+    // myPhoneNumberList = nowauthInfo.myPhoneNumberList;
+    // myOAuth2List = nowauthInfo.myOAuth2List;
+    // roleList = nowauthInfo.roleList;
+    //
+    // authPasswordIsNull = nowauthInfo.authPasswordIsNull;
   }
 
   void goToChangePasswordPage() {
