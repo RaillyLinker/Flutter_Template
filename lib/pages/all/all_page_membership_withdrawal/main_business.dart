@@ -13,8 +13,8 @@ import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
 import 'package:flutter_template/repositories/network/apis/api_main_server.dart'
     as api_main_server;
-import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
-    as spw_auth_member_info;
+import 'package:flutter_template/repositories/spws/spw_auth_info.dart'
+    as spw_auth_info;
 import 'package:flutter_template/dialogs/all/all_dialog_info/main_widget.dart'
     as all_dialog_info;
 import 'package:flutter_template/dialogs/all/all_dialog_loading_spinner/main_widget.dart'
@@ -67,10 +67,10 @@ class MainBusiness {
     // !!!onFocusGainedAsync 로직 작성!!!
 
     // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
-    final spw_auth_member_info.SharedPreferenceWrapperVo? nowLoginMemberInfo =
+    final spw_auth_info.SharedPreferenceWrapperVo? nowauthInfo =
         gf_my_functions.getNowVerifiedMemberInfo();
 
-    if (nowLoginMemberInfo == null) {
+    if (nowauthInfo == null) {
       // 로그아웃 상태
       showToast(
         "로그인이 필요합니다.",
@@ -147,7 +147,7 @@ class MainBusiness {
     }
     accountWithdrawalAsyncClicked = true;
 
-    var signInInfo = spw_auth_member_info.SharedPreferenceWrapper.get();
+    var signInInfo = spw_auth_info.SharedPreferenceWrapper.get();
 
     if (signInInfo == null) {
       // 비회원일 때
@@ -223,7 +223,7 @@ class MainBusiness {
                       if (networkResponseObjectOk.responseStatusCode == 200) {
                         // 정상 응답
                         // 로그아웃 처리
-                        spw_auth_member_info.SharedPreferenceWrapper.set(
+                        spw_auth_info.SharedPreferenceWrapper.set(
                             value: null);
                         final GlobalKey<all_dialog_info.MainWidgetState>
                             allDialogInfoStateGk =

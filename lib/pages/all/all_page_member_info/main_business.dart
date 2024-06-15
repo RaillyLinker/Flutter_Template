@@ -11,8 +11,8 @@ import 'package:flutter_template/global_widgets/gw_slw_page_outer_frame.dart'
     as gw_slw_page_outer_frame;
 import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
-import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
-    as spw_auth_member_info;
+import 'package:flutter_template/repositories/spws/spw_auth_info.dart'
+    as spw_auth_info;
 import 'package:flutter_template/global_functions/gf_my_functions.dart'
     as gf_my_functions;
 import 'package:flutter_template/pages/all/all_page_membership_withdrawal/main_widget.dart'
@@ -71,10 +71,10 @@ class MainBusiness {
     // !!!onFocusGainedAsync 로직 작성!!!
 
     // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
-    final spw_auth_member_info.SharedPreferenceWrapperVo? nowLoginMemberInfo =
+    final spw_auth_info.SharedPreferenceWrapperVo? nowauthInfo =
         gf_my_functions.getNowVerifiedMemberInfo();
 
-    if (nowLoginMemberInfo == null) {
+    if (nowauthInfo == null) {
       // 로그아웃 상태
       showToast(
         "로그인이 필요합니다.",
@@ -139,7 +139,7 @@ class MainBusiness {
   final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> myProfileAreaGk =
       GlobalKey();
   late BuildContext myProfileAreaContext;
-  late List<spw_auth_member_info.SharedPreferenceWrapperVoProfileInfo>
+  late List<spw_auth_info.SharedPreferenceWrapperVoProfileInfo>
       myProfileList; // 내가 등록한 Profile 정보 리스트
   int? frontProfileIdx; // myProfileList 의 대표 프로필 인덱스
 
@@ -151,19 +151,19 @@ class MainBusiness {
   final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> emailAreaGk =
       GlobalKey();
   late BuildContext emailAreaContext;
-  List<spw_auth_member_info.SharedPreferenceWrapperVoEmailInfo>?
+  List<spw_auth_info.SharedPreferenceWrapperVoEmailInfo>?
       myEmailList; // 내가 등록한 이메일 정보 리스트
 
   final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> myPhoneNumberAreaGk =
       GlobalKey();
   late BuildContext myPhoneNumberAreaContext;
-  List<spw_auth_member_info.SharedPreferenceWrapperVoPhoneInfo>?
+  List<spw_auth_info.SharedPreferenceWrapperVoPhoneInfo>?
       myPhoneNumberList; // 내가 등록한 전화번호 정보 리스트
 
   final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> myOAuth2AreaGk =
       GlobalKey();
   late BuildContext myOAuth2AreaContext;
-  List<spw_auth_member_info.SharedPreferenceWrapperVoOAuth2Info>?
+  List<spw_auth_info.SharedPreferenceWrapperVoOAuth2Info>?
       myOAuth2List; // 내가 등록한 OAuth2 정보 리스트
 
   final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> roleListAreaGk =
@@ -189,15 +189,15 @@ class MainBusiness {
 
   void setNowMemberInfo() {
     // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
-    spw_auth_member_info.SharedPreferenceWrapperVo? nowLoginMemberInfo =
+    spw_auth_info.SharedPreferenceWrapperVo? nowauthInfo =
         gf_my_functions.getNowVerifiedMemberInfo();
 
-    if (nowLoginMemberInfo == null) {
+    if (nowauthInfo == null) {
       inputError = true;
       return;
     }
 
-    myProfileList = nowLoginMemberInfo.myProfileList;
+    myProfileList = nowauthInfo.myProfileList;
     for (int i = 0; i < myProfileList.length; i++) {
       var myProfile = myProfileList[i];
       if (myProfile.isFront) {
@@ -205,13 +205,13 @@ class MainBusiness {
         break;
       }
     }
-    nickName = nowLoginMemberInfo.nickName;
-    myEmailList = nowLoginMemberInfo.myEmailList;
-    myPhoneNumberList = nowLoginMemberInfo.myPhoneNumberList;
-    myOAuth2List = nowLoginMemberInfo.myOAuth2List;
-    roleList = nowLoginMemberInfo.roleList;
+    nickName = nowauthInfo.nickName;
+    myEmailList = nowauthInfo.myEmailList;
+    myPhoneNumberList = nowauthInfo.myPhoneNumberList;
+    myOAuth2List = nowauthInfo.myOAuth2List;
+    roleList = nowauthInfo.roleList;
 
-    authPasswordIsNull = nowLoginMemberInfo.authPasswordIsNull;
+    authPasswordIsNull = nowauthInfo.authPasswordIsNull;
   }
 
   void goToChangePasswordPage() {

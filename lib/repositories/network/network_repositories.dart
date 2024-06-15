@@ -7,8 +7,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'apis/api_main_server.dart' as api_main_server;
 import 'package:flutter_template/global_data/gd_const_config.dart'
     as gd_const_config;
-import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
-    as spw_auth_member_info;
+import 'package:flutter_template/repositories/spws/spw_auth_info.dart'
+    as spw_auth_info;
 
 // [네트워크 요청 객체 파일]
 // 네트워크 요청 객체 선언, 생성, 설정 파일
@@ -91,7 +91,7 @@ void setDioObjects() {
     // 만약 Authorization 헤더를 보내지 않았다면 적합성 검사를 하지 않습니다.
     // 적합성 검사 수행시 올바르지 않은 Authorization Token 이라면 responseHeader 로 {"api-result-code" : "a"} 가 반환이 되고,
     // 만료된 AccessToken 이라면 responseHeader 로 {"api-result-code", "b"} 가 반환이 됩니다.
-    // 아래 인터셉터 로직의 결과로 로그인이 만료되었다면, spw_auth_member_info 가 null 로 변경됩니다.
+    // 아래 인터셉터 로직의 결과로 로그인이 만료되었다면, spw_auth_info 가 null 로 변경됩니다.
     if (responseHeaderMap.containsKey("api-result-code")) {
       // JWT 토큰 관련 서버 에러 발생
 
@@ -103,7 +103,7 @@ void setDioObjects() {
             // 올바르지 않은 Authorization Token
 
             // login_user_info SSW 비우기 (= 로그아웃 처리)
-            spw_auth_member_info.SharedPreferenceWrapper.set(value: null);
+            spw_auth_info.SharedPreferenceWrapper.set(value: null);
 
             // 호출 코드로 응답 전달
             handler.resolve(response);
@@ -114,10 +114,10 @@ void setDioObjects() {
             // Request Header 에 Authorization 입력시, 만료된 AccessToken. (reissue, logout API 는 제외)
 
             // 액세스 토큰 재발급
-            spw_auth_member_info.SharedPreferenceWrapperVo? loginMemberInfo =
-                spw_auth_member_info.SharedPreferenceWrapper.get();
+            spw_auth_info.SharedPreferenceWrapperVo? authInfo =
+                spw_auth_info.SharedPreferenceWrapper.get();
 
-            if (loginMemberInfo == null) {
+            if (authInfo == null) {
               // 정상적으로 프로세스를 진행할 수 없으므로 그냥 스킵
               // 호출 코드로 응답 전달
               handler.next(response);
@@ -125,14 +125,14 @@ void setDioObjects() {
             } else {
               // 리플레시 토큰 만료 여부 확인
               bool isRefreshTokenExpired = DateFormat('yyyy-MM-dd HH:mm:ss.SSS')
-                  .parse(loginMemberInfo.refreshTokenExpireWhen)
+                  .parse(authInfo.refreshTokenExpireWhen)
                   .isBefore(DateTime.now());
 
               if (isRefreshTokenExpired) {
                 // 리플래시 토큰이 사용 불가이므로 로그아웃 처리
 
                 // login_user_info SSW 비우기 (= 로그아웃 처리)
-                spw_auth_member_info.SharedPreferenceWrapper.set(value: null);
+                spw_auth_info.SharedPreferenceWrapper.set(value: null);
 
                 // 호출 코드로 응답 전달
                 handler.resolve(response);
@@ -147,11 +147,11 @@ void setDioObjects() {
                         requestHeaderVo: api_main_server
                             .PostService1TkV1AuthReissueAsyncRequestHeaderVo(
                                 authorization:
-                                    "${loginMemberInfo.tokenType} ${loginMemberInfo.accessToken}"),
+                                    "${authInfo.tokenType} ${authInfo.accessToken}"),
                         requestBodyVo: api_main_server
                             .PostService1TkV1AuthReissueAsyncRequestBodyVo(
                                 refreshToken:
-                                    "${loginMemberInfo.tokenType} ${loginMemberInfo.refreshToken}"));
+                                    "${authInfo.tokenType} ${authInfo.refreshToken}"));
 
                 // 네트워크 요청 결과 처리
                 if (postReissueResponse.dioException == null) {
@@ -169,36 +169,36 @@ void setDioObjects() {
 
                     // SSW 정보 갱신
                     List<
-                            spw_auth_member_info
+                            spw_auth_info
                             .SharedPreferenceWrapperVoOAuth2Info>
                         myOAuth2ObjectList = [];
                     for (api_main_server
                         .PostReissueAsyncResponseBodyVoOAuth2Info myOAuth2
                         in postReissueResponseBody.myOAuth2List) {
-                      myOAuth2ObjectList.add(spw_auth_member_info
+                      myOAuth2ObjectList.add(spw_auth_info
                           .SharedPreferenceWrapperVoOAuth2Info(myOAuth2.uid,
                               myOAuth2.oauth2TypeCode, myOAuth2.oauth2Id));
                     }
 
                     List<
-                            spw_auth_member_info
+                            spw_auth_info
                             .SharedPreferenceWrapperVoProfileInfo>
                         myProfileList = [];
                     for (api_main_server
                         .PostReissueAsyncResponseBodyVoProfile myProfile
                         in postReissueResponseBody.myProfileList) {
-                      myProfileList.add(spw_auth_member_info
+                      myProfileList.add(spw_auth_info
                           .SharedPreferenceWrapperVoProfileInfo(myProfile.uid,
                               myProfile.imageFullUrl, myProfile.front));
                     }
 
                     List<
-                        spw_auth_member_info
+                        spw_auth_info
                         .SharedPreferenceWrapperVoEmailInfo> myEmailList = [];
                     for (api_main_server
                         .PostReissueAsyncResponseBodyVoEmail myEmail
                         in postReissueResponseBody.myEmailList) {
-                      myEmailList.add(spw_auth_member_info
+                      myEmailList.add(spw_auth_info
                           .SharedPreferenceWrapperVoEmailInfo(
                               uid: myEmail.uid,
                               emailAddress: myEmail.emailAddress,
@@ -206,42 +206,42 @@ void setDioObjects() {
                     }
 
                     List<
-                            spw_auth_member_info
+                            spw_auth_info
                             .SharedPreferenceWrapperVoPhoneInfo>
                         myPhoneNumberList = [];
                     for (api_main_server
                         .PostReissueAsyncResponseBodyVoPhone myPhone
                         in postReissueResponseBody.myPhoneNumberList) {
-                      myPhoneNumberList.add(spw_auth_member_info
+                      myPhoneNumberList.add(spw_auth_info
                           .SharedPreferenceWrapperVoPhoneInfo(
                               uid: myPhone.uid,
                               phoneNumber: myPhone.phoneNumber,
                               isFront: myPhone.front));
                     }
 
-                    loginMemberInfo.memberUid =
+                    authInfo.memberUid =
                         postReissueResponseBody.memberUid;
-                    loginMemberInfo.nickName = postReissueResponseBody.nickName;
-                    loginMemberInfo.roleList = postReissueResponseBody.roleList;
-                    loginMemberInfo.tokenType =
+                    authInfo.nickName = postReissueResponseBody.nickName;
+                    authInfo.roleList = postReissueResponseBody.roleList;
+                    authInfo.tokenType =
                         postReissueResponseBody.tokenType;
-                    loginMemberInfo.accessToken =
+                    authInfo.accessToken =
                         postReissueResponseBody.accessToken;
-                    loginMemberInfo.accessTokenExpireWhen =
+                    authInfo.accessTokenExpireWhen =
                         postReissueResponseBody.accessTokenExpireWhen;
-                    loginMemberInfo.refreshToken =
+                    authInfo.refreshToken =
                         postReissueResponseBody.refreshToken;
-                    loginMemberInfo.refreshTokenExpireWhen =
+                    authInfo.refreshTokenExpireWhen =
                         postReissueResponseBody.refreshTokenExpireWhen;
-                    loginMemberInfo.myOAuth2List = myOAuth2ObjectList;
-                    loginMemberInfo.myProfileList = myProfileList;
-                    loginMemberInfo.myEmailList = myEmailList;
-                    loginMemberInfo.myPhoneNumberList = myPhoneNumberList;
-                    loginMemberInfo.authPasswordIsNull =
+                    authInfo.myOAuth2List = myOAuth2ObjectList;
+                    authInfo.myProfileList = myProfileList;
+                    authInfo.myEmailList = myEmailList;
+                    authInfo.myPhoneNumberList = myPhoneNumberList;
+                    authInfo.authPasswordIsNull =
                         postReissueResponseBody.authPasswordIsNull;
 
-                    spw_auth_member_info.SharedPreferenceWrapper.set(
-                        value: loginMemberInfo);
+                    spw_auth_info.SharedPreferenceWrapper.set(
+                        value: authInfo);
 
                     // 새로운 AccessToken 으로 재요청
                     try {
@@ -249,7 +249,7 @@ void setDioObjects() {
                       RequestOptions options = response.requestOptions;
                       options.headers.remove("Authorization");
                       options.headers["Authorization"] =
-                          "${loginMemberInfo.tokenType} ${loginMemberInfo.accessToken}";
+                          "${authInfo.tokenType} ${authInfo.accessToken}";
                       Response retryResponse = await mainServerDio.request(
                         options.path,
                         data: options.data,
@@ -295,7 +295,7 @@ void setDioObjects() {
                             // 리플래시 토큰이 사용 불가이므로 로그아웃 처리
 
                             // login_user_info SSW 비우기 (= 로그아웃 처리)
-                            spw_auth_member_info.SharedPreferenceWrapper.set(
+                            spw_auth_info.SharedPreferenceWrapper.set(
                                 value: null);
 
                             // 호출 코드로 응답 전달

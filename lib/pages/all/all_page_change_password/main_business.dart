@@ -19,8 +19,8 @@ import 'package:flutter_template/dialogs/all/all_dialog_loading_spinner/main_wid
     as all_dialog_loading_spinner;
 import 'package:flutter_template/dialogs/all/all_dialog_yes_or_no/main_widget.dart'
     as all_dialog_yes_or_no;
-import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
-    as spw_auth_member_info;
+import 'package:flutter_template/repositories/spws/spw_auth_info.dart'
+    as spw_auth_info;
 import 'package:flutter_template/global_functions/gf_my_functions.dart'
     as gf_my_functions;
 import 'package:flutter_template/pages/all/all_page_login/main_widget.dart'
@@ -73,10 +73,10 @@ class MainBusiness {
     // !!!onFocusGainedAsync 로직 작성!!!
 
     // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
-    spw_auth_member_info.SharedPreferenceWrapperVo? nowLoginMemberInfo =
+    spw_auth_info.SharedPreferenceWrapperVo? nowauthInfo =
         gf_my_functions.getNowVerifiedMemberInfo();
 
-    if (nowLoginMemberInfo == null) {
+    if (nowauthInfo == null) {
       // 비회원 상태라면 진입 금지
       showToast(
         "로그인이 필요합니다.",
@@ -350,11 +350,11 @@ class MainBusiness {
               key: allDialogLoadingSpinnerStateGk,
               inputVo:
                   all_dialog_loading_spinner.InputVo(onDialogCreated: () async {
-                spw_auth_member_info.SharedPreferenceWrapperVo?
-                    loginMemberInfo =
-                    spw_auth_member_info.SharedPreferenceWrapper.get();
+                spw_auth_info.SharedPreferenceWrapperVo?
+                    authInfo =
+                    spw_auth_info.SharedPreferenceWrapper.get();
 
-                if (loginMemberInfo == null) {
+                if (authInfo == null) {
                   // 비회원 상태라면 진입 금지
                   if (!mainContext.mounted) return;
                   showToast(
@@ -376,7 +376,7 @@ class MainBusiness {
                         requestHeaderVo: api_main_server
                             .PutService1TkV1AuthChangeAccountPasswordAsyncRequestHeaderVo(
                                 authorization:
-                                    "${loginMemberInfo.tokenType} ${loginMemberInfo.accessToken}"),
+                                    "${authInfo.tokenType} ${authInfo.accessToken}"),
                         requestBodyVo: api_main_server
                             .PutService1TkV1AuthChangeAccountPasswordAsyncRequestBodyVo(
                                 oldPassword: oldPw, newPassword: newPw));
@@ -427,18 +427,18 @@ class MainBusiness {
                                   key: allDialogLoadingSpinnerStateGk,
                                   inputVo: all_dialog_loading_spinner.InputVo(
                                       onDialogCreated: () async {
-                                    spw_auth_member_info
+                                    spw_auth_info
                                         .SharedPreferenceWrapperVo?
-                                        loginMemberInfo = spw_auth_member_info
+                                        authInfo = spw_auth_info
                                             .SharedPreferenceWrapper.get();
 
-                                    if (loginMemberInfo != null) {
+                                    if (authInfo != null) {
                                       // 모든 기기에서 로그아웃 처리하기
 
                                       // 서버 Logout API 실행
-                                      spw_auth_member_info
+                                      spw_auth_info
                                           .SharedPreferenceWrapperVo?
-                                          loginMemberInfo = spw_auth_member_info
+                                          authInfo = spw_auth_info
                                               .SharedPreferenceWrapper.get();
 
                                       await api_main_server
@@ -446,10 +446,10 @@ class MainBusiness {
                                               requestHeaderVo: api_main_server
                                                   .DeleteService1TkV1AuthAllAuthorizationTokenAsyncRequestHeaderVo(
                                                       authorization:
-                                                          "${loginMemberInfo!.tokenType} ${loginMemberInfo.accessToken}"));
+                                                          "${authInfo!.tokenType} ${authInfo.accessToken}"));
 
                                       // login_user_info SPW 비우기
-                                      spw_auth_member_info
+                                      spw_auth_info
                                               .SharedPreferenceWrapper
                                           .set(value: null);
                                     }
@@ -475,26 +475,26 @@ class MainBusiness {
                                   key: allDialogLoadingSpinnerStateGk,
                                   inputVo: all_dialog_loading_spinner.InputVo(
                                       onDialogCreated: () async {
-                                    spw_auth_member_info
+                                    spw_auth_info
                                         .SharedPreferenceWrapperVo?
-                                        loginMemberInfo = spw_auth_member_info
+                                        authInfo = spw_auth_info
                                             .SharedPreferenceWrapper.get();
 
-                                    if (loginMemberInfo != null) {
+                                    if (authInfo != null) {
                                       // 서버 Logout API 실행
-                                      spw_auth_member_info
+                                      spw_auth_info
                                           .SharedPreferenceWrapperVo?
-                                          loginMemberInfo = spw_auth_member_info
+                                          authInfo = spw_auth_info
                                               .SharedPreferenceWrapper.get();
                                       await api_main_server
                                           .postService1TkV1AuthLogoutAsync(
                                               requestHeaderVo: api_main_server
                                                   .PostService1TkV1AuthLogoutAsyncRequestHeaderVo(
                                                       authorization:
-                                                          "${loginMemberInfo!.tokenType} ${loginMemberInfo.accessToken}"));
+                                                          "${authInfo!.tokenType} ${authInfo.accessToken}"));
 
                                       // login_user_info SPW 비우기
-                                      spw_auth_member_info
+                                      spw_auth_info
                                               .SharedPreferenceWrapper
                                           .set(value: null);
                                     }

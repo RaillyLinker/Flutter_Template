@@ -12,8 +12,8 @@ import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
     as gw_sfw_wrapper;
 import 'package:flutter_template/repositories/network/apis/api_main_server.dart'
     as api_main_server;
-import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
-    as spw_auth_member_info;
+import 'package:flutter_template/repositories/spws/spw_auth_info.dart'
+    as spw_auth_info;
 import 'package:flutter_template/dialogs/all/all_dialog_info/main_widget.dart'
     as all_dialog_info;
 import 'package:flutter_template/dialogs/all/all_dialog_loading_spinner/main_widget.dart'
@@ -211,13 +211,13 @@ class MainBusiness {
                       key: allDialogLoadingSpinnerStateGk,
                       inputVo: all_dialog_loading_spinner.InputVo(
                           onDialogCreated: () async {
-                        spw_auth_member_info.SharedPreferenceWrapperVo?
-                            loginMemberInfo =
-                            spw_auth_member_info.SharedPreferenceWrapper.get();
+                        spw_auth_info.SharedPreferenceWrapperVo?
+                            authInfo =
+                            spw_auth_info.SharedPreferenceWrapper.get();
 
-                        String? authorization = (loginMemberInfo == null)
+                        String? authorization = (authInfo == null)
                             ? null
-                            : "${loginMemberInfo.tokenType} ${loginMemberInfo.accessToken}";
+                            : "${authInfo.tokenType} ${authInfo.accessToken}";
 
                         var response = await api_main_server
                             .getService1TkV1AuthForLoggedInAsync(
@@ -299,13 +299,13 @@ class MainBusiness {
                       key: allDialogLoadingSpinnerStateGk,
                       inputVo: all_dialog_loading_spinner.InputVo(
                           onDialogCreated: () async {
-                        spw_auth_member_info.SharedPreferenceWrapperVo?
-                            loginMemberInfo =
-                            spw_auth_member_info.SharedPreferenceWrapper.get();
+                        spw_auth_info.SharedPreferenceWrapperVo?
+                            authInfo =
+                            spw_auth_info.SharedPreferenceWrapper.get();
 
-                        String? authorization = (loginMemberInfo == null)
+                        String? authorization = (authInfo == null)
                             ? null
-                            : "${loginMemberInfo.tokenType} ${loginMemberInfo.accessToken}";
+                            : "${authInfo.tokenType} ${authInfo.accessToken}";
 
                         var response = await api_main_server
                             .getService1TkV1AuthForDeveloperAsync(
@@ -387,13 +387,13 @@ class MainBusiness {
                       key: allDialogLoadingSpinnerStateGk,
                       inputVo: all_dialog_loading_spinner.InputVo(
                           onDialogCreated: () async {
-                        spw_auth_member_info.SharedPreferenceWrapperVo?
-                            loginMemberInfo =
-                            spw_auth_member_info.SharedPreferenceWrapper.get();
+                        spw_auth_info.SharedPreferenceWrapperVo?
+                            authInfo =
+                            spw_auth_info.SharedPreferenceWrapper.get();
 
-                        String? authorization = (loginMemberInfo == null)
+                        String? authorization = (authInfo == null)
                             ? null
-                            : "${loginMemberInfo.tokenType} ${loginMemberInfo.accessToken}";
+                            : "${authInfo.tokenType} ${authInfo.accessToken}";
 
                         var response = await api_main_server
                             .getService1TkV1AuthForAdminAsync(

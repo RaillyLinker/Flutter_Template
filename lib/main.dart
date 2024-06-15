@@ -34,19 +34,19 @@ void main() async {
   // Web Url 에서 # 제거
   setPathUrlStrategy();
 
-  // SharedPreferences 객체 생성
+  // 전역에서 사용할 SharedPreferences 객체 생성
   gd_const.sharedPreferences = await SharedPreferences.getInstance();
 
-  // Dio 객체 설정
+  // 전역에서 사용할 Dio 객체 설정 및 생성
   network_repositories.setDioObjects();
-
-  // Web 에서 개별 페이지 주소 보이기
-  GoRouter.optionURLReflectsImperativeAPIs = true;
 
   // ---------------------------------------------------------------------------
   if (kIsWeb) {
     // (Web 환경)
     // !!!Web 환경 프로그램 최초 실행 로직 작성!!!
+
+    // Web 에서 개별 페이지 주소 보이기
+    GoRouter.optionURLReflectsImperativeAPIs = true;
 
     // 마우스 우클릭 메뉴 금지 (현 시점, 플러터 웹에서 마우스 우클릭이 유용하지 않으며, 커스텀 메뉴를 사용하기 위해 필요한 조치)
     BrowserContextMenu.disableContextMenu();
@@ -101,7 +101,7 @@ void main() async {
   // 현 디바이스 정보를 메모리에 불러오기
   gd_const.baseDeviceInfo = await DeviceInfoPlugin().deviceInfo;
 
-  // 첫 화면 실행
+  // 처음 페이지 실행
   runApp(
     // 검색 엔진 로봇 방문 감지
     RobotDetector(

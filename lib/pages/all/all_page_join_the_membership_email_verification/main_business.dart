@@ -21,8 +21,8 @@ import 'package:flutter_template/dialogs/all/all_dialog_loading_spinner/main_wid
     as all_dialog_loading_spinner;
 import 'package:flutter_template/pages/all/all_page_join_the_membership_edit_member_info/main_widget.dart'
     as all_page_join_the_membership_edit_member_info;
-import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
-    as spw_auth_member_info;
+import 'package:flutter_template/repositories/spws/spw_auth_info.dart'
+    as spw_auth_info;
 import 'package:flutter_template/global_functions/gf_my_functions.dart'
     as gf_my_functions;
 import 'package:flutter_template/pages/all/all_page_home/main_widget.dart'
@@ -73,10 +73,10 @@ class MainBusiness {
     // !!!onFocusGainedAsync 로직 작성!!!
 
     // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
-    spw_auth_member_info.SharedPreferenceWrapperVo? nowLoginMemberInfo =
+    spw_auth_info.SharedPreferenceWrapperVo? nowauthInfo =
         gf_my_functions.getNowVerifiedMemberInfo();
 
-    if (nowLoginMemberInfo != null) {
+    if (nowauthInfo != null) {
       // 로그인 상태라면 진입금지
       showToast(
         "잘못된 진입입니다.",

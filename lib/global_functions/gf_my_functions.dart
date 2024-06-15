@@ -5,7 +5,7 @@ import 'package:image/image.dart' as img;
 import 'package:intl/intl.dart';
 
 // (all)
-import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
+import 'package:flutter_template/repositories/spws/spw_auth_info.dart'
     as spw_sign_in_member_info;
 
 // [전역 함수 작성 파일]
@@ -15,24 +15,24 @@ import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
 // (현 시점 검증된 로그인 정보 가져오기)
 // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
 spw_sign_in_member_info.SharedPreferenceWrapperVo? getNowVerifiedMemberInfo() {
-  spw_sign_in_member_info.SharedPreferenceWrapperVo? nowLoginMemberInfo;
+  spw_sign_in_member_info.SharedPreferenceWrapperVo? nowauthInfo;
 
   // Shared Preferences 에 저장된 로그인 유저 정보 가져오기
-  spw_sign_in_member_info.SharedPreferenceWrapperVo? loginMemberInfo =
+  spw_sign_in_member_info.SharedPreferenceWrapperVo? authInfo =
       spw_sign_in_member_info.SharedPreferenceWrapper.get();
 
   // 로그인 검증 실행
-  if (loginMemberInfo != null) {
+  if (authInfo != null) {
     // 액세스 토큰 만료 시간이 지났는지 확인
     bool isAccessTokenExpired = DateFormat('yyyy-MM-dd HH:mm:ss.SSS')
-        .parse(loginMemberInfo.accessTokenExpireWhen)
+        .parse(authInfo.accessTokenExpireWhen)
         .isBefore(DateTime.now());
 
     if (isAccessTokenExpired) {
       // 액세스 토큰 만료
       // 리플레시 토큰 만료 시간이 지났는지 확인
       bool isRefreshTokenExpired = DateFormat('yyyy-MM-dd HH:mm:ss.SSS')
-          .parse(loginMemberInfo.refreshTokenExpireWhen)
+          .parse(authInfo.refreshTokenExpireWhen)
           .isBefore(DateTime.now());
 
       if (isRefreshTokenExpired) {
@@ -42,15 +42,15 @@ spw_sign_in_member_info.SharedPreferenceWrapperVo? getNowVerifiedMemberInfo() {
         // 재 로그인이 필요한 상황이므로 비회원으로 다루기
       } else {
         // 리플레시 토큰 만료 되지 않음 = 재발급은 하지 않고 회원 정보 승인
-        nowLoginMemberInfo = loginMemberInfo;
+        nowauthInfo = authInfo;
       }
     } else {
       // 액세스 토큰 만료 되지 않음 (= 검증된 정상 로그인 정보)
-      nowLoginMemberInfo = loginMemberInfo;
+      nowauthInfo = authInfo;
     }
   }
 
-  return nowLoginMemberInfo;
+  return nowauthInfo;
 }
 
 ////

@@ -15,8 +15,8 @@ import 'main_widget.dart' as main_widget;
 // (all)
 import 'package:flutter_template/repositories/network/apis/api_main_server.dart'
     as api_main_server;
-import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
-    as spw_auth_member_info;
+import 'package:flutter_template/repositories/spws/spw_auth_info.dart'
+    as spw_auth_info;
 import 'package:flutter_template/dialogs/all/all_dialog_info/main_widget.dart'
     as all_dialog_info;
 import 'package:flutter_template/dialogs/all/all_dialog_yes_or_no/main_widget.dart'
@@ -352,18 +352,18 @@ class MainBusiness {
 
   // (자동 로그인 확인)
   Future<void> _checkAutoLoginAsync() async {
-    spw_auth_member_info.SharedPreferenceWrapperVo? loginMemberInfo =
-        spw_auth_member_info.SharedPreferenceWrapper.get();
-    if (loginMemberInfo != null) {
+    spw_auth_info.SharedPreferenceWrapperVo? authInfo =
+        spw_auth_info.SharedPreferenceWrapper.get();
+    if (authInfo != null) {
       // 리플레시 토큰 만료 여부 확인
       bool isRefreshTokenExpired = DateFormat('yyyy-MM-dd HH:mm:ss.SSS')
-          .parse(loginMemberInfo.refreshTokenExpireWhen)
+          .parse(authInfo.refreshTokenExpireWhen)
           .isBefore(DateTime.now());
 
       if (isRefreshTokenExpired) {
         // 리플래시 토큰이 사용 불가이므로 로그아웃 처리
         // login_user_info SPW 비우기
-        spw_auth_member_info.SharedPreferenceWrapper.set(value: null);
+        spw_auth_info.SharedPreferenceWrapper.set(value: null);
 
         initLogicComplete = true;
         _onApplicationInitLogicComplete();
@@ -373,11 +373,11 @@ class MainBusiness {
                 requestHeaderVo: api_main_server
                     .PostService1TkV1AuthReissueAsyncRequestHeaderVo(
                         authorization:
-                            "${loginMemberInfo.tokenType} ${loginMemberInfo.accessToken}"),
+                            "${authInfo.tokenType} ${authInfo.accessToken}"),
                 requestBodyVo: api_main_server
                     .PostService1TkV1AuthReissueAsyncRequestBodyVo(
                         refreshToken:
-                            "${loginMemberInfo.tokenType} ${loginMemberInfo.refreshToken}"));
+                            "${authInfo.tokenType} ${authInfo.refreshToken}"));
 
         // 네트워크 요청 결과 처리
         if (postAutoLoginOutputVo.dioException == null) {
@@ -395,74 +395,74 @@ class MainBusiness {
             signInRetryCount = 0;
 
             // SSW 정보 갱신
-            List<spw_auth_member_info.SharedPreferenceWrapperVoOAuth2Info>
+            List<spw_auth_info.SharedPreferenceWrapperVoOAuth2Info>
                 myOAuth2ObjectList = [];
             for (api_main_server
                 .PostReissueAsyncResponseBodyVoOAuth2Info myOAuth2
                 in postReissueResponseBody.myOAuth2List) {
               myOAuth2ObjectList
-                  .add(spw_auth_member_info.SharedPreferenceWrapperVoOAuth2Info(
+                  .add(spw_auth_info.SharedPreferenceWrapperVoOAuth2Info(
                 myOAuth2.uid,
                 myOAuth2.oauth2TypeCode,
                 myOAuth2.oauth2Id,
               ));
             }
 
-            List<spw_auth_member_info.SharedPreferenceWrapperVoProfileInfo>
+            List<spw_auth_info.SharedPreferenceWrapperVoProfileInfo>
                 myProfileList = [];
             for (api_main_server.PostReissueAsyncResponseBodyVoProfile myProfile
                 in postReissueResponseBody.myProfileList) {
               myProfileList.add(
-                  spw_auth_member_info.SharedPreferenceWrapperVoProfileInfo(
+                  spw_auth_info.SharedPreferenceWrapperVoProfileInfo(
                 myProfile.uid,
                 myProfile.imageFullUrl,
                 myProfile.front,
               ));
             }
 
-            List<spw_auth_member_info.SharedPreferenceWrapperVoEmailInfo>
+            List<spw_auth_info.SharedPreferenceWrapperVoEmailInfo>
                 myEmailList = [];
             for (api_main_server.PostReissueAsyncResponseBodyVoEmail myEmail
                 in postReissueResponseBody.myEmailList) {
               myEmailList
-                  .add(spw_auth_member_info.SharedPreferenceWrapperVoEmailInfo(
+                  .add(spw_auth_info.SharedPreferenceWrapperVoEmailInfo(
                 uid: myEmail.uid,
                 emailAddress: myEmail.emailAddress,
                 isFront: myEmail.front,
               ));
             }
 
-            List<spw_auth_member_info.SharedPreferenceWrapperVoPhoneInfo>
+            List<spw_auth_info.SharedPreferenceWrapperVoPhoneInfo>
                 myPhoneNumberList = [];
             for (api_main_server.PostReissueAsyncResponseBodyVoPhone myPhone
                 in postReissueResponseBody.myPhoneNumberList) {
               myPhoneNumberList
-                  .add(spw_auth_member_info.SharedPreferenceWrapperVoPhoneInfo(
+                  .add(spw_auth_info.SharedPreferenceWrapperVoPhoneInfo(
                 uid: myPhone.uid,
                 phoneNumber: myPhone.phoneNumber,
                 isFront: myPhone.front,
               ));
             }
 
-            loginMemberInfo.memberUid = postReissueResponseBody.memberUid;
-            loginMemberInfo.nickName = postReissueResponseBody.nickName;
-            loginMemberInfo.roleList = postReissueResponseBody.roleList;
-            loginMemberInfo.tokenType = postReissueResponseBody.tokenType;
-            loginMemberInfo.accessToken = postReissueResponseBody.accessToken;
-            loginMemberInfo.accessTokenExpireWhen =
+            authInfo.memberUid = postReissueResponseBody.memberUid;
+            authInfo.nickName = postReissueResponseBody.nickName;
+            authInfo.roleList = postReissueResponseBody.roleList;
+            authInfo.tokenType = postReissueResponseBody.tokenType;
+            authInfo.accessToken = postReissueResponseBody.accessToken;
+            authInfo.accessTokenExpireWhen =
                 postReissueResponseBody.accessTokenExpireWhen;
-            loginMemberInfo.refreshToken = postReissueResponseBody.refreshToken;
-            loginMemberInfo.refreshTokenExpireWhen =
+            authInfo.refreshToken = postReissueResponseBody.refreshToken;
+            authInfo.refreshTokenExpireWhen =
                 postReissueResponseBody.refreshTokenExpireWhen;
-            loginMemberInfo.myOAuth2List = myOAuth2ObjectList;
-            loginMemberInfo.myProfileList = myProfileList;
-            loginMemberInfo.myEmailList = myEmailList;
-            loginMemberInfo.myPhoneNumberList = myPhoneNumberList;
-            loginMemberInfo.authPasswordIsNull =
+            authInfo.myOAuth2List = myOAuth2ObjectList;
+            authInfo.myProfileList = myProfileList;
+            authInfo.myEmailList = myEmailList;
+            authInfo.myPhoneNumberList = myPhoneNumberList;
+            authInfo.authPasswordIsNull =
                 postReissueResponseBody.authPasswordIsNull;
 
-            spw_auth_member_info.SharedPreferenceWrapper.set(
-                value: loginMemberInfo);
+            spw_auth_info.SharedPreferenceWrapper.set(
+                value: authInfo);
 
             initLogicComplete = true;
             _onApplicationInitLogicComplete();
@@ -496,7 +496,7 @@ class MainBusiness {
                         ));
 
                 // login_user_info SSW 비우기 (= 로그아웃 처리)
-                spw_auth_member_info.SharedPreferenceWrapper.set(value: null);
+                spw_auth_info.SharedPreferenceWrapper.set(value: null);
                 initLogicComplete = true;
                 _onApplicationInitLogicComplete();
                 return;
@@ -543,7 +543,7 @@ class MainBusiness {
                     // 리플래시 토큰이 사용 불가이므로 로그아웃 처리
 
                     // login_user_info SSW 비우기 (= 로그아웃 처리)
-                    spw_auth_member_info.SharedPreferenceWrapper.set(
+                    spw_auth_info.SharedPreferenceWrapper.set(
                         value: null);
                     initLogicComplete = true;
                     _onApplicationInitLogicComplete();
@@ -579,7 +579,7 @@ class MainBusiness {
                     ));
 
             // login_user_info SSW 비우기 (= 로그아웃 처리)
-            spw_auth_member_info.SharedPreferenceWrapper.set(value: null);
+            spw_auth_info.SharedPreferenceWrapper.set(value: null);
             initLogicComplete = true;
             _onApplicationInitLogicComplete();
             return;

@@ -15,8 +15,8 @@ import 'package:flutter_template/global_functions/gf_my_functions.dart'
     as gf_my_functions;
 import 'package:flutter_template/repositories/network/apis/api_main_server.dart'
     as api_main_server;
-import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
-    as spw_auth_member_info;
+import 'package:flutter_template/repositories/spws/spw_auth_info.dart'
+    as spw_auth_info;
 import 'package:flutter_template/dialogs/all/all_dialog_info/main_widget.dart'
     as all_dialog_info;
 import 'package:flutter_template/dialogs/all/all_dialog_loading_spinner/main_widget.dart'
@@ -151,10 +151,10 @@ class MainBusiness {
     );
 
     // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
-    spw_auth_member_info.SharedPreferenceWrapperVo? nowLoginMemberInfo =
+    spw_auth_info.SharedPreferenceWrapperVo? nowauthInfo =
         gf_my_functions.getNowVerifiedMemberInfo();
 
-    if (nowLoginMemberInfo == null) {
+    if (nowauthInfo == null) {
       // 비 로그인 상태
       hoveringListTileViewModel.add(
         HoveringListTileViewModel(
@@ -185,19 +185,19 @@ class MainBusiness {
                       )).then((outputVo) {});
 
               // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
-              spw_auth_member_info.SharedPreferenceWrapperVo? loginMemberInfo =
+              spw_auth_info.SharedPreferenceWrapperVo? authInfo =
                   gf_my_functions.getNowVerifiedMemberInfo();
 
-              if (loginMemberInfo != null) {
+              if (authInfo != null) {
                 // 서버 Logout API 실행
                 await api_main_server.postService1TkV1AuthLogoutAsync(
                     requestHeaderVo: api_main_server
                         .PostService1TkV1AuthLogoutAsyncRequestHeaderVo(
                             authorization:
-                                "${loginMemberInfo.tokenType} ${loginMemberInfo.accessToken}"));
+                                "${authInfo.tokenType} ${authInfo.accessToken}"));
 
                 // login_user_info SPW 비우기
-                spw_auth_member_info.SharedPreferenceWrapper.set(value: null);
+                spw_auth_info.SharedPreferenceWrapper.set(value: null);
               }
 
               allDialogLoadingSpinnerStateGk.currentState?.mainBusiness
@@ -230,10 +230,10 @@ class MainBusiness {
                       )).then((outputVo) {});
 
               // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
-              spw_auth_member_info.SharedPreferenceWrapperVo? loginMemberInfo =
+              spw_auth_info.SharedPreferenceWrapperVo? authInfo =
                   gf_my_functions.getNowVerifiedMemberInfo();
 
-              if (loginMemberInfo == null) {
+              if (authInfo == null) {
                 hoveringTileViewModelList = getNewItemWidgetList();
                 hoveringTileViewModelListAreaGk.currentState?.refreshUi();
 
@@ -243,13 +243,13 @@ class MainBusiness {
                 // 리플레시 토큰 만료 여부 확인
                 bool isRefreshTokenExpired =
                     DateFormat('yyyy-MM-dd HH:mm:ss.SSS')
-                        .parse(loginMemberInfo.refreshTokenExpireWhen)
+                        .parse(authInfo.refreshTokenExpireWhen)
                         .isBefore(DateTime.now());
 
                 if (isRefreshTokenExpired) {
                   // 리플래시 토큰이 사용 불가이므로 로그아웃 처리
                   // login_user_info SPW 비우기
-                  spw_auth_member_info.SharedPreferenceWrapper.set(value: null);
+                  spw_auth_info.SharedPreferenceWrapper.set(value: null);
                   allDialogLoadingSpinnerStateGk.currentState?.mainBusiness
                       .closeDialog();
 
@@ -264,11 +264,11 @@ class MainBusiness {
                           requestHeaderVo: api_main_server
                               .PostService1TkV1AuthReissueAsyncRequestHeaderVo(
                                   authorization:
-                                      "${loginMemberInfo.tokenType} ${loginMemberInfo.accessToken}"),
+                                      "${authInfo.tokenType} ${authInfo.accessToken}"),
                           requestBodyVo: api_main_server
                               .PostService1TkV1AuthReissueAsyncRequestBodyVo(
                                   refreshToken:
-                                      "${loginMemberInfo.tokenType} ${loginMemberInfo.refreshToken}"));
+                                      "${authInfo.tokenType} ${authInfo.refreshToken}"));
 
                   // 네트워크 요청 결과 처리
                   if (postAutoLoginOutputVo.dioException == null) {
@@ -286,13 +286,13 @@ class MainBusiness {
 
                       // SPW 정보 갱신
                       List<
-                              spw_auth_member_info
+                              spw_auth_info
                               .SharedPreferenceWrapperVoOAuth2Info>
                           myOAuth2ObjectList = [];
                       for (api_main_server
                           .PostReissueAsyncResponseBodyVoOAuth2Info myOAuth2
                           in postReissueResponseBody.myOAuth2List) {
-                        myOAuth2ObjectList.add(spw_auth_member_info
+                        myOAuth2ObjectList.add(spw_auth_info
                             .SharedPreferenceWrapperVoOAuth2Info(
                           myOAuth2.uid,
                           myOAuth2.oauth2TypeCode,
@@ -301,13 +301,13 @@ class MainBusiness {
                       }
 
                       List<
-                              spw_auth_member_info
+                              spw_auth_info
                               .SharedPreferenceWrapperVoProfileInfo>
                           myProfileList = [];
                       for (api_main_server
                           .PostReissueAsyncResponseBodyVoProfile myProfile
                           in postReissueResponseBody.myProfileList) {
-                        myProfileList.add(spw_auth_member_info
+                        myProfileList.add(spw_auth_info
                             .SharedPreferenceWrapperVoProfileInfo(
                           myProfile.uid,
                           myProfile.imageFullUrl,
@@ -316,12 +316,12 @@ class MainBusiness {
                       }
 
                       List<
-                          spw_auth_member_info
+                          spw_auth_info
                           .SharedPreferenceWrapperVoEmailInfo> myEmailList = [];
                       for (api_main_server
                           .PostReissueAsyncResponseBodyVoEmail myEmail
                           in postReissueResponseBody.myEmailList) {
-                        myEmailList.add(spw_auth_member_info
+                        myEmailList.add(spw_auth_info
                             .SharedPreferenceWrapperVoEmailInfo(
                           uid: myEmail.uid,
                           emailAddress: myEmail.emailAddress,
@@ -330,13 +330,13 @@ class MainBusiness {
                       }
 
                       List<
-                              spw_auth_member_info
+                              spw_auth_info
                               .SharedPreferenceWrapperVoPhoneInfo>
                           myPhoneNumberList = [];
                       for (api_main_server
                           .PostReissueAsyncResponseBodyVoPhone myPhone
                           in postReissueResponseBody.myPhoneNumberList) {
-                        myPhoneNumberList.add(spw_auth_member_info
+                        myPhoneNumberList.add(spw_auth_info
                             .SharedPreferenceWrapperVoPhoneInfo(
                           uid: myPhone.uid,
                           phoneNumber: myPhone.phoneNumber,
@@ -344,31 +344,31 @@ class MainBusiness {
                         ));
                       }
 
-                      loginMemberInfo.memberUid =
+                      authInfo.memberUid =
                           postReissueResponseBody.memberUid;
-                      loginMemberInfo.nickName =
+                      authInfo.nickName =
                           postReissueResponseBody.nickName;
-                      loginMemberInfo.roleList =
+                      authInfo.roleList =
                           postReissueResponseBody.roleList;
-                      loginMemberInfo.tokenType =
+                      authInfo.tokenType =
                           postReissueResponseBody.tokenType;
-                      loginMemberInfo.accessToken =
+                      authInfo.accessToken =
                           postReissueResponseBody.accessToken;
-                      loginMemberInfo.accessTokenExpireWhen =
+                      authInfo.accessTokenExpireWhen =
                           postReissueResponseBody.accessTokenExpireWhen;
-                      loginMemberInfo.refreshToken =
+                      authInfo.refreshToken =
                           postReissueResponseBody.refreshToken;
-                      loginMemberInfo.refreshTokenExpireWhen =
+                      authInfo.refreshTokenExpireWhen =
                           postReissueResponseBody.refreshTokenExpireWhen;
-                      loginMemberInfo.myOAuth2List = myOAuth2ObjectList;
-                      loginMemberInfo.myProfileList = myProfileList;
-                      loginMemberInfo.myEmailList = myEmailList;
-                      loginMemberInfo.myPhoneNumberList = myPhoneNumberList;
-                      loginMemberInfo.authPasswordIsNull =
+                      authInfo.myOAuth2List = myOAuth2ObjectList;
+                      authInfo.myProfileList = myProfileList;
+                      authInfo.myEmailList = myEmailList;
+                      authInfo.myPhoneNumberList = myPhoneNumberList;
+                      authInfo.authPasswordIsNull =
                           postReissueResponseBody.authPasswordIsNull;
 
-                      spw_auth_member_info.SharedPreferenceWrapper.set(
-                          value: loginMemberInfo);
+                      spw_auth_info.SharedPreferenceWrapper.set(
+                          value: authInfo);
 
                       allDialogLoadingSpinnerStateGk.currentState?.mainBusiness
                           .closeDialog();
@@ -424,7 +424,7 @@ class MainBusiness {
                             {
                               // 리플래시 토큰이 사용 불가이므로 로그아웃 처리
                               // login_user_info SPW 비우기
-                              spw_auth_member_info.SharedPreferenceWrapper.set(
+                              spw_auth_info.SharedPreferenceWrapper.set(
                                   value: null);
 
                               hoveringTileViewModelList =
@@ -488,20 +488,20 @@ class MainBusiness {
   // (멤버 정보 반환)
   MemberInfoViewModel? getMemberInfoVo() {
     // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
-    spw_auth_member_info.SharedPreferenceWrapperVo? loginMemberInfo =
+    spw_auth_info.SharedPreferenceWrapperVo? authInfo =
         gf_my_functions.getNowVerifiedMemberInfo();
 
-    if (loginMemberInfo == null) {
+    if (authInfo == null) {
       return null;
     } else {
       return MemberInfoViewModel(
-        memberUid: loginMemberInfo.memberUid.toString(),
-        tokenType: loginMemberInfo.tokenType.toString(),
-        accessToken: loginMemberInfo.accessToken.toString(),
-        accessTokenExpireWhen: loginMemberInfo.accessTokenExpireWhen.toString(),
-        refreshToken: loginMemberInfo.refreshToken.toString(),
+        memberUid: authInfo.memberUid.toString(),
+        tokenType: authInfo.tokenType.toString(),
+        accessToken: authInfo.accessToken.toString(),
+        accessTokenExpireWhen: authInfo.accessTokenExpireWhen.toString(),
+        refreshToken: authInfo.refreshToken.toString(),
         refreshTokenExpireWhen:
-            loginMemberInfo.refreshTokenExpireWhen.toString(),
+            authInfo.refreshTokenExpireWhen.toString(),
       );
     }
   }

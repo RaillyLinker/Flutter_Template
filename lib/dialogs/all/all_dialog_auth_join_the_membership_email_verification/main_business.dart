@@ -14,8 +14,8 @@ import 'package:flutter_template/dialogs/all/all_dialog_info/main_widget.dart'
     as all_dialog_info;
 import 'package:flutter_template/dialogs/all/all_dialog_loading_spinner/main_widget.dart'
     as all_dialog_loading_spinner;
-import 'package:flutter_template/repositories/spws/spw_auth_member_info.dart'
-    as spw_auth_member_info;
+import 'package:flutter_template/repositories/spws/spw_auth_info.dart'
+    as spw_auth_info;
 import 'package:flutter_template/global_functions/gf_my_functions.dart'
     as gf_my_functions;
 
@@ -46,10 +46,10 @@ class MainBusiness {
     // !!!onFocusGainedAsync 로직 작성!!!
 
     // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
-    final spw_auth_member_info.SharedPreferenceWrapperVo? nowLoginMemberInfo =
+    final spw_auth_info.SharedPreferenceWrapperVo? nowauthInfo =
         gf_my_functions.getNowVerifiedMemberInfo();
 
-    if (nowLoginMemberInfo != null) {
+    if (nowauthInfo != null) {
       // 로그인 상태라면 닫기
       mainContext.pop();
       return;
