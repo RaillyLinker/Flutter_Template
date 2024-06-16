@@ -23,8 +23,6 @@ import 'package:flutter_template/dialogs/all/all_dialog_loading_spinner/main_wid
     as all_dialog_loading_spinner;
 import 'package:flutter_template/pages/all/all_page_login/main_widget.dart'
     as all_page_login;
-import 'package:flutter_template/pages/all/all_page_member_info/main_widget.dart'
-    as all_page_member_info;
 import 'package:flutter_template/pages/all/all_page_authorization_test_sample_list/main_widget.dart'
     as all_page_authorization_test_sample_list;
 
@@ -397,16 +395,6 @@ class MainBusiness {
                   }
                 }
               }
-            }),
-      );
-
-      hoveringListTileViewModel.add(
-        HoveringListTileViewModel(
-            itemTitle: "회원 정보 페이지로 이동",
-            itemDescription: "회원 정보 페이지로 이동합니다.",
-            onItemClicked: () {
-              // 회원정보 페이지로 이동
-              mainContext.pushNamed(all_page_member_info.pageName);
             }),
       );
     }

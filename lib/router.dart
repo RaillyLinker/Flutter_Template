@@ -36,10 +36,6 @@ import 'package:flutter_template/pages/all/all_page_join_the_membership_email_ve
     as all_page_join_the_membership_email_verification;
 import 'package:flutter_template/pages/all/all_page_login/main_widget.dart'
     as all_page_login;
-import 'package:flutter_template/pages/all/all_page_member_info/main_widget.dart'
-    as all_page_member_info;
-import 'package:flutter_template/pages/all/all_page_membership_withdrawal/main_widget.dart'
-    as all_page_membership_withdrawal;
 import 'package:flutter_template/pages/all/all_page_network_request_sample_list/main_widget.dart'
     as all_page_network_request_sample_list;
 import 'package:flutter_template/pages/all/all_page_page_and_router_sample_list/main_widget.dart'
@@ -387,33 +383,6 @@ GoRouter getRouter() {
             transitionsBuilder: all_page_login.pageTransitionsBuilder);
       },
       routes: subRouteListAuthSampleAuthLogin,
-    ),
-  );
-
-  subRouteListAuthSample.add(
-    GoRoute(
-      path: "member-info",
-      name: all_page_member_info.pageName,
-      pageBuilder: (c, s) {
-        return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_member_info.MainWidget(goRouterState: s),
-            transitionsBuilder: all_page_member_info.pageTransitionsBuilder);
-      },
-    ),
-  );
-
-  subRouteListAuthSample.add(
-    GoRoute(
-      path: "membership-withdrawal",
-      name: all_page_membership_withdrawal.pageName,
-      pageBuilder: (c, s) {
-        return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_membership_withdrawal.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_membership_withdrawal.pageTransitionsBuilder);
-      },
     ),
   );
 
