@@ -393,50 +393,55 @@ class MainBusiness {
                   var networkResponseObjectOk =
                       response.networkResponseObjectOk!;
 
-                  if (networkResponseObjectOk.responseStatusCode == 200) {
-                    // 정상 응답
+                  switch (networkResponseObjectOk.responseStatusCode) {
+                    case 200:
+                      {
+                        // 정상 응답
+                        // 응답 body
+                        var responseBody = networkResponseObjectOk.responseBody
+                            as api_main_server
+                            .PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBodyVo;
 
-                    // 응답 body
-                    var responseBody = networkResponseObjectOk.responseBody
-                        as api_main_server
-                        .PostService1TkV1RequestTestPostRequestMultipartFormDataJsonAsyncResponseBodyVo;
-
-                    // 확인 다이얼로그 호출
-                    final GlobalKey<all_dialog_info.MainWidgetState>
-                        allDialogInfoStateGk =
-                        GlobalKey<all_dialog_info.MainWidgetState>();
-                    if (!context.mounted) return;
-                    showDialog(
-                        barrierDismissible: true,
-                        context: context,
-                        builder: (context) => all_dialog_info.MainWidget(
-                              key: allDialogInfoStateGk,
-                              inputVo: all_dialog_info.InputVo(
-                                dialogTitle: "응답 결과",
-                                dialogContent:
-                                    "Http Status Code : ${networkResponseObjectOk.responseStatusCode}\n\nResponse Body:\n${responseBody.toString()}",
-                                checkBtnTitle: "확인",
-                                onDialogCreated: () {},
-                              ),
-                            )).then((outputVo) {});
-                  } else {
-                    // 비정상 응답
-                    final GlobalKey<all_dialog_info.MainWidgetState>
-                        allDialogInfoStateGk =
-                        GlobalKey<all_dialog_info.MainWidgetState>();
-                    if (!context.mounted) return;
-                    showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) => all_dialog_info.MainWidget(
-                              key: allDialogInfoStateGk,
-                              inputVo: all_dialog_info.InputVo(
-                                dialogTitle: "네트워크 에러",
-                                dialogContent: "네트워크 상태가 불안정합니다.\n다시 시도해주세요.",
-                                checkBtnTitle: "확인",
-                                onDialogCreated: () {},
-                              ),
-                            ));
+                        // 확인 다이얼로그 호출
+                        final GlobalKey<all_dialog_info.MainWidgetState>
+                            allDialogInfoStateGk =
+                            GlobalKey<all_dialog_info.MainWidgetState>();
+                        if (!context.mounted) return;
+                        showDialog(
+                            barrierDismissible: true,
+                            context: context,
+                            builder: (context) => all_dialog_info.MainWidget(
+                                  key: allDialogInfoStateGk,
+                                  inputVo: all_dialog_info.InputVo(
+                                    dialogTitle: "응답 결과",
+                                    dialogContent:
+                                        "Http Status Code : ${networkResponseObjectOk.responseStatusCode}\n\nResponse Body:\n${responseBody.toString()}",
+                                    checkBtnTitle: "확인",
+                                    onDialogCreated: () {},
+                                  ),
+                                )).then((outputVo) {});
+                      }
+                    default:
+                      {
+                        // 비정상 응답
+                        final GlobalKey<all_dialog_info.MainWidgetState>
+                            allDialogInfoStateGk =
+                            GlobalKey<all_dialog_info.MainWidgetState>();
+                        if (!context.mounted) return;
+                        showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) => all_dialog_info.MainWidget(
+                                  key: allDialogInfoStateGk,
+                                  inputVo: all_dialog_info.InputVo(
+                                    dialogTitle: "네트워크 에러",
+                                    dialogContent:
+                                        "네트워크 상태가 불안정합니다.\n다시 시도해주세요.",
+                                    checkBtnTitle: "확인",
+                                    onDialogCreated: () {},
+                                  ),
+                                ));
+                      }
                   }
                 } else {
                   // Dio 네트워크 에러
