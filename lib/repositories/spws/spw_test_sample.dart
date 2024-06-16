@@ -45,15 +45,18 @@ class SharedPreferenceWrapper {
       try {
         // 값 복호화
         String decryptedJsonString = gf_crypto.aes256Decrypt(
-            cipherText: savedJsonString,
-            secretKey: _secretKey,
-            secretIv: _secretIv);
+          cipherText: savedJsonString,
+          secretKey: _secretKey,
+          secretIv: _secretIv,
+        );
 
         // !!! Map 을 Object 로 변경!!!
         // map 키는 Object 의 변수명과 동일
         Map<String, dynamic> map = jsonDecode(decryptedJsonString);
         var resultObject = SharedPreferenceWrapperVo(
-            sampleInt: map["sampleInt"], sampleString: map["sampleString"]);
+          sampleInt: map["sampleInt"],
+          sampleString: map["sampleString"],
+        );
         _semaphore.release();
         return resultObject;
       } catch (e) {
@@ -84,14 +87,15 @@ class SharedPreferenceWrapper {
       // map 키는 Object 의 변수명과 동일하게 설정
       Map<String, dynamic> map = {
         "sampleInt": value.sampleInt,
-        "sampleString": value.sampleString
+        "sampleString": value.sampleString,
       };
 
       // 값 암호화
       String encryptedJsonString = gf_crypto.aes256Encrypt(
-          plainText: jsonEncode(map),
-          secretKey: _secretKey,
-          secretIv: _secretIv);
+        plainText: jsonEncode(map),
+        secretKey: _secretKey,
+        secretIv: _secretIv,
+      );
 
       // 키에 암호화된 값을 저장
       gd_const.sharedPreferences

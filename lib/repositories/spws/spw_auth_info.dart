@@ -45,9 +45,10 @@ class SharedPreferenceWrapper {
       try {
         // 값 복호화
         String decryptedJsonString = gf_crypto.aes256Decrypt(
-            cipherText: savedJsonString,
-            secretKey: _secretKey,
-            secretIv: _secretIv);
+          cipherText: savedJsonString,
+          secretKey: _secretKey,
+          secretIv: _secretIv,
+        );
 
         // !!! Map 을 Object 로 변경!!!
         // map 키는 Object 의 변수명과 동일
@@ -101,9 +102,10 @@ class SharedPreferenceWrapper {
 
       // 값 암호화
       String encryptedJsonString = gf_crypto.aes256Encrypt(
-          plainText: jsonEncode(map),
-          secretKey: _secretKey,
-          secretIv: _secretIv);
+        plainText: jsonEncode(map),
+        secretKey: _secretKey,
+        secretIv: _secretIv,
+      );
 
       // 키에 암호화된 값을 저장
       gd_const.sharedPreferences
@@ -135,12 +137,12 @@ class SharedPreferenceWrapperVo {
   // 액세스 토큰 (ex : "aaaaaaaaaa111122223333")
   String accessToken;
 
-  // 액세스 토큰 만료일시 (ex : "2023-01-02 11:11:11.111")
+  // 액세스 토큰 만료일시 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z, ex : "2024_05_02_T_15_14_49_552_KST")
   String accessTokenExpireWhen;
 
   // 리플레시 토큰 (ex : "rrrrrrrrrr111122223333")
   String refreshToken;
 
-  // 리플레시 토큰 만료일시 (ex : "2023-01-02 11:11:11.111")
+  // 리플레시 토큰 만료일시 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z, ex : "2024_05_02_T_15_14_49_552_KST")
   String refreshTokenExpireWhen;
 }
