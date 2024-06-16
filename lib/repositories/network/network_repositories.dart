@@ -90,7 +90,7 @@ void setDioObjects() {
           // 미인증 응답 신호 발생
 
           // (Authorization JWT 토큰 관련 처리)
-          // 본 인터셉터를 통과한 API 는 401 코드가 발생했을 때, 재로그인 유도 처리만 하면 되도록 처리 하였습니다.
+          // 본 인터셉터를 통과한 API 는 401 코드가 발생했을 때, 로그인이 필요하다는 처리만 하면 되도록 처리 하였습니다.
 
           // 응답 헤더 (ex : {"Authorization" : "Bearer 12345"})
           Map<String, dynamic> responseHeaderMap = response.headers.map;

@@ -8,7 +8,6 @@
     all_page_change_password
     all_page_find_password_with_email
     all_page_authorization_test_sample_list
-    api_main_server.dart - 버전 체크 api 부터
     gf_my_functions.dart
     app_page_init_splash
     all_page_image_loading_sample

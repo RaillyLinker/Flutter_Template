@@ -1236,67 +1236,14 @@ Future<
       // Object 타입이 넘어오면 Map<String, dynamic> 으로 받고,
       // Object List 타입이 넘어오면 List<Map<String, dynamic>> 으로 받아서 처리
 
-      var oAuth2List =
-          List<Map<String, dynamic>>.from(responseBodyMap["myOAuth2List"]);
-      List<PostSignInWithPasswordAsyncResponseBodyVoOAuth2Info>
-          oAuth2ObjectList = [];
-      for (Map<String, dynamic> oAuth2 in oAuth2List) {
-        oAuth2ObjectList.add(
-            PostSignInWithPasswordAsyncResponseBodyVoOAuth2Info(
-                uid: oAuth2["uid"],
-                oauth2TypeCode: oAuth2["oauth2TypeCode"],
-                oauth2Id: oAuth2["oauth2Id"]));
-      }
-
-      var myProfileList =
-          List<Map<String, dynamic>>.from(responseBodyMap["myProfileList"]);
-      List<PostSignInWithPasswordAsyncResponseBodyVoProfile>
-          myProfileObjectList = [];
-      for (Map<String, dynamic> profile in myProfileList) {
-        myProfileObjectList.add(
-            PostSignInWithPasswordAsyncResponseBodyVoProfile(
-                uid: profile["uid"],
-                imageFullUrl: profile["imageFullUrl"],
-                front: profile["front"]));
-      }
-
-      var myEmailList =
-          List<Map<String, dynamic>>.from(responseBodyMap["myEmailList"]);
-      List<PostSignInWithPasswordAsyncResponseBodyVoEmail> myEmailObjectList =
-          [];
-      for (Map<String, dynamic> profile in myEmailList) {
-        myEmailObjectList.add(PostSignInWithPasswordAsyncResponseBodyVoEmail(
-            uid: profile["uid"],
-            emailAddress: profile["emailAddress"],
-            front: profile["front"]));
-      }
-
-      var myPhoneNumberList =
-          List<Map<String, dynamic>>.from(responseBodyMap["myPhoneNumberList"]);
-      List<PostSignInWithPasswordAsyncResponseBodyVoPhone>
-          myPhoneNumberObjectList = [];
-      for (Map<String, dynamic> profile in myPhoneNumberList) {
-        myPhoneNumberObjectList.add(
-            PostSignInWithPasswordAsyncResponseBodyVoPhone(
-                uid: profile["uid"],
-                phoneNumber: profile["phoneNumber"],
-                front: profile["front"]));
-      }
-
       responseBody = PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVo(
-          memberUid: responseBodyMap["memberUid"],
-          nickName: responseBodyMap["nickName"],
-          roleList: List<String>.from(responseBodyMap["roleList"]),
-          tokenType: responseBodyMap["tokenType"],
-          accessToken: responseBodyMap["accessToken"],
-          refreshToken: responseBodyMap["refreshToken"],
-          accessTokenExpireWhen: responseBodyMap["accessTokenExpireWhen"],
-          refreshTokenExpireWhen: responseBodyMap["refreshTokenExpireWhen"],
-          myOAuth2List: oAuth2ObjectList,
-          myProfileList: myProfileObjectList,
-          myEmailList: myEmailObjectList,
-          myPhoneNumberList: myPhoneNumberObjectList,
-          authPasswordIsNull: responseBodyMap["authPasswordIsNull"]);
+        memberUid: responseBodyMap["memberUid"],
+        tokenType: responseBodyMap["tokenType"],
+        accessToken: responseBodyMap["accessToken"],
+        refreshToken: responseBodyMap["refreshToken"],
+        accessTokenExpireWhen: responseBodyMap["accessTokenExpireWhen"],
+        refreshTokenExpireWhen: responseBodyMap["refreshTokenExpireWhen"],
+      );
     }
 
     return gc_template_classes.NetworkResponseObject(
@@ -1314,8 +1261,11 @@ Future<
 }
 
 class PostService1TkV1AuthLoginWithPasswordAsyncRequestBodyVo {
-  PostService1TkV1AuthLoginWithPasswordAsyncRequestBodyVo(
-      {required this.loginTypeCode, required this.id, required this.password});
+  PostService1TkV1AuthLoginWithPasswordAsyncRequestBodyVo({
+    required this.loginTypeCode,
+    required this.id,
+    required this.password,
+  });
 
   int loginTypeCode; // 로그인 타입 (0 : 닉네임, 1 : 이메일, 2 : 전화번호)
   String id; // 아이디 (0 : 홍길동, 1 : test@gmail.com, 2 : 82)000-0000-0000)
@@ -1326,85 +1276,29 @@ class PostService1TkV1AuthLoginWithPasswordAsyncResponseHeaderVo {
   PostService1TkV1AuthLoginWithPasswordAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
-  // (api-result-code)
-  // 0 : 정상 동작
-  // 1 : 가입 되지 않은 회원
-  // 2 : 패스워드 불일치
+  // (204 api-result-code)
+  // 1 : 입력한 id 로 가입된 회원 정보가 없습니다.
+  // 2 : 입력한 password 가 일치하지 않습니다.
   String? apiResultCode;
 }
 
 class PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVo {
-  PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVo(
-      {required this.memberUid,
-      required this.nickName,
-      required this.roleList,
-      required this.tokenType,
-      required this.accessToken,
-      required this.refreshToken,
-      required this.accessTokenExpireWhen,
-      required this.refreshTokenExpireWhen,
-      required this.myOAuth2List,
-      required this.myProfileList,
-      required this.myEmailList,
-      required this.myPhoneNumberList,
-      required this.authPasswordIsNull});
+  PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVo({
+    required this.memberUid,
+    required this.tokenType,
+    required this.accessToken,
+    required this.refreshToken,
+    required this.accessTokenExpireWhen,
+    required this.refreshTokenExpireWhen,
+  });
 
   int memberUid; // 멤버 고유값
-  String nickName; // 닉네임
-  List<String> roleList; // 권한 리스트 (관리자 : ROLE_ADMIN, 개발자 : ROLE_DEVELOPER)
   String tokenType; // 인증 토큰 타입 (ex : Bearer)
   String accessToken; // 엑세스 토큰
   String refreshToken; // 리플레시 토큰
-  String accessTokenExpireWhen; // 엑세스 토큰 만료 시간 (yyyy-MM-dd HH:mm:ss.SSS)
-  String refreshTokenExpireWhen; // 리플레시 토큰 만료 시간 (yyyy-MM-dd HH:mm:ss.SSS)
-  List<PostSignInWithPasswordAsyncResponseBodyVoOAuth2Info>
-      myOAuth2List; // 내가 등록한 OAuth2 정보 리스트
-  List<PostSignInWithPasswordAsyncResponseBodyVoProfile>
-      myProfileList; // 내가 등록한 Profile 정보 리스트
-  List<PostSignInWithPasswordAsyncResponseBodyVoEmail>
-      myEmailList; // 내가 등록한 이메일 정보 리스트
-  List<PostSignInWithPasswordAsyncResponseBodyVoPhone>
-      myPhoneNumberList; // 내가 등록한 전화번호 정보 리스트
-  bool
-      authPasswordIsNull; // 계정 로그인 비밀번호 설정 Null 여부 (OAuth2 만으로 회원가입한 경우는 비밀번호가 없으므로 true)
-}
-
-class PostSignInWithPasswordAsyncResponseBodyVoOAuth2Info {
-  PostSignInWithPasswordAsyncResponseBodyVoOAuth2Info(
-      {required this.uid,
-      required this.oauth2TypeCode,
-      required this.oauth2Id});
-
-  int uid; // 행 고유값
-  int oauth2TypeCode; // OAuth2 (1 : Google, 2 : Naver, 3 : Kakao, 4 : Apple)
-  String oauth2Id; // oAuth2 고유값 아이디
-}
-
-class PostSignInWithPasswordAsyncResponseBodyVoProfile {
-  PostSignInWithPasswordAsyncResponseBodyVoProfile(
-      {required this.uid, required this.imageFullUrl, required this.front});
-
-  int uid; // 행 고유값
-  String imageFullUrl; // 프로필 이미지 Full URL
-  bool front; // 표 프로필 여부
-}
-
-class PostSignInWithPasswordAsyncResponseBodyVoEmail {
-  PostSignInWithPasswordAsyncResponseBodyVoEmail(
-      {required this.uid, required this.emailAddress, required this.front});
-
-  int uid; // 행 고유값
-  String emailAddress; // 이메일 주소
-  bool front; // 대표 이메일 여부
-}
-
-class PostSignInWithPasswordAsyncResponseBodyVoPhone {
-  PostSignInWithPasswordAsyncResponseBodyVoPhone(
-      {required this.uid, required this.phoneNumber, required this.front});
-
-  int uid; // 행 고유값
-  String phoneNumber; // 전화번호
-  bool front; // 대표 전화번호 여부
+  String accessTokenExpireWhen; // 엑세스 토큰 만료 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
+  String
+      refreshTokenExpireWhen; // 리플레시 토큰 만료 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
 }
 
 ////
@@ -1475,8 +1369,12 @@ class PostService1TkV1AuthLogoutAsyncResponseHeaderVo {
   PostService1TkV1AuthLogoutAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
-  // (api-result-code)
-  // 0 : 정상 동작
+  // (401 api-result-code)
+  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
+  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
+  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
+  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
+  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
   String? apiResultCode;
 }
 
@@ -1555,8 +1453,12 @@ class DeleteService1TkV1AuthAllAuthorizationTokenAsyncResponseHeaderVo {
   DeleteService1TkV1AuthAllAuthorizationTokenAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
-  // (api-result-code)
-  // 0 : 정상 동작
+  // (401 api-result-code)
+  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
+  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
+  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
+  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
+  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
   String? apiResultCode;
 }
 
@@ -1619,60 +1521,14 @@ Future<
       // Object 타입이 넘어오면 Map<String, dynamic> 으로 받고,
       // Object List 타입이 넘어오면 List<Map<String, dynamic>> 으로 받아서 처리
 
-      var oAuth2List =
-          List<Map<String, dynamic>>.from(responseBodyMap["myOAuth2List"]);
-      List<PostReissueAsyncResponseBodyVoOAuth2Info> oAuth2ObjectList = [];
-      for (Map<String, dynamic> oAuth2 in oAuth2List) {
-        oAuth2ObjectList.add(PostReissueAsyncResponseBodyVoOAuth2Info(
-            uid: oAuth2["uid"],
-            oauth2TypeCode: oAuth2["oauth2TypeCode"],
-            oauth2Id: oAuth2["oauth2Id"]));
-      }
-
-      var myProfileList =
-          List<Map<String, dynamic>>.from(responseBodyMap["myProfileList"]);
-      List<PostReissueAsyncResponseBodyVoProfile> myProfileObjectList = [];
-      for (Map<String, dynamic> profile in myProfileList) {
-        myProfileObjectList.add(PostReissueAsyncResponseBodyVoProfile(
-            uid: profile["uid"],
-            imageFullUrl: profile["imageFullUrl"],
-            front: profile["front"]));
-      }
-
-      var myEmailList =
-          List<Map<String, dynamic>>.from(responseBodyMap["myEmailList"]);
-      List<PostReissueAsyncResponseBodyVoEmail> myEmailObjectList = [];
-      for (Map<String, dynamic> profile in myEmailList) {
-        myEmailObjectList.add(PostReissueAsyncResponseBodyVoEmail(
-            uid: profile["uid"],
-            emailAddress: profile["emailAddress"],
-            front: profile["front"]));
-      }
-
-      var myPhoneNumberList =
-          List<Map<String, dynamic>>.from(responseBodyMap["myPhoneNumberList"]);
-      List<PostReissueAsyncResponseBodyVoPhone> myPhoneNumberObjectList = [];
-      for (Map<String, dynamic> profile in myPhoneNumberList) {
-        myPhoneNumberObjectList.add(PostReissueAsyncResponseBodyVoPhone(
-            uid: profile["uid"],
-            phoneNumber: profile["phoneNumber"],
-            front: profile["front"]));
-      }
-
       responseBody = PostService1TkV1AuthReissueAsyncResponseBodyVo(
-          memberUid: responseBodyMap["memberUid"],
-          nickName: responseBodyMap["nickName"],
-          roleList: List<String>.from(responseBodyMap["roleList"]),
-          tokenType: responseBodyMap["tokenType"],
-          accessToken: responseBodyMap["accessToken"],
-          refreshToken: responseBodyMap["refreshToken"],
-          accessTokenExpireWhen: responseBodyMap["accessTokenExpireWhen"],
-          refreshTokenExpireWhen: responseBodyMap["refreshTokenExpireWhen"],
-          myOAuth2List: oAuth2ObjectList,
-          myProfileList: myProfileObjectList,
-          myEmailList: myEmailObjectList,
-          myPhoneNumberList: myPhoneNumberObjectList,
-          authPasswordIsNull: responseBodyMap["authPasswordIsNull"]);
+        memberUid: responseBodyMap["memberUid"],
+        tokenType: responseBodyMap["tokenType"],
+        accessToken: responseBodyMap["accessToken"],
+        refreshToken: responseBodyMap["refreshToken"],
+        accessTokenExpireWhen: responseBodyMap["accessTokenExpireWhen"],
+        refreshTokenExpireWhen: responseBodyMap["refreshTokenExpireWhen"],
+      );
     }
 
     return gc_template_classes.NetworkResponseObject(
@@ -1707,86 +1563,29 @@ class PostService1TkV1AuthReissueAsyncResponseHeaderVo {
   PostService1TkV1AuthReissueAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
-  // (api-result-code)
-  // 0 : 정상 동작
-  // 1 : 탈퇴된 회원
-  // 2 : 유효하지 않은 리프레시 토큰
-  // 3 : 리프레시 토큰 만료
-  // 4 : 리프레시 토큰이 액세스 토큰과 매칭되지 않음
+  // (204 api-result-code)
+  // 1 : 올바르지 않은 Authorization Token 입니다.
+  // 2 : 유효하지 않은 Refresh Token 입니다.
+  // 3 : Refresh Token 이 만료되었습니다.
   String? apiResultCode;
 }
 
 class PostService1TkV1AuthReissueAsyncResponseBodyVo {
-  PostService1TkV1AuthReissueAsyncResponseBodyVo(
-      {required this.memberUid,
-      required this.nickName,
-      required this.roleList,
-      required this.tokenType,
-      required this.accessToken,
-      required this.refreshToken,
-      required this.accessTokenExpireWhen,
-      required this.refreshTokenExpireWhen,
-      required this.myOAuth2List,
-      required this.myProfileList,
-      required this.myEmailList,
-      required this.myPhoneNumberList,
-      required this.authPasswordIsNull});
+  PostService1TkV1AuthReissueAsyncResponseBodyVo({
+    required this.memberUid,
+    required this.tokenType,
+    required this.accessToken,
+    required this.refreshToken,
+    required this.accessTokenExpireWhen,
+    required this.refreshTokenExpireWhen,
+  });
 
   int memberUid; // 멤버 고유값
-  String nickName; // 닉네임
-  List<String> roleList; // 권한 리스트 (관리자 : ROLE_ADMIN, 개발자 : ROLE_DEVELOPER)
   String tokenType; // 인증 토큰 타입 (ex : Bearer)
   String accessToken; // 엑세스 토큰
   String refreshToken; // 리플레시 토큰
   String accessTokenExpireWhen; // 엑세스 토큰 만료 시간 (yyyy-MM-dd HH:mm:ss.SSS)
   String refreshTokenExpireWhen; // 리플레시 토큰 만료 시간 (yyyy-MM-dd HH:mm:ss.SSS)
-  List<PostReissueAsyncResponseBodyVoOAuth2Info>
-      myOAuth2List; // 내가 등록한 OAuth2 정보 리스트
-  List<PostReissueAsyncResponseBodyVoProfile>
-      myProfileList; // 내가 등록한 Profile 정보 리스트
-  List<PostReissueAsyncResponseBodyVoEmail> myEmailList; // 내가 등록한 이메일 정보 리스트
-  List<PostReissueAsyncResponseBodyVoPhone>
-      myPhoneNumberList; // 내가 등록한 전화번호 정보 리스트
-  bool
-      authPasswordIsNull; // 계정 로그인 비밀번호 설정 Null 여부 (OAuth2 만으로 회원가입한 경우는 비밀번호가 없으므로 true)
-}
-
-class PostReissueAsyncResponseBodyVoOAuth2Info {
-  PostReissueAsyncResponseBodyVoOAuth2Info(
-      {required this.uid,
-      required this.oauth2TypeCode,
-      required this.oauth2Id});
-
-  int uid; // 행 고유값
-  int oauth2TypeCode; // OAuth2 (1 : Google, 2 : Naver, 3 : Kakao, 4 : Apple)
-  String oauth2Id; // oAuth2 고유값 아이디
-}
-
-class PostReissueAsyncResponseBodyVoProfile {
-  PostReissueAsyncResponseBodyVoProfile(
-      {required this.uid, required this.imageFullUrl, required this.front});
-
-  int uid; // 행 고유값
-  String imageFullUrl; // 프로필 이미지 Full URL
-  bool front; // 표 프로필 여부
-}
-
-class PostReissueAsyncResponseBodyVoEmail {
-  PostReissueAsyncResponseBodyVoEmail(
-      {required this.uid, required this.emailAddress, required this.front});
-
-  int uid; // 행 고유값
-  String emailAddress; // 이메일 주소
-  bool front; // 대표 이메일 여부
-}
-
-class PostReissueAsyncResponseBodyVoPhone {
-  PostReissueAsyncResponseBodyVoPhone(
-      {required this.uid, required this.phoneNumber, required this.front});
-
-  int uid; // 행 고유값
-  String phoneNumber; // 전화번호
-  bool front; // 대표 전화번호 여부
 }
 
 ////
@@ -1817,26 +1616,17 @@ Future<
         options: Options(headers: requestHeaders));
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     GetService1TkV1AuthForNoLoggedInAsyncResponseHeaderVo responseHeader;
-    GetService1TkV1AuthForNoLoggedInAsyncResponseBodyVo? responseBody;
+    String? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
-    responseHeader = GetService1TkV1AuthForNoLoggedInAsyncResponseHeaderVo(
-        apiResultCode: (responseHeaderMap.containsKey("api-result-code"))
-            ? responseHeaderMap["api-result-code"][0]
-            : null);
+    responseHeader = GetService1TkV1AuthForNoLoggedInAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
-      Map<String, dynamic> responseBodyMap = response.data;
 
-      // responseBody 로 List 타입이 넘어오면 List<>.from 으로 받고,
-      // Object 타입이 넘어오면 Map<String, dynamic> 으로 받고,
-      // Object List 타입이 넘어오면 List<Map<String, dynamic>> 으로 받아서 처리
-
-      responseBody = GetService1TkV1AuthForNoLoggedInAsyncResponseBodyVo(
-          result: responseBodyMap["result"]);
+      responseBody = response.data;
     }
 
     return gc_template_classes.NetworkResponseObject(
@@ -1854,23 +1644,11 @@ Future<
 }
 
 class GetService1TkV1AuthForNoLoggedInAsyncResponseHeaderVo {
-  GetService1TkV1AuthForNoLoggedInAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String? apiResultCode;
+  GetService1TkV1AuthForNoLoggedInAsyncResponseHeaderVo();
 }
 
 class GetService1TkV1AuthForNoLoggedInAsyncResponseBodyVo {
-  GetService1TkV1AuthForNoLoggedInAsyncResponseBodyVo({required this.result});
-
-  String result;
-
-  @override
-  String toString() {
-    return "result : $result";
-  }
+  GetService1TkV1AuthForNoLoggedInAsyncResponseBodyVo();
 }
 
 ////
@@ -1910,7 +1688,7 @@ Future<
     Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     GetService1TkV1AuthForLoggedInAsyncResponseHeaderVo responseHeader;
-    GetService1TkV1AuthForLoggedInAsyncResponseBodyVo? responseBody;
+    String? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
     responseHeader = GetService1TkV1AuthForLoggedInAsyncResponseHeaderVo(
@@ -1919,14 +1697,8 @@ Future<
             : null);
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
-      Map<String, dynamic> responseBodyMap = response.data;
 
-      // responseBody 로 List 타입이 넘어오면 List<>.from 으로 받고,
-      // Object 타입이 넘어오면 Map<String, dynamic> 으로 받고,
-      // Object List 타입이 넘어오면 List<Map<String, dynamic>> 으로 받아서 처리
-
-      responseBody = GetService1TkV1AuthForLoggedInAsyncResponseBodyVo(
-          result: responseBodyMap["result"]);
+      responseBody = response.data;
     }
 
     return gc_template_classes.NetworkResponseObject(
@@ -1955,20 +1727,17 @@ class GetService1TkV1AuthForLoggedInAsyncResponseHeaderVo {
   GetService1TkV1AuthForLoggedInAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
-  // (api-result-code)
-  // 0 : 정상 동작
+  // (401 api-result-code)
+  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
+  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
+  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
+  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
+  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
   String? apiResultCode;
 }
 
 class GetService1TkV1AuthForLoggedInAsyncResponseBodyVo {
-  GetService1TkV1AuthForLoggedInAsyncResponseBodyVo({required this.result});
-
-  String result;
-
-  @override
-  String toString() {
-    return "result : $result";
-  }
+  GetService1TkV1AuthForLoggedInAsyncResponseBodyVo();
 }
 
 ////
@@ -2008,7 +1777,7 @@ Future<
     Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     GetService1TkV1AuthForDeveloperAsyncResponseHeaderVo responseHeader;
-    GetService1TkV1AuthForDeveloperAsyncResponseBodyVo? responseBody;
+    String? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
     responseHeader = GetService1TkV1AuthForDeveloperAsyncResponseHeaderVo(
@@ -2017,14 +1786,8 @@ Future<
             : null);
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
-      Map<String, dynamic> responseBodyMap = response.data;
 
-      // responseBody 로 List 타입이 넘어오면 List<>.from 으로 받고,
-      // Object 타입이 넘어오면 Map<String, dynamic> 으로 받고,
-      // Object List 타입이 넘어오면 List<Map<String, dynamic>> 으로 받아서 처리
-
-      responseBody = GetService1TkV1AuthForDeveloperAsyncResponseBodyVo(
-          result: responseBodyMap["result"]);
+      responseBody = response.data;
     }
 
     return gc_template_classes.NetworkResponseObject(
@@ -2053,20 +1816,17 @@ class GetService1TkV1AuthForDeveloperAsyncResponseHeaderVo {
   GetService1TkV1AuthForDeveloperAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
-  // (api-result-code)
-  // 0 : 정상 동작
+  // (401 api-result-code)
+  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
+  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
+  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
+  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
+  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
   String? apiResultCode;
 }
 
 class GetService1TkV1AuthForDeveloperAsyncResponseBodyVo {
-  GetService1TkV1AuthForDeveloperAsyncResponseBodyVo({required this.result});
-
-  String result;
-
-  @override
-  String toString() {
-    return "result : $result";
-  }
+  GetService1TkV1AuthForDeveloperAsyncResponseBodyVo();
 }
 
 ////
@@ -2106,7 +1866,7 @@ Future<
     Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     GetService1TkV1AuthForAdminAsyncResponseHeaderVo responseHeader;
-    GetService1TkV1AuthForAdminAsyncResponseBodyVo? responseBody;
+    String? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
     responseHeader = GetService1TkV1AuthForAdminAsyncResponseHeaderVo(
@@ -2115,14 +1875,8 @@ Future<
             : null);
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
-      Map<String, dynamic> responseBodyMap = response.data;
 
-      // responseBody 로 List 타입이 넘어오면 List<>.from 으로 받고,
-      // Object 타입이 넘어오면 Map<String, dynamic> 으로 받고,
-      // Object List 타입이 넘어오면 List<Map<String, dynamic>> 으로 받아서 처리
-
-      responseBody = GetService1TkV1AuthForAdminAsyncResponseBodyVo(
-          result: responseBodyMap["result"]);
+      responseBody = response.data;
     }
 
     return gc_template_classes.NetworkResponseObject(
@@ -2151,20 +1905,17 @@ class GetService1TkV1AuthForAdminAsyncResponseHeaderVo {
   GetService1TkV1AuthForAdminAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
-  // (api-result-code)
-  // 0 : 정상 동작
+  // (401 api-result-code)
+  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
+  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
+  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
+  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
+  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
   String? apiResultCode;
 }
 
 class GetService1TkV1AuthForAdminAsyncResponseBodyVo {
-  GetService1TkV1AuthForAdminAsyncResponseBodyVo({required this.result});
-
-  String result;
-
-  @override
-  String toString() {
-    return "result : $result";
-  }
+  GetService1TkV1AuthForAdminAsyncResponseBodyVo();
 }
 
 ////
@@ -2198,7 +1949,7 @@ Future<
         options: Options(headers: requestHeaders));
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseHeaderVo
         responseHeader;
@@ -2206,10 +1957,7 @@ Future<
 
     // !!!Response Map 을 Response Object 로 변경!!!
     responseHeader =
-        GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseHeaderVo(
-            apiResultCode: (responseHeaderMap.containsKey("api-result-code"))
-                ? responseHeaderMap["api-result-code"][0]
-                : null);
+        GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
       Map<String, dynamic> responseBodyMap = response.data;
@@ -2245,12 +1993,7 @@ class GetService1TkV1AuthNicknameDuplicateCheckAsyncRequestQueryVo {
 }
 
 class GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseHeaderVo {
-  GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String? apiResultCode;
+  GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseHeaderVo();
 }
 
 class GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseBodyVo {
@@ -2321,9 +2064,9 @@ Future<
 
       responseBody =
           PostService1TkV1AuthJoinTheMembershipEmailVerificationAsyncResponseBodyVo(
-              verificationUid: responseBodyMap["verificationUid"],
-              verificationExpireWhen:
-                  responseBodyMap["verificationExpireWhen"]);
+        verificationUid: responseBodyMap["verificationUid"],
+        verificationExpireWhen: responseBodyMap["verificationExpireWhen"],
+      );
     }
 
     return gc_template_classes.NetworkResponseObject(
@@ -2351,18 +2094,19 @@ class PostService1TkV1AuthJoinTheMembershipEmailVerificationAsyncResponseHeaderV
   PostService1TkV1AuthJoinTheMembershipEmailVerificationAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
-  // (api-result-code)
-  // 0 : 정상 동작
-  // 1 : 기존 회원 존재
+  // (204 api-result-code)
+  // 1 : 동일한 이메일을 사용하는 회원이 존재합니다.
   String? apiResultCode;
 }
 
 class PostService1TkV1AuthJoinTheMembershipEmailVerificationAsyncResponseBodyVo {
-  PostService1TkV1AuthJoinTheMembershipEmailVerificationAsyncResponseBodyVo(
-      {required this.verificationUid, required this.verificationExpireWhen});
+  PostService1TkV1AuthJoinTheMembershipEmailVerificationAsyncResponseBodyVo({
+    required this.verificationUid,
+    required this.verificationExpireWhen,
+  });
 
   int verificationUid; // 검증 고유값
-  String verificationExpireWhen; // 검증 만료 시간 (yyyy-MM-dd HH:mm:ss.SSS)
+  String verificationExpireWhen; // 검증 만료 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
 }
 
 ////
@@ -2415,15 +2159,14 @@ Future<
                 : null);
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
-      Map<String, dynamic> responseBodyMap = response.data;
+      // Map<String, dynamic> responseBodyMap = response.data;
 
       // responseBody 로 List 타입이 넘어오면 List<>.from 으로 받고,
       // Object 타입이 넘어오면 Map<String, dynamic> 으로 받고,
       // Object List 타입이 넘어오면 List<Map<String, dynamic>> 으로 받아서 처리
 
       responseBody =
-          GetService1TkV1AuthJoinTheMembershipEmailVerificationCheckAsyncResponseBodyVo(
-              expireWhen: responseBodyMap["expireWhen"]);
+          GetService1TkV1AuthJoinTheMembershipEmailVerificationCheckAsyncResponseBodyVo();
     }
 
     return gc_template_classes.NetworkResponseObject(
@@ -2441,10 +2184,11 @@ Future<
 }
 
 class GetService1TkV1AuthJoinTheMembershipEmailVerificationCheckAsyncRequestQueryVo {
-  GetService1TkV1AuthJoinTheMembershipEmailVerificationCheckAsyncRequestQueryVo(
-      {required this.verificationUid,
-      required this.email,
-      required this.verificationCode});
+  GetService1TkV1AuthJoinTheMembershipEmailVerificationCheckAsyncRequestQueryVo({
+    required this.verificationUid,
+    required this.email,
+    required this.verificationCode,
+  });
 
   int verificationUid; // 검증 고유값
   String email; // 확인 이메일
@@ -2455,19 +2199,15 @@ class GetService1TkV1AuthJoinTheMembershipEmailVerificationCheckAsyncResponseHea
   GetService1TkV1AuthJoinTheMembershipEmailVerificationCheckAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
-  // (api-result-code)
-  // 0 : 정상 동작
-  // 1 : 이메일 검증 요청을 보낸 적 없음
-  // 2 : 이메일 검증 요청이 만료됨
-  // 3 : verificationCode 가 일치하지 않음
+  // (204 api-result-code)
+  // 1 : 이메일 검증 요청을 보낸 적이 없습니다.
+  // 2 : 이메일 검증 요청이 만료되었습니다.
+  // 3 : verificationCode 가 일치하지 않습니다.
   String? apiResultCode;
 }
 
 class GetService1TkV1AuthJoinTheMembershipEmailVerificationCheckAsyncResponseBodyVo {
-  GetService1TkV1AuthJoinTheMembershipEmailVerificationCheckAsyncResponseBodyVo(
-      {required this.expireWhen});
-
-  String expireWhen; // 인증 완료시 새로 늘어난 검증 만료 시간 (yyyy-MM-dd HH:mm:ss.SSS)
+  GetService1TkV1AuthJoinTheMembershipEmailVerificationCheckAsyncResponseBodyVo();
 }
 
 ////
@@ -2548,13 +2288,14 @@ Future<
 }
 
 class PostService1TkV1AuthJoinTheMembershipWithEmailAsyncRequestBodyVo {
-  PostService1TkV1AuthJoinTheMembershipWithEmailAsyncRequestBodyVo(
-      {required this.verificationUid,
-      required this.email,
-      required this.password,
-      required this.nickName,
-      required this.verificationCode,
-      required this.profileImageFile});
+  PostService1TkV1AuthJoinTheMembershipWithEmailAsyncRequestBodyVo({
+    required this.verificationUid,
+    required this.email,
+    required this.password,
+    required this.nickName,
+    required this.verificationCode,
+    required this.profileImageFile,
+  });
 
   int verificationUid; // 검증 고유값
   String email; // 아이디 - 이메일
@@ -2568,13 +2309,12 @@ class PostService1TkV1AuthJoinTheMembershipWithEmailAsyncResponseHeaderVo {
   PostService1TkV1AuthJoinTheMembershipWithEmailAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
-  // (api-result-code)
-  // 0 : 정상 동작
-  // 1 : 이메일 검증 요청을 보낸 적 없음
-  // 2 : 이메일 검증 요청이 만료됨
-  // 3 : verificationCode 가 일치하지 않음
-  // 4 : 이미 가입된 회원이 있습니다.
-  // 5 : 이미 사용중인 닉네임
+  // (204 api-result-code)
+  // 1 : 이메일 검증 요청을 보낸 적이 없습니다.
+  // 2 : 이메일 검증 요청이 만료되었습니다.
+  // 3 : verificationCode 가 일치하지 않습니다.
+  // 4 : 이미 동일한 이메일로 가입된 회원이 존재합니다.
+  // 5 : 이미 동일한 닉네임으로 가입된 회원이 존재합니다.
   String? apiResultCode;
 }
 
@@ -2667,17 +2407,18 @@ class PostService1TkV1AuthFindPasswordEmailVerificationAsyncResponseHeaderVo {
       {required this.apiResultCode});
 
   // (api-result-code)
-  // 0 : 정상 동작
-  // 1 : 가입되지 않은 회원
+  // 1 : 해당 이메일로 가입된 회원 정보가 존재하지 않습니다.
   String? apiResultCode;
 }
 
 class PostService1TkV1AuthFindPasswordEmailVerificationAsyncResponseBodyVo {
-  PostService1TkV1AuthFindPasswordEmailVerificationAsyncResponseBodyVo(
-      {required this.verificationUid, required this.verificationExpireWhen});
+  PostService1TkV1AuthFindPasswordEmailVerificationAsyncResponseBodyVo({
+    required this.verificationUid,
+    required this.verificationExpireWhen,
+  });
 
   int verificationUid; // 검증 고유값
-  String verificationExpireWhen; // 검증 만료 시간 (yyyy-MM-dd HH:mm:ss.SSS)
+  String verificationExpireWhen; // 검증 만료 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
 }
 
 ////
@@ -2753,10 +2494,11 @@ Future<
 }
 
 class PostService1TkV1AuthFindPasswordWithEmailAsyncRequestBodyVo {
-  PostService1TkV1AuthFindPasswordWithEmailAsyncRequestBodyVo(
-      {required this.email,
-      required this.verificationUid,
-      required this.verificationCode});
+  PostService1TkV1AuthFindPasswordWithEmailAsyncRequestBodyVo({
+    required this.email,
+    required this.verificationUid,
+    required this.verificationCode,
+  });
 
   String email; // 비밀번호를 찾을 계정 이메일
   int verificationUid; // 검증 고유값
@@ -2768,104 +2510,15 @@ class PostService1TkV1AuthFindPasswordWithEmailAsyncResponseHeaderVo {
       {required this.apiResultCode});
 
   // (api-result-code)
-  // 0 : 정상 동작
-  // 1 : 이메일 검증 요청을 보낸 적 없음
-  // 2 : 이메일 검증 요청이 만료됨
-  // 3 : verificationCode 가 일치하지 않음
-  // 4 : 탈퇴한 회원입니다.
+  // 1 : 이메일 검증 요청을 보낸 적이 없습니다.
+  // 2 : 이메일 검증 요청이 만료되었습니다.
+  // 3 : verificationCode 가 일치하지 않습니다.
+  // 4 : 해당 이메일로 가입한 회원 정보가 존재하지 않습니다.
   String? apiResultCode;
 }
 
 class PostService1TkV1AuthFindPasswordWithEmailAsyncResponseBodyVo {
   PostService1TkV1AuthFindPasswordWithEmailAsyncResponseBodyVo();
-}
-
-////
-// (회원탈퇴 요청 <>)
-Future<
-        gc_template_classes.NetworkResponseObject<
-            DeleteService1TkV1AuthWithdrawalAsyncResponseHeaderVo,
-            DeleteService1TkV1AuthWithdrawalAsyncResponseBodyVo>>
-    deleteService1TkV1AuthWithdrawalAsync(
-        {required DeleteService1TkV1AuthWithdrawalAsyncRequestHeaderVo
-            requestHeaderVo}) async {
-  // !!!개발 / 배포 모드별 요청 Path 지정!!!
-  String devServerUrl = "/service1/tk/v1/auth/withdrawal";
-  String prodServerUrl = "/service1/tk/v1/auth/withdrawal";
-
-  Map<String, dynamic> requestHeaders = {};
-  Map<String, dynamic> requestQueryParams = {};
-  Map<String, dynamic> requestBody = {};
-
-  // !!!Request Object 를 Map 으로 만들기!!!
-  requestHeaders["Authorization"] = requestHeaderVo.authorization;
-
-  // baseUrl + Request path + QueryParam
-  String requestUrlAndParam = gf_template_functions.mergeNetworkQueryParam(
-      queryParams: requestQueryParams,
-      requestUrl: (gd_const_config.isDebugMode) ? devServerUrl : prodServerUrl);
-
-  try {
-    // !!!네트워크 요청 설정!!!
-    // requestPathAndParam, headers 설정 외 세부 설정
-    var response = await _serverDioObject.delete(requestUrlAndParam,
-        options: Options(
-            headers: requestHeaders,
-            sendTimeout: const Duration(seconds: 10),
-            receiveTimeout: const Duration(seconds: 10)),
-        data: requestBody);
-
-    int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
-
-    DeleteService1TkV1AuthWithdrawalAsyncResponseHeaderVo responseHeader;
-    DeleteService1TkV1AuthWithdrawalAsyncResponseBodyVo? responseBody;
-
-    // !!!Response Map 을 Response Object 로 변경!!!
-    responseHeader = DeleteService1TkV1AuthWithdrawalAsyncResponseHeaderVo(
-        apiResultCode: (responseHeaderMap.containsKey("api-result-code"))
-            ? responseHeaderMap["api-result-code"][0]!
-            : null);
-    if (statusCode == 200) {
-      // responseBody 가 반환되는 조건
-      // Map<String, dynamic> responseBodyMap = response.data;
-
-      responseBody = DeleteService1TkV1AuthWithdrawalAsyncResponseBodyVo();
-    }
-
-    return gc_template_classes.NetworkResponseObject(
-        networkResponseObjectOk: gc_template_classes.NetworkResponseObjectOk(
-            responseStatusCode: statusCode,
-            responseHeaders: responseHeader,
-            responseBody: responseBody),
-        dioException: null);
-  } on DioException catch (e) {
-    // 서버에 리퀘스트가 도달하지 못한 에러 + Dio 가 에러로 규정한 Status Code
-    //  = 클라이언트 입장에선 그냥 네트워크 에러로 처리
-    return gc_template_classes.NetworkResponseObject(
-        networkResponseObjectOk: null, dioException: e);
-  }
-}
-
-class DeleteService1TkV1AuthWithdrawalAsyncRequestHeaderVo {
-  DeleteService1TkV1AuthWithdrawalAsyncRequestHeaderVo(
-      {required this.authorization});
-
-  // 인증 토큰 (ex : "Bearer abcd1234!@#$")
-  String authorization;
-}
-
-class DeleteService1TkV1AuthWithdrawalAsyncResponseHeaderVo {
-  DeleteService1TkV1AuthWithdrawalAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (api-result-code)
-  // 0 : 정상 동작
-  String? apiResultCode;
-}
-
-class DeleteService1TkV1AuthWithdrawalAsyncResponseBodyVo {
-  DeleteService1TkV1AuthWithdrawalAsyncResponseBodyVo();
 }
 
 ////
@@ -2963,11 +2616,16 @@ class PutService1TkV1AuthChangeAccountPasswordAsyncResponseHeaderVo {
   PutService1TkV1AuthChangeAccountPasswordAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
-  // (api-result-code)
-  // 0 : 정상 동작
-  // 1 : 탈퇴된 회원
-  // 2 : 기존 비밀번호가 일치하지 않음
-  // 3 : 비번을 null 로 만들려고 할 때 account 외의 OAuth2 인증이 없기에 비번 제거 불가
+  // (204 api-result-code)
+  // 1 : 기존 비밀번호가 일치하지 않습니다.
+  // 2 : 비밀번호를 null 로 만들려고 할 때, 이외에 로그인할 수단이 없으므로 비밀번호 제거가 불가능합니다.
+
+  // (401 api-result-code)
+  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
+  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
+  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
+  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
+  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
   String? apiResultCode;
 }
 
