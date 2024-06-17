@@ -68,7 +68,7 @@ class MainBusiness {
 
     // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
     spw_auth_info.SharedPreferenceWrapperVo? nowauthInfo =
-        gf_my_functions.getNowVerifiedMemberInfo();
+        gf_my_functions.getNowAuthInfo();
 
     if (nowauthInfo != null) {
       // 로그인 상태라면 진입금지

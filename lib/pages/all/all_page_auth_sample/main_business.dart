@@ -150,7 +150,7 @@ class MainBusiness {
 
     // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
     spw_auth_info.SharedPreferenceWrapperVo? nowauthInfo =
-        gf_my_functions.getNowVerifiedMemberInfo();
+        gf_my_functions.getNowAuthInfo();
 
     if (nowauthInfo == null) {
       // 비 로그인 상태
@@ -184,7 +184,7 @@ class MainBusiness {
 
               // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
               spw_auth_info.SharedPreferenceWrapperVo? authInfo =
-                  gf_my_functions.getNowVerifiedMemberInfo();
+                  gf_my_functions.getNowAuthInfo();
 
               if (authInfo != null) {
                 // 서버 Logout API 실행
@@ -205,7 +205,7 @@ class MainBusiness {
               hoveringTileViewModelList = getNewItemWidgetList();
               hoveringTileViewModelListAreaGk.currentState?.refreshUi();
 
-              memberInfoViewModel = getMemberInfoVo();
+              memberInfoViewModel = null;
               memberInfoAreaGk.currentState?.refreshUi();
             }),
       );
@@ -229,18 +229,18 @@ class MainBusiness {
 
               // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
               spw_auth_info.SharedPreferenceWrapperVo? authInfo =
-                  gf_my_functions.getNowVerifiedMemberInfo();
+                  gf_my_functions.getNowAuthInfo();
 
               if (authInfo == null) {
                 hoveringTileViewModelList = getNewItemWidgetList();
                 hoveringTileViewModelListAreaGk.currentState?.refreshUi();
 
-                memberInfoViewModel = getMemberInfoVo();
+                memberInfoViewModel = null;
                 memberInfoAreaGk.currentState?.refreshUi();
               } else {
                 // 리플레시 토큰 만료 여부 확인
                 bool isRefreshTokenExpired =
-                    DateFormat('yyyy-MM-dd HH:mm:ss.SSS')
+                    DateFormat("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z")
                         .parse(authInfo.refreshTokenExpireWhen)
                         .isBefore(DateTime.now());
 
@@ -254,10 +254,10 @@ class MainBusiness {
                   hoveringTileViewModelList = getNewItemWidgetList();
                   hoveringTileViewModelListAreaGk.currentState?.refreshUi();
 
-                  memberInfoViewModel = getMemberInfoVo();
+                  memberInfoViewModel = null;
                   memberInfoAreaGk.currentState?.refreshUi();
                 } else {
-                  var postAutoLoginOutputVo =
+                  var postReissueResponse =
                       await api_main_server.postService1TkV1AuthReissueAsync(
                           requestHeaderVo: api_main_server
                               .PostService1TkV1AuthReissueAsyncRequestHeaderVo(
@@ -269,10 +269,10 @@ class MainBusiness {
                                       "${authInfo.tokenType} ${authInfo.refreshToken}"));
 
                   // 네트워크 요청 결과 처리
-                  if (postAutoLoginOutputVo.dioException == null) {
+                  if (postReissueResponse.dioException == null) {
                     // Dio 네트워크 응답
                     var networkResponseObjectOk =
-                        postAutoLoginOutputVo.networkResponseObjectOk!;
+                        postReissueResponse.networkResponseObjectOk!;
 
                     if (networkResponseObjectOk.responseStatusCode == 200) {
                       // 정상 응답
@@ -306,70 +306,15 @@ class MainBusiness {
                       memberInfoViewModel = getMemberInfoVo();
                       memberInfoAreaGk.currentState?.refreshUi();
                     } else {
-                      var postReissueResponseHeader = networkResponseObjectOk
-                              .responseHeaders! as api_main_server
-                          .PostService1TkV1AuthReissueAsyncResponseHeaderVo;
+                      // 리플래시 토큰이 사용 불가이므로 로그아웃 처리
+                      // login_user_info SPW 비우기
+                      spw_auth_info.SharedPreferenceWrapper.set(value: null);
 
-                      // 비정상 응답
-                      if (postReissueResponseHeader.apiResultCode == null) {
-                        allDialogLoadingSpinnerStateGk
-                            .currentState?.mainBusiness
-                            .closeDialog();
+                      hoveringTileViewModelList = getNewItemWidgetList();
+                      hoveringTileViewModelListAreaGk.currentState?.refreshUi();
 
-                        // 비정상 응답이면서 서버에서 에러 원인 코드가 전달되지 않았을 때
-                        final GlobalKey<all_dialog_info.MainWidgetState>
-                            allDialogInfoStateGk =
-                            GlobalKey<all_dialog_info.MainWidgetState>();
-                        if (!mainContext.mounted) return;
-                        showDialog(
-                            barrierDismissible: false,
-                            context: mainContext,
-                            builder: (context) => all_dialog_info.MainWidget(
-                                  key: allDialogInfoStateGk,
-                                  inputVo: all_dialog_info.InputVo(
-                                    dialogTitle: "네트워크 에러",
-                                    dialogContent:
-                                        "네트워크 상태가 불안정합니다.\n다시 시도해주세요.",
-                                    checkBtnTitle: "확인",
-                                    onDialogCreated: () {},
-                                  ),
-                                ));
-                      } else {
-                        allDialogLoadingSpinnerStateGk
-                            .currentState?.mainBusiness
-                            .closeDialog();
-
-                        // 서버 지정 에러 코드를 전달 받았을 때
-                        String apiResultCode =
-                            postReissueResponseHeader.apiResultCode!;
-
-                        switch (apiResultCode) {
-                          case "1": // 탈퇴된 회원
-                          case "2": // 유효하지 않은 리프레시 토큰
-                          case "3": // 리프레시 토큰 만료
-                          case "4": // 리프레시 토큰이 액세스 토큰과 매칭되지 않음
-                            {
-                              // 리플래시 토큰이 사용 불가이므로 로그아웃 처리
-                              // login_user_info SPW 비우기
-                              spw_auth_info.SharedPreferenceWrapper.set(
-                                  value: null);
-
-                              hoveringTileViewModelList =
-                                  getNewItemWidgetList();
-                              hoveringTileViewModelListAreaGk.currentState
-                                  ?.refreshUi();
-
-                              memberInfoViewModel = getMemberInfoVo();
-                              memberInfoAreaGk.currentState?.refreshUi();
-                            }
-                            break;
-                          default:
-                            {
-                              // 알 수 없는 코드일 때
-                              throw Exception("unKnown Error Code");
-                            }
-                        }
-                      }
+                      memberInfoViewModel = null;
+                      memberInfoAreaGk.currentState?.refreshUi();
                     }
                   } else {
                     allDialogLoadingSpinnerStateGk.currentState?.mainBusiness
@@ -406,7 +351,7 @@ class MainBusiness {
   MemberInfoViewModel? getMemberInfoVo() {
     // 검증된 현재 회원 정보 가져오기 (비회원이라면 null)
     spw_auth_info.SharedPreferenceWrapperVo? authInfo =
-        gf_my_functions.getNowVerifiedMemberInfo();
+        gf_my_functions.getNowAuthInfo();
 
     if (authInfo == null) {
       return null;
