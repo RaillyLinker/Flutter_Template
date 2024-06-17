@@ -12,8 +12,6 @@ import 'package:flutter_template/pages/all/all_page_auth_sample/main_widget.dart
     as all_page_auth_sample;
 import 'package:flutter_template/pages/all/all_page_authorization_test_sample_list/main_widget.dart'
     as all_page_authorization_test_sample_list;
-import 'package:flutter_template/pages/all/all_page_change_password/main_widget.dart'
-    as all_page_change_password;
 import 'package:flutter_template/pages/all/all_page_crypt_sample/main_widget.dart'
     as all_page_crypt_sample;
 import 'package:flutter_template/pages/all/all_page_dialog_sample_list/main_widget.dart'
@@ -383,20 +381,6 @@ GoRouter getRouter() {
             transitionsBuilder: all_page_login.pageTransitionsBuilder);
       },
       routes: subRouteListAuthSampleAuthLogin,
-    ),
-  );
-
-  subRouteListAuthSample.add(
-    GoRoute(
-      path: "change-password",
-      name: all_page_change_password.pageName,
-      pageBuilder: (c, s) {
-        return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_change_password.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_change_password.pageTransitionsBuilder);
-      },
     ),
   );
 
