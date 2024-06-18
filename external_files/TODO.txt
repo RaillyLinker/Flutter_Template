@@ -1,12 +1,5 @@
 [TODO]
 - 재검수 및 개선
-    all_page_authorization_test_sample_list
-    all_page_login
-    all_page_find_password_with_email
-    all_page_join_the_membership_email_verification
-    all_dialog_auth_join_the_membership_email_verification
-    all_page_join_the_membership_edit_member_info
-    app_page_init_splash
     all_page_image_loading_sample
     mobile_page_permission_sample_list
     pc_page_flutter_resource_image_resize

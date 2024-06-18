@@ -263,7 +263,8 @@ class MainBusiness {
                       position: StyledToastPosition.bottom,
                       animation: StyledToastAnimation.scale,
                     );
-                  } else {
+                  } else if (networkResponseObjectOk.responseStatusCode ==
+                      204) {
                     // 비정상 응답
                     var responseHeaders = networkResponseObjectOk
                             .responseHeaders! as api_main_server
@@ -321,6 +322,25 @@ class MainBusiness {
                           }
                       }
                     }
+                  } else {
+                    allDialogLoadingSpinnerStateGk.currentState?.mainBusiness
+                        .closeDialog();
+                    final GlobalKey<all_dialog_info.MainWidgetState>
+                        allDialogInfoStateGk =
+                        GlobalKey<all_dialog_info.MainWidgetState>();
+                    if (!mainContext.mounted) return;
+                    showDialog(
+                        barrierDismissible: true,
+                        context: mainContext,
+                        builder: (context) => all_dialog_info.MainWidget(
+                              key: allDialogInfoStateGk,
+                              inputVo: all_dialog_info.InputVo(
+                                dialogTitle: "네트워크 에러",
+                                dialogContent: "네트워크 상태가 불안정합니다.\n다시 시도해주세요.",
+                                checkBtnTitle: "확인",
+                                onDialogCreated: () {},
+                              ),
+                            ));
                   }
                 } else {
                   allDialogLoadingSpinnerStateGk.currentState?.mainBusiness
@@ -438,7 +458,7 @@ class MainBusiness {
 
                     if (!mainContext.mounted) return;
                     mainContext.pop();
-                  } else {
+                  } else if (networkResponseObjectOk.responseStatusCode == 204) {
                     // 비정상 응답
                     var responseHeaders = networkResponseObjectOk
                             .responseHeaders! as api_main_server
@@ -563,6 +583,25 @@ class MainBusiness {
                           }
                       }
                     }
+                  } else {
+                    allDialogLoadingSpinnerStateGk.currentState?.mainBusiness
+                        .closeDialog();
+                    final GlobalKey<all_dialog_info.MainWidgetState>
+                    allDialogInfoStateGk =
+                    GlobalKey<all_dialog_info.MainWidgetState>();
+                    if (!mainContext.mounted) return;
+                    showDialog(
+                        barrierDismissible: true,
+                        context: mainContext,
+                        builder: (context) => all_dialog_info.MainWidget(
+                          key: allDialogInfoStateGk,
+                          inputVo: all_dialog_info.InputVo(
+                            dialogTitle: "네트워크 에러",
+                            dialogContent: "네트워크 상태가 불안정합니다.\n다시 시도해주세요.",
+                            checkBtnTitle: "확인",
+                            onDialogCreated: () {},
+                          ),
+                        ));
                   }
                 } else {
                   allDialogLoadingSpinnerStateGk.currentState?.mainBusiness

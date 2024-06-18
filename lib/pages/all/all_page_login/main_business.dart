@@ -320,7 +320,7 @@ class MainBusiness {
                   // pop 이 불가능하면 Home 페이지로 이동
                   mainContext.goNamed(all_page_home.pageName);
                 }
-              } else {
+              } else if (networkResponseObjectOk.responseStatusCode == 204) {
                 // 비정상 응답
                 var responseHeaderVo = networkResponseObjectOk.responseHeaders
                     as api_main_server
@@ -329,7 +329,7 @@ class MainBusiness {
                 switch (responseHeaderVo.apiResultCode) {
                   case "1":
                     {
-                      // 가입 되지 않은 회원
+                      // 입력한 id 로 가입된 회원 정보가 없습니다.
                       final GlobalKey<all_dialog_info.MainWidgetState>
                           allDialogInfoStateGk =
                           GlobalKey<all_dialog_info.MainWidgetState>();
@@ -351,7 +351,7 @@ class MainBusiness {
                     break;
                   case "2":
                     {
-                      // 로그인 정보 검증 불일치
+                      // 입력한 password 가 일치하지 않습니다.
                       final GlobalKey<all_dialog_info.MainWidgetState>
                           allDialogInfoStateGk =
                           GlobalKey<all_dialog_info.MainWidgetState>();
@@ -393,6 +393,24 @@ class MainBusiness {
                       accountLoginAsyncClicked = false;
                     }
                 }
+              } else {
+                final GlobalKey<all_dialog_info.MainWidgetState>
+                    allDialogInfoStateGk =
+                    GlobalKey<all_dialog_info.MainWidgetState>();
+                if (!mainContext.mounted) return;
+                showDialog(
+                    barrierDismissible: true,
+                    context: mainContext,
+                    builder: (context) => all_dialog_info.MainWidget(
+                          key: allDialogInfoStateGk,
+                          inputVo: all_dialog_info.InputVo(
+                            dialogTitle: "네트워크 에러",
+                            dialogContent: "네트워크 상태가 불안정합니다.\n다시 시도해주세요.",
+                            checkBtnTitle: "확인",
+                            onDialogCreated: () {},
+                          ),
+                        ));
+                accountLoginAsyncClicked = false;
               }
             } else {
               final GlobalKey<all_dialog_info.MainWidgetState>

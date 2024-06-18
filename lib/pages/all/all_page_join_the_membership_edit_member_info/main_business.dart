@@ -1,7 +1,6 @@
 // (external)
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'dart:io';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
@@ -444,7 +443,7 @@ class MainBusiness {
         onRegisterBtnClickClicked = false;
         if (!mainContext.mounted) return;
         mainContext.pop(const main_widget.OutputVo(registerComplete: true));
-      } else {
+      } else if (networkResponseObjectOk.responseStatusCode == 204) {
         // 비정상 응답
         var responseHeaders = networkResponseObjectOk.responseHeaders
             as api_main_server
@@ -592,6 +591,24 @@ class MainBusiness {
               }
           }
         }
+      } else {
+        // Dio 네트워크 에러
+        final GlobalKey<all_dialog_info.MainWidgetState> allDialogInfoStateGk =
+            GlobalKey<all_dialog_info.MainWidgetState>();
+        if (!mainContext.mounted) return;
+        showDialog(
+            barrierDismissible: true,
+            context: mainContext,
+            builder: (context) => all_dialog_info.MainWidget(
+                  key: allDialogInfoStateGk,
+                  inputVo: all_dialog_info.InputVo(
+                    dialogTitle: "네트워크 에러",
+                    dialogContent: "네트워크 상태가 불안정합니다.\n다시 시도해주세요.",
+                    checkBtnTitle: "확인",
+                    onDialogCreated: () {},
+                  ),
+                ));
+        onRegisterBtnClickClicked = false;
       }
     } else {
       // Dio 네트워크 에러

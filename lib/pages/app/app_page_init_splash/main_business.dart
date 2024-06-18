@@ -356,7 +356,7 @@ class MainBusiness {
         spw_auth_info.SharedPreferenceWrapper.get();
     if (authInfo != null) {
       // 리플레시 토큰 만료 여부 확인
-      bool isRefreshTokenExpired = DateFormat('yyyy-MM-dd HH:mm:ss.SSS')
+      bool isRefreshTokenExpired = DateFormat("yyyy_MM_dd_'T'_HH_mm_ss_SSS_z")
           .parse(authInfo.refreshTokenExpireWhen)
           .isBefore(DateTime.now());
 
@@ -409,7 +409,7 @@ class MainBusiness {
 
             initLogicComplete = true;
             _onApplicationInitLogicComplete();
-          } else {
+          } else if (networkResponseObjectOk.responseStatusCode == 204) {
             // 액세스 토큰 재발급 비정상 응답
             var responseHeaders = networkResponseObjectOk.responseHeaders
                 as api_main_server
@@ -478,10 +478,9 @@ class MainBusiness {
               String apiResultCode = responseHeaders.apiResultCode!;
 
               switch (apiResultCode) {
-                case "1": // 탈퇴된 회원
-                case "2": // 유효하지 않은 리프레시 토큰
-                case "3": // 리프레시 토큰 만료
-                case "4": // 리프레시 토큰이 액세스 토큰과 매칭되지 않음
+                case "1": // 올바르지 않은 Authorization Token 입니다.
+                case "2": // 유효하지 않은 Refresh Token 입니다.
+                case "3": // Refresh Token 이 만료되었습니다.
                   {
                     // 리플래시 토큰이 사용 불가이므로 로그아웃 처리
 
@@ -498,6 +497,11 @@ class MainBusiness {
                   }
               }
             }
+          } else {
+            // login_user_info SSW 비우기 (= 로그아웃 처리)
+            spw_auth_info.SharedPreferenceWrapper.set(value: null);
+            initLogicComplete = true;
+            _onApplicationInitLogicComplete();
           }
         } else {
           if (signInRetryCount == signInRetryCountLimit) {

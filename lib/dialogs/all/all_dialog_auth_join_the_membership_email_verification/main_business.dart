@@ -179,7 +179,8 @@ class MainBusiness {
                     verificationCodeTextFieldAreaGk.currentState?.refreshUi();
                     FocusScope.of(verificationCodeTextFieldContext)
                         .requestFocus(verificationCodeTextFieldFocus);
-                  } else {
+                  } else if (networkResponseObjectOk.responseStatusCode ==
+                      204) {
                     var responseHeaders = networkResponseObjectOk
                             .responseHeaders as api_main_server
                         .PostService1TkV1AuthJoinTheMembershipEmailVerificationAsyncResponseHeaderVo;
@@ -241,6 +242,23 @@ class MainBusiness {
                           }
                       }
                     }
+                  } else {
+                    final GlobalKey<all_dialog_info.MainWidgetState>
+                        allDialogInfoStateGk =
+                        GlobalKey<all_dialog_info.MainWidgetState>();
+                    if (!mainContext.mounted) return;
+                    showDialog(
+                        barrierDismissible: true,
+                        context: mainContext,
+                        builder: (context) => all_dialog_info.MainWidget(
+                              key: allDialogInfoStateGk,
+                              inputVo: all_dialog_info.InputVo(
+                                dialogTitle: "네트워크 에러",
+                                dialogContent: "네트워크 상태가 불안정합니다.\n다시 시도해주세요.",
+                                checkBtnTitle: "확인",
+                                onDialogCreated: () {},
+                              ),
+                            ));
                   }
                 } else {
                   final GlobalKey<all_dialog_info.MainWidgetState>
@@ -320,7 +338,8 @@ class MainBusiness {
                     mainContext.pop(main_widget.OutputVo(
                         checkedVerificationCode: verificationCode,
                         verificationUid: verificationUid));
-                  } else {
+                  } else if (networkResponseObjectOk.responseStatusCode ==
+                      204) {
                     var responseHeaders = networkResponseObjectOk
                             .responseHeaders as api_main_server
                         .GetService1TkV1AuthJoinTheMembershipEmailVerificationCheckAsyncResponseHeaderVo;
@@ -417,6 +436,23 @@ class MainBusiness {
                           }
                       }
                     }
+                  } else {
+                    final GlobalKey<all_dialog_info.MainWidgetState>
+                        allDialogInfoStateGk =
+                        GlobalKey<all_dialog_info.MainWidgetState>();
+                    if (!mainContext.mounted) return;
+                    showDialog(
+                        barrierDismissible: true,
+                        context: mainContext,
+                        builder: (context) => all_dialog_info.MainWidget(
+                              key: allDialogInfoStateGk,
+                              inputVo: all_dialog_info.InputVo(
+                                dialogTitle: "네트워크 에러",
+                                dialogContent: "네트워크 상태가 불안정합니다.\n다시 시도해주세요.",
+                                checkBtnTitle: "확인",
+                                onDialogCreated: () {},
+                              ),
+                            ));
                   }
                 } else {
                   final GlobalKey<all_dialog_info.MainWidgetState>
