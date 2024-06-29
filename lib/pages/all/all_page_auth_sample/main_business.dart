@@ -188,9 +188,9 @@ class MainBusiness {
 
               if (authInfo != null) {
                 // 서버 Logout API 실행
-                await api_main_server.postService1TkV1AuthLogoutAsync(
+                await api_main_server.deleteService1TkV1AuthLogoutAsync(
                     requestHeaderVo: api_main_server
-                        .PostService1TkV1AuthLogoutAsyncRequestHeaderVo(
+                        .DeleteService1TkV1AuthLogoutAsyncRequestHeaderVo(
                             authorization:
                                 "${authInfo.tokenType} ${authInfo.accessToken}"));
 

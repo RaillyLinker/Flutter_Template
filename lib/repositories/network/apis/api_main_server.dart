@@ -1306,10 +1306,10 @@ class PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVo {
 // 서버 로그인 검증 요청 후 인증 정보 수신
 Future<
         gc_template_classes.NetworkResponseObject<
-            PostService1TkV1AuthLogoutAsyncResponseHeaderVo,
-            PostService1TkV1AuthLogoutAsyncResponseBodyVo>>
-    postService1TkV1AuthLogoutAsync(
-        {required PostService1TkV1AuthLogoutAsyncRequestHeaderVo
+            DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo,
+            DeleteService1TkV1AuthLogoutAsyncResponseBodyVo>>
+    deleteService1TkV1AuthLogoutAsync(
+        {required DeleteService1TkV1AuthLogoutAsyncRequestHeaderVo
             requestHeaderVo}) async {
   // !!!개발 / 배포 모드별 요청 Path 지정!!!
   String devServerUrl = "/service1/tk/v1/auth/logout";
@@ -1330,17 +1330,17 @@ Future<
   try {
     // !!!네트워크 요청 설정!!!
     // requestPathAndParam, headers 설정 외 세부 설정
-    var response = await _serverDioObject.post(requestUrlAndParam,
+    var response = await _serverDioObject.delete(requestUrlAndParam,
         options: Options(headers: requestHeaders), data: requestBody);
 
     int statusCode = response.statusCode!;
     Map<String, dynamic> responseHeaderMap = response.headers.map;
 
-    PostService1TkV1AuthLogoutAsyncResponseHeaderVo responseHeader;
-    PostService1TkV1AuthLogoutAsyncResponseBodyVo? responseBody;
+    DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo responseHeader;
+    DeleteService1TkV1AuthLogoutAsyncResponseBodyVo? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
-    responseHeader = PostService1TkV1AuthLogoutAsyncResponseHeaderVo(
+    responseHeader = DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo(
         apiResultCode: responseHeaderMap.containsKey("api-result-code")
             ? responseHeaderMap["api-result-code"][0]
             : null);
@@ -1358,15 +1358,15 @@ Future<
   }
 }
 
-class PostService1TkV1AuthLogoutAsyncRequestHeaderVo {
-  PostService1TkV1AuthLogoutAsyncRequestHeaderVo({required this.authorization});
+class DeleteService1TkV1AuthLogoutAsyncRequestHeaderVo {
+  DeleteService1TkV1AuthLogoutAsyncRequestHeaderVo({required this.authorization});
 
   // 인증 토큰 (ex : "Bearer abcd1234!@#$")
   String authorization;
 }
 
-class PostService1TkV1AuthLogoutAsyncResponseHeaderVo {
-  PostService1TkV1AuthLogoutAsyncResponseHeaderVo(
+class DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo {
+  DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo(
       {required this.apiResultCode});
 
   // (401 api-result-code)
@@ -1378,7 +1378,7 @@ class PostService1TkV1AuthLogoutAsyncResponseHeaderVo {
   String? apiResultCode;
 }
 
-class PostService1TkV1AuthLogoutAsyncResponseBodyVo {}
+class DeleteService1TkV1AuthLogoutAsyncResponseBodyVo {}
 
 ////
 // (멤버의 현재 발행된 모든 리프레시 토큰 비활성화 (= 모든 기기에서 로그아웃) 요청 <>)
