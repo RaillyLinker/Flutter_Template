@@ -1267,7 +1267,7 @@ class PostService1TkV1AuthLoginWithPasswordAsyncRequestBodyVo {
     required this.password,
   });
 
-  int loginTypeCode; // 로그인 타입 (0 : 닉네임, 1 : 이메일, 2 : 전화번호)
+  int loginTypeCode; // 로그인 타입 (0 : 아이디, 1 : 이메일, 2 : 전화번호)
   String id; // 아이디 (0 : 홍길동, 1 : test@gmail.com, 2 : 82)000-0000-0000)
   String password; // 비밀번호
 }
@@ -1359,7 +1359,8 @@ Future<
 }
 
 class DeleteService1TkV1AuthLogoutAsyncRequestHeaderVo {
-  DeleteService1TkV1AuthLogoutAsyncRequestHeaderVo({required this.authorization});
+  DeleteService1TkV1AuthLogoutAsyncRequestHeaderVo(
+      {required this.authorization});
 
   // 인증 토큰 (ex : "Bearer abcd1234!@#$")
   String authorization;
@@ -1919,23 +1920,23 @@ class GetService1TkV1AuthForAdminAsyncResponseBodyVo {
 }
 
 ////
-// (닉네임 중복 검사)
+// (아이디 중복 검사)
 Future<
         gc_template_classes.NetworkResponseObject<
-            GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseHeaderVo,
-            GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseBodyVo>>
-    getService1TkV1AuthNicknameDuplicateCheckAsync(
-        {required GetService1TkV1AuthNicknameDuplicateCheckAsyncRequestQueryVo
+            GetService1TkV1AuthIdDuplicateCheckAsyncResponseHeaderVo,
+            GetService1TkV1AuthIdDuplicateCheckAsyncResponseBodyVo>>
+    getService1TkV1AuthIdDuplicateCheckAsync(
+        {required GetService1TkV1AuthIdDuplicateCheckAsyncRequestQueryVo
             requestQueryVo}) async {
   // !!!개발 / 배포 모드별 요청 Path 지정!!!
-  String devServerUrl = "/service1/tk/v1/auth/nickname-duplicate-check";
-  String prodServerUrl = "/service1/tk/v1/auth/nickname-duplicate-check";
+  String devServerUrl = "/service1/tk/v1/auth/id-duplicate-check";
+  String prodServerUrl = "/service1/tk/v1/auth/id-duplicate-check";
 
   Map<String, dynamic> requestHeaders = {};
   Map<String, dynamic> requestQueryParams = {};
 
   // !!!Request Object 를 Map 으로 만들기!!!
-  requestQueryParams["nickName"] = requestQueryVo.nickName;
+  requestQueryParams["id"] = requestQueryVo.id;
 
   // baseUrl + Request path + QueryParam
   String requestUrlAndParam = gf_template_functions.mergeNetworkQueryParam(
@@ -1951,13 +1952,11 @@ Future<
     int statusCode = response.statusCode!;
     // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
-    GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseHeaderVo
-        responseHeader;
-    GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseBodyVo? responseBody;
+    GetService1TkV1AuthIdDuplicateCheckAsyncResponseHeaderVo responseHeader;
+    GetService1TkV1AuthIdDuplicateCheckAsyncResponseBodyVo? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
-    responseHeader =
-        GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseHeaderVo();
+    responseHeader = GetService1TkV1AuthIdDuplicateCheckAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
       Map<String, dynamic> responseBodyMap = response.data;
@@ -1966,9 +1965,8 @@ Future<
       // Object 타입이 넘어오면 Map<String, dynamic> 으로 받고,
       // Object List 타입이 넘어오면 List<Map<String, dynamic>> 으로 받아서 처리
 
-      responseBody =
-          GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseBodyVo(
-              duplicated: responseBodyMap["duplicated"]);
+      responseBody = GetService1TkV1AuthIdDuplicateCheckAsyncResponseBodyVo(
+          duplicated: responseBodyMap["duplicated"]);
     }
 
     return gc_template_classes.NetworkResponseObject(
@@ -1985,19 +1983,18 @@ Future<
   }
 }
 
-class GetService1TkV1AuthNicknameDuplicateCheckAsyncRequestQueryVo {
-  GetService1TkV1AuthNicknameDuplicateCheckAsyncRequestQueryVo(
-      {required this.nickName});
+class GetService1TkV1AuthIdDuplicateCheckAsyncRequestQueryVo {
+  GetService1TkV1AuthIdDuplicateCheckAsyncRequestQueryVo({required this.id});
 
-  String nickName;
+  String id;
 }
 
-class GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseHeaderVo {
-  GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseHeaderVo();
+class GetService1TkV1AuthIdDuplicateCheckAsyncResponseHeaderVo {
+  GetService1TkV1AuthIdDuplicateCheckAsyncResponseHeaderVo();
 }
 
-class GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseBodyVo {
-  GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseBodyVo(
+class GetService1TkV1AuthIdDuplicateCheckAsyncResponseBodyVo {
+  GetService1TkV1AuthIdDuplicateCheckAsyncResponseBodyVo(
       {required this.duplicated});
 
   bool duplicated;
@@ -2231,7 +2228,7 @@ Future<
   requestFormDataMap["verificationUid"] = requestBodyVo.verificationUid;
   requestFormDataMap["email"] = requestBodyVo.email;
   requestFormDataMap["password"] = requestBodyVo.password;
-  requestFormDataMap["nickName"] = requestBodyVo.nickName;
+  requestFormDataMap["id"] = requestBodyVo.id;
   requestFormDataMap["verificationCode"] = requestBodyVo.verificationCode;
   if (requestBodyVo.profileImageFile != null) {
     requestFormDataMap["profileImageFile"] = requestBodyVo.profileImageFile;
@@ -2292,7 +2289,7 @@ class PostService1TkV1AuthJoinTheMembershipWithEmailAsyncRequestBodyVo {
     required this.verificationUid,
     required this.email,
     required this.password,
-    required this.nickName,
+    required this.id,
     required this.verificationCode,
     required this.profileImageFile,
   });
@@ -2300,7 +2297,7 @@ class PostService1TkV1AuthJoinTheMembershipWithEmailAsyncRequestBodyVo {
   int verificationUid; // 검증 고유값
   String email; // 아이디 - 이메일
   String password; // 사용할 비밀번호
-  String nickName; // 닉네임
+  String id; // 계정 아이디
   String verificationCode; // oauth2Id 검증에 사용한 코드
   MultipartFile? profileImageFile; // 프로필 사진 파일
 }
@@ -2314,7 +2311,7 @@ class PostService1TkV1AuthJoinTheMembershipWithEmailAsyncResponseHeaderVo {
   // 2 : 이메일 검증 요청이 만료되었습니다.
   // 3 : verificationCode 가 일치하지 않습니다.
   // 4 : 이미 동일한 이메일로 가입된 회원이 존재합니다.
-  // 5 : 이미 동일한 닉네임으로 가입된 회원이 존재합니다.
+  // 5 : 이미 동일한 아이디로 가입된 회원이 존재합니다.
   String? apiResultCode;
 }
 

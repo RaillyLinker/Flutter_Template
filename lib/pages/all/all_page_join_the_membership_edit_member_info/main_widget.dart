@@ -258,32 +258,29 @@ class MainWidgetState extends State<MainWidget> with WidgetsBindingObserver {
                             child: SizedBox(
                               width: 200,
                               child: gw_sfw_wrapper.SfwRefreshWrapper(
-                                key: mainBusiness.nickNameTextFieldAreaGk,
+                                key: mainBusiness.idTextFieldAreaGk,
                                 widgetBuild: (context) {
-                                  mainBusiness.nickNameTextFieldContext =
-                                      context;
+                                  mainBusiness.idTextFieldContext = context;
 
                                   return TextFormField(
                                     autofocus: true,
-                                    enabled:
-                                        mainBusiness.nickNameTextEditEnabled,
+                                    enabled: mainBusiness.idTextEditEnabled,
                                     keyboardType: TextInputType.text,
-                                    controller: mainBusiness
-                                        .nickNameTextFieldController,
-                                    focusNode:
-                                        mainBusiness.nickNameTextFieldFocus,
+                                    controller:
+                                        mainBusiness.idTextFieldController,
+                                    focusNode: mainBusiness.idTextFieldFocus,
                                     decoration: InputDecoration(
-                                      labelText: '닉네임',
+                                      labelText: '아이디',
                                       floatingLabelStyle:
                                           const TextStyle(color: Colors.blue),
-                                      hintText: "사용할 닉네임을 입력 하세요.",
+                                      hintText: "사용할 아이디를 입력 하세요.",
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               vertical: 10.0, horizontal: 10.0),
                                       filled: true,
                                       fillColor: Colors.white,
-                                      errorText: mainBusiness
-                                          .nickNameTextFieldErrorMsg,
+                                      errorText:
+                                          mainBusiness.idTextFieldErrorMsg,
                                       focusedBorder: const UnderlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.blue),
@@ -291,27 +288,23 @@ class MainWidgetState extends State<MainWidget> with WidgetsBindingObserver {
                                       suffixIcon: IconButton(
                                         onPressed: () {
                                           mainBusiness
-                                              .nickNameTextFieldController
-                                              .text = "";
+                                              .idTextFieldController.text = "";
                                         },
                                         icon: const Icon(Icons.clear),
                                       ),
                                     ),
                                     onChanged: (value) {
                                       // 입력값 변경시 에러 메세지 삭제
-                                      if (mainBusiness
-                                              .nickNameTextFieldErrorMsg !=
+                                      if (mainBusiness.idTextFieldErrorMsg !=
                                           null) {
-                                        mainBusiness.nickNameTextFieldErrorMsg =
-                                            null;
-                                        mainBusiness.nickNameTextFieldAreaGk
-                                            .currentState
+                                        mainBusiness.idTextFieldErrorMsg = null;
+                                        mainBusiness
+                                            .idTextFieldAreaGk.currentState
                                             ?.refreshUi();
                                       }
                                     },
                                     onEditingComplete: () {
-                                      mainBusiness
-                                          .onNickNameCheckBtnClickAsync();
+                                      mainBusiness.onIdCheckBtnClickAsync();
                                     },
                                   );
                                 },
@@ -321,20 +314,20 @@ class MainWidgetState extends State<MainWidget> with WidgetsBindingObserver {
                         Expanded(
                             flex: 10,
                             child: gw_sfw_wrapper.SfwRefreshWrapper(
-                              key: mainBusiness.nickNameCheckBtnAreaGk,
+                              key: mainBusiness.idCheckBtnAreaGk,
                               widgetBuild: (context) {
-                                mainBusiness.nickNameCheckBtnContext = context;
+                                mainBusiness.idCheckBtnContext = context;
 
                                 return ElevatedButton(
                                   onPressed: () {
                                     // 중복 확인 버튼 동작
-                                    mainBusiness.onNickNameCheckBtnClickAsync();
+                                    mainBusiness.onIdCheckBtnClickAsync();
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.blue,
                                   ),
                                   child: Text(
-                                    mainBusiness.nickNameCheckBtn,
+                                    mainBusiness.idCheckBtn,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                         color: Colors.white,
@@ -351,63 +344,60 @@ class MainWidgetState extends State<MainWidget> with WidgetsBindingObserver {
                   cursor: SystemMouseCursors.click,
                   child: GestureDetector(
                     onTap: () {
-                      mainBusiness.onNicknameInputRuleTap();
+                      mainBusiness.onIdInputRuleTap();
                     },
                     child: gw_sfw_wrapper.SfwRefreshWrapper(
-                      key: mainBusiness.nicknameInputRuleHideAreaGk,
+                      key: mainBusiness.idInputRuleHideAreaGk,
                       widgetBuild: (context) {
-                        mainBusiness.nicknameInputRuleHideContext = context;
-                        var passwordInputRule =
-                            mainBusiness.nicknameInputRuleHide
-                                ? const SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "닉네임 입력 규칙",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.grey,
-                                              fontFamily: "MaruBuri"),
-                                        ),
-                                      ],
+                        mainBusiness.idInputRuleHideContext = context;
+                        var passwordInputRule = mainBusiness.idInputRuleHide
+                            ? const SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 5,
                                     ),
-                                  )
-                                : const SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "닉네임 입력 규칙",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.grey,
-                                              fontFamily: "MaruBuri"),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          '1. 닉네임은 2 글자 이상으로 입력하세요.\n'
-                                          '2. 닉네임에 공백은 허용되지 않습니다.\n'
-                                          '3. 아래 특수문자는 사용할 수 없습니다.\n'
-                                          '    <, >, (, ), #, ’, /, |\n'
-                                          '4. 욕설 등 부적절한 닉네임의 경우 강제로 닉네임이 변경될 수 있습니다.',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.normal,
-                                              color: Colors.grey,
-                                              fontFamily: "MaruBuri"),
-                                        )
-                                      ],
+                                    Text(
+                                      "아이디 입력 규칙",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
+                                          fontFamily: "MaruBuri"),
                                     ),
-                                  );
+                                  ],
+                                ),
+                              )
+                            : const SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      "아이디 입력 규칙",
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey,
+                                          fontFamily: "MaruBuri"),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      '1. 아이디는 2자 이상의 영문/숫자로 입력하세요.\n'
+                                      '2. 아이디에 공백은 허용되지 않습니다.\n'
+                                      '3. 욕설 등 부적절한 아이디를 사용할 경우 강제로 변경 조치 될 수 있습니다.',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.grey,
+                                          fontFamily: "MaruBuri"),
+                                    )
+                                  ],
+                                ),
+                              );
 
                         return Container(
                           width: 300,

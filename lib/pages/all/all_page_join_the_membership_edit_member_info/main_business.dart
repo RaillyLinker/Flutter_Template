@@ -75,8 +75,8 @@ class MainBusiness {
   // (종료 시점 단 한번 실행)
   void dispose() {
     // !!!dispose 로직 작성!!!
-    nickNameTextFieldController.dispose();
-    nickNameTextFieldFocus.dispose();
+    idTextFieldController.dispose();
+    idTextFieldFocus.dispose();
   }
 
   // (최초 실행시 단 한번 실행) - 위젯 build 바로 직전, 모든 것이 준비 되었을 때
@@ -154,24 +154,23 @@ class MainBusiness {
   late BuildContext profileImageContext;
   Uint8List? profileImage;
 
-  final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState>
-      nickNameTextFieldAreaGk = GlobalKey();
-  late BuildContext nickNameTextFieldContext;
-  final TextEditingController nickNameTextFieldController =
-      TextEditingController();
-  final FocusNode nickNameTextFieldFocus = FocusNode();
-  String? nickNameTextFieldErrorMsg;
-  bool nickNameTextEditEnabled = true;
+  final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> idTextFieldAreaGk =
+      GlobalKey();
+  late BuildContext idTextFieldContext;
+  final TextEditingController idTextFieldController = TextEditingController();
+  final FocusNode idTextFieldFocus = FocusNode();
+  String? idTextFieldErrorMsg;
+  bool idTextEditEnabled = true;
 
-  final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState>
-      nickNameCheckBtnAreaGk = GlobalKey();
-  late BuildContext nickNameCheckBtnContext;
-  String nickNameCheckBtn = "중복\n확인";
+  final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> idCheckBtnAreaGk =
+      GlobalKey();
+  late BuildContext idCheckBtnContext;
+  String idCheckBtn = "중복\n확인";
 
-  final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState>
-      nicknameInputRuleHideAreaGk = GlobalKey();
-  late BuildContext nicknameInputRuleHideContext;
-  bool nicknameInputRuleHide = true;
+  final GlobalKey<gw_sfw_wrapper.SfwRefreshWrapperState> idInputRuleHideAreaGk =
+      GlobalKey();
+  late BuildContext idInputRuleHideContext;
+  bool idInputRuleHide = true;
 
   // [private 변수]
 
@@ -253,61 +252,57 @@ class MainBusiness {
     }
   }
 
-  // (닉네임 체크 버튼 클릭)
-  bool onNickNameCheckBtnAsyncClicked = false;
+  // (아이디 체크 버튼 클릭)
+  bool onIdCheckBtnAsyncClicked = false;
 
-  Future<void> onNickNameCheckBtnClickAsync() async {
-    if (onNickNameCheckBtnAsyncClicked) {
+  Future<void> onIdCheckBtnClickAsync() async {
+    if (onIdCheckBtnAsyncClicked) {
       return;
     }
-    onNickNameCheckBtnAsyncClicked = true;
+    onIdCheckBtnAsyncClicked = true;
 
-    if (nickNameCheckBtn == "중복\n확인") {
+    if (idCheckBtn == "중복\n확인") {
       // 중복 확인 버튼을 눌렀을 때
       // 입력창의 에러를 지우기
-      nickNameTextFieldErrorMsg = null;
-      nickNameTextFieldAreaGk.currentState?.refreshUi();
+      idTextFieldErrorMsg = null;
+      idTextFieldAreaGk.currentState?.refreshUi();
 
-      if (nickNameTextFieldController.text == "") {
-        nickNameTextFieldErrorMsg = "닉네임을 입력하세요.";
-        nickNameTextFieldAreaGk.currentState?.refreshUi();
-        FocusScope.of(nickNameTextFieldContext)
-            .requestFocus(nickNameTextFieldFocus);
-        onNickNameCheckBtnAsyncClicked = false;
+      if (idTextFieldController.text == "") {
+        idTextFieldErrorMsg = "아이디를 입력하세요.";
+        idTextFieldAreaGk.currentState?.refreshUi();
+        FocusScope.of(idTextFieldContext).requestFocus(idTextFieldFocus);
+        onIdCheckBtnAsyncClicked = false;
         return;
       }
-      if (nickNameTextFieldController.text.contains(" ")) {
-        nickNameTextFieldErrorMsg = "닉네임에 공백은 허용되지 않습니다.";
-        nickNameTextFieldAreaGk.currentState?.refreshUi();
-        FocusScope.of(nickNameTextFieldContext)
-            .requestFocus(nickNameTextFieldFocus);
-        onNickNameCheckBtnAsyncClicked = false;
+      if (idTextFieldController.text.contains(" ")) {
+        idTextFieldErrorMsg = "아이디에 공백은 허용되지 않습니다.";
+        idTextFieldAreaGk.currentState?.refreshUi();
+        FocusScope.of(idTextFieldContext).requestFocus(idTextFieldFocus);
+        onIdCheckBtnAsyncClicked = false;
         return;
       }
-      if (nickNameTextFieldController.text.length < 2) {
-        nickNameTextFieldErrorMsg = "닉네임은 최소 2자 이상 입력하세요.";
-        nickNameTextFieldAreaGk.currentState?.refreshUi();
-        FocusScope.of(nickNameTextFieldContext)
-            .requestFocus(nickNameTextFieldFocus);
-        onNickNameCheckBtnAsyncClicked = false;
+      if (idTextFieldController.text.length < 2) {
+        idTextFieldErrorMsg = "아이디는 최소 2자 이상 입력하세요.";
+        idTextFieldAreaGk.currentState?.refreshUi();
+        FocusScope.of(idTextFieldContext).requestFocus(idTextFieldFocus);
+        onIdCheckBtnAsyncClicked = false;
         return;
       }
-      if (RegExp(r'[<>()#’/|]').hasMatch(nickNameTextFieldController.text)) {
-        nickNameTextFieldErrorMsg = "특수문자 < > ( ) # ’ / | 는 사용할 수 없습니다.";
-        nickNameTextFieldAreaGk.currentState?.refreshUi();
-        FocusScope.of(nickNameTextFieldContext)
-            .requestFocus(nickNameTextFieldFocus);
-        onNickNameCheckBtnAsyncClicked = false;
+      if (!RegExp(r'^[a-zA-Z0-9]+$').hasMatch(idTextFieldController.text)) {
+        idTextFieldErrorMsg = "아이디는 영문 / 숫자만 입력할 수 있습니다.";
+        idTextFieldAreaGk.currentState?.refreshUi();
+        FocusScope.of(idTextFieldContext).requestFocus(idTextFieldFocus);
+        onIdCheckBtnAsyncClicked = false;
         return;
       }
 
       var responseVo =
-          await api_main_server.getService1TkV1AuthNicknameDuplicateCheckAsync(
+          await api_main_server.getService1TkV1AuthIdDuplicateCheckAsync(
               requestQueryVo: api_main_server
-                  .GetService1TkV1AuthNicknameDuplicateCheckAsyncRequestQueryVo(
-                      nickName: nickNameTextFieldController.text.trim()));
+                  .GetService1TkV1AuthIdDuplicateCheckAsyncRequestQueryVo(
+                      id: idTextFieldController.text.trim()));
 
-      onNickNameCheckBtnAsyncClicked = false;
+      onIdCheckBtnAsyncClicked = false;
       if (responseVo.dioException == null) {
         // Dio 네트워크 응답
         var networkResponseObjectOk = responseVo.networkResponseObjectOk!;
@@ -315,22 +310,21 @@ class MainBusiness {
         if (networkResponseObjectOk.responseStatusCode == 200) {
           var responseBody = networkResponseObjectOk.responseBody
               as api_main_server
-              .GetService1TkV1AuthNicknameDuplicateCheckAsyncResponseBodyVo;
+              .GetService1TkV1AuthIdDuplicateCheckAsyncResponseBodyVo;
 
           if (responseBody.duplicated) {
             // 중복시 에러표시
-            nickNameTextFieldErrorMsg = "이미 사용중인 닉네임입니다.";
-            nickNameTextFieldAreaGk.currentState?.refreshUi();
-            if (!nickNameTextFieldContext.mounted) return;
-            FocusScope.of(nickNameTextFieldContext)
-                .requestFocus(nickNameTextFieldFocus);
+            idTextFieldErrorMsg = "이미 사용중인 아이디입니다.";
+            idTextFieldAreaGk.currentState?.refreshUi();
+            if (!idTextFieldContext.mounted) return;
+            FocusScope.of(idTextFieldContext).requestFocus(idTextFieldFocus);
           } else {
             // 중복이 아니라면 에딧 비활성화 및 버튼명 변경
-            nickNameTextEditEnabled = false;
-            nickNameTextFieldAreaGk.currentState?.refreshUi();
+            idTextEditEnabled = false;
+            idTextFieldAreaGk.currentState?.refreshUi();
 
-            nickNameCheckBtn = "재입력";
-            nickNameCheckBtnAreaGk.currentState?.refreshUi();
+            idCheckBtn = "재입력";
+            idCheckBtnAreaGk.currentState?.refreshUi();
           }
         } else {
           final GlobalKey<all_dialog_info.MainWidgetState>
@@ -370,11 +364,11 @@ class MainBusiness {
       }
     } else {
       // 다시 입력 버튼을 눌렀을 때
-      nickNameTextEditEnabled = true;
-      nickNameTextFieldAreaGk.currentState?.refreshUi();
+      idTextEditEnabled = true;
+      idTextFieldAreaGk.currentState?.refreshUi();
 
-      nickNameCheckBtn = "중복\n확인";
-      nickNameCheckBtnAreaGk.currentState?.refreshUi();
+      idCheckBtn = "중복\n확인";
+      idCheckBtnAreaGk.currentState?.refreshUi();
     }
   }
 
@@ -387,16 +381,15 @@ class MainBusiness {
     }
     onRegisterBtnClickClicked = true;
 
-    if (nickNameCheckBtn == "중복\n확인") {
-      // 아직 닉네임 검증되지 않았을 때
+    if (idCheckBtn == "중복\n확인") {
+      // 아직 아이디 검증되지 않았을 때
       // 입력창에 Focus 주기
 
-      nickNameTextFieldErrorMsg = "닉네임 중복 확인이 필요합니다.";
-      nickNameTextFieldAreaGk.currentState?.refreshUi();
+      idTextFieldErrorMsg = "아이디 중복 확인이 필요합니다.";
+      idTextFieldAreaGk.currentState?.refreshUi();
 
       onRegisterBtnClickClicked = false;
-      FocusScope.of(nickNameTextFieldContext)
-          .requestFocus(nickNameTextFieldFocus);
+      FocusScope.of(idTextFieldContext).requestFocus(idTextFieldFocus);
       return;
     }
 
@@ -409,7 +402,7 @@ class MainBusiness {
       verificationUid: inputVo.verificationUid,
       email: inputVo.memberId,
       password: inputVo.password,
-      nickName: nickNameTextFieldController.text.trim(),
+      id: idTextFieldController.text.trim(),
       verificationCode: inputVo.verificationCode,
       profileImageFile: profileImage == null
           ? null
@@ -576,11 +569,11 @@ class MainBusiness {
               break;
             case "5":
               {
-                // 이미 사용중인 닉네임
-                nickNameTextFieldErrorMsg = "이미 사용중인 닉네임입니다.";
-                nickNameTextFieldAreaGk.currentState?.refreshUi();
-                nickNameCheckBtn = "중복\n확인";
-                nickNameCheckBtnAreaGk.currentState?.refreshUi();
+                // 이미 사용중인 아이디
+                idTextFieldErrorMsg = "이미 사용중인 아이디입니다.";
+                idTextFieldAreaGk.currentState?.refreshUi();
+                idCheckBtn = "중복\n확인";
+                idCheckBtnAreaGk.currentState?.refreshUi();
                 onRegisterBtnClickClicked = false;
               }
               break;
@@ -631,10 +624,10 @@ class MainBusiness {
     }
   }
 
-  // 닉네임 입력 규칙 클릭
-  void onNicknameInputRuleTap() {
-    nicknameInputRuleHide = !nicknameInputRuleHide;
-    nicknameInputRuleHideAreaGk.currentState?.refreshUi();
+  // 아이디 입력 규칙 클릭
+  void onIdInputRuleTap() {
+    idInputRuleHide = !idInputRuleHide;
+    idInputRuleHideAreaGk.currentState?.refreshUi();
   }
 
   // [private 함수]
