@@ -310,6 +310,9 @@ class MainBusiness {
                       // login_user_info SPW 비우기
                       spw_auth_info.SharedPreferenceWrapper.set(value: null);
 
+                      allDialogLoadingSpinnerStateGk.currentState?.mainBusiness
+                          .closeDialog();
+
                       hoveringTileViewModelList = getNewItemWidgetList();
                       hoveringTileViewModelListAreaGk.currentState?.refreshUi();
 
