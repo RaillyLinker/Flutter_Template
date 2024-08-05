@@ -1279,6 +1279,7 @@ class PostService1TkV1AuthLoginWithPasswordAsyncResponseHeaderVo {
   // (204 api-result-code)
   // 1 : 입력한 id 로 가입된 회원 정보가 없습니다.
   // 2 : 입력한 password 가 일치하지 않습니다.
+  // 3 : 계정이 정지된 상태입니다.
   String? apiResultCode;
 }
 
@@ -1374,96 +1375,10 @@ class DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo {
   // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
   // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
   // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
-  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
-  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
   String? apiResultCode;
 }
 
 class DeleteService1TkV1AuthLogoutAsyncResponseBodyVo {}
-
-////
-// (멤버의 현재 발행된 모든 리프레시 토큰 비활성화 (= 모든 기기에서 로그아웃) 요청 <>)
-// 멤버의 현재 발행된 모든 리프레시 토큰을 비활성화 (= 모든 기기에서 로그아웃) 하는 API
-// 한번 발행된 액세스 토큰을 강제로 못쓰게 만들 수는 없지만, 현재 발행된 모든 리플래시 토큰을 사용할 수 없도록 만듭니다.
-Future<
-        gc_template_classes.NetworkResponseObject<
-            DeleteService1TkV1AuthAllAuthorizationTokenAsyncResponseHeaderVo,
-            DeleteService1TkV1AuthAllAuthorizationTokenAsyncResponseBodyVo>>
-    deleteService1TkV1AuthAllAuthorizationTokenAsync(
-        {required DeleteService1TkV1AuthAllAuthorizationTokenAsyncRequestHeaderVo
-            requestHeaderVo}) async {
-  // !!!개발 / 배포 모드별 요청 Path 지정!!!
-  String devServerUrl = "/service1/tk/v1/auth/all-authorization-token";
-  String prodServerUrl = "/service1/tk/v1/auth/all-authorization-token";
-
-  Map<String, dynamic> requestHeaders = {};
-  Map<String, dynamic> requestQueryParams = {};
-  Map<String, dynamic> requestBody = {};
-
-  // !!!Request Object 를 Map 으로 만들기!!!
-  requestHeaders["Authorization"] = requestHeaderVo.authorization;
-
-  // baseUrl + Request path + QueryParam
-  String requestUrlAndParam = gf_template_functions.mergeNetworkQueryParam(
-      queryParams: requestQueryParams,
-      requestUrl: (gd_const_config.isDebugMode) ? devServerUrl : prodServerUrl);
-
-  try {
-    // !!!네트워크 요청 설정!!!
-    // requestPathAndParam, headers 설정 외 세부 설정
-    var response = await _serverDioObject.delete(requestUrlAndParam,
-        options: Options(headers: requestHeaders), data: requestBody);
-
-    int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
-
-    DeleteService1TkV1AuthAllAuthorizationTokenAsyncResponseHeaderVo
-        responseHeader;
-    DeleteService1TkV1AuthAllAuthorizationTokenAsyncResponseBodyVo?
-        responseBody;
-
-    // !!!Response Map 을 Response Object 로 변경!!!
-    responseHeader =
-        DeleteService1TkV1AuthAllAuthorizationTokenAsyncResponseHeaderVo(
-            apiResultCode: responseHeaderMap.containsKey("api-result-code")
-                ? responseHeaderMap["api-result-code"][0]
-                : null);
-    return gc_template_classes.NetworkResponseObject(
-        networkResponseObjectOk: gc_template_classes.NetworkResponseObjectOk(
-            responseStatusCode: statusCode,
-            responseHeaders: responseHeader,
-            responseBody: responseBody),
-        dioException: null);
-  } on DioException catch (e) {
-    // 서버에 리퀘스트가 도달하지 못한 에러 + Dio 가 에러로 규정한 Status Code
-    //  = 클라이언트 입장에선 그냥 네트워크 에러로 처리
-    return gc_template_classes.NetworkResponseObject(
-        networkResponseObjectOk: null, dioException: e);
-  }
-}
-
-class DeleteService1TkV1AuthAllAuthorizationTokenAsyncRequestHeaderVo {
-  DeleteService1TkV1AuthAllAuthorizationTokenAsyncRequestHeaderVo(
-      {required this.authorization});
-
-  // 인증 토큰 (ex : "Bearer abcd1234!@#$")
-  String authorization;
-}
-
-class DeleteService1TkV1AuthAllAuthorizationTokenAsyncResponseHeaderVo {
-  DeleteService1TkV1AuthAllAuthorizationTokenAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (401 api-result-code)
-  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
-  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
-  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
-  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
-  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
-  String? apiResultCode;
-}
-
-class DeleteService1TkV1AuthAllAuthorizationTokenAsyncResponseBodyVo {}
 
 ////
 // (토큰 재발급 요청 <>)
@@ -1561,13 +1476,17 @@ class PostService1TkV1AuthReissueAsyncRequestBodyVo {
 }
 
 class PostService1TkV1AuthReissueAsyncResponseHeaderVo {
-  PostService1TkV1AuthReissueAsyncResponseHeaderVo(
-      {required this.apiResultCode});
+  PostService1TkV1AuthReissueAsyncResponseHeaderVo({
+    required this.apiResultCode
+  });
 
   // (204 api-result-code)
-  // 1 : 올바르지 않은 Authorization Token 입니다.
-  // 2 : 유효하지 않은 Refresh Token 입니다.
-  // 3 : Refresh Token 이 만료되었습니다.
+  // 1 : 유효하지 않은 Refresh Token 입니다.
+  // 2 : Refresh Token 이 만료되었습니다.
+  // 3 : 올바르지 않은 Access Token 입니다.
+  // 4 : 탈퇴된 회원입니다.
+  // 5 : 로그아웃 처리된 Access Token 입니다.(갱신 불가)
+  // 6 : Access Token 의 멤버가 계정 정지 처리된 상태입니다.(갱신 불가)
   String? apiResultCode;
 }
 
@@ -1585,8 +1504,9 @@ class PostService1TkV1AuthReissueAsyncResponseBodyVo {
   String tokenType; // 인증 토큰 타입 (ex : Bearer)
   String accessToken; // 엑세스 토큰
   String refreshToken; // 리플레시 토큰
-  String accessTokenExpireWhen; // 엑세스 토큰 만료 시간 (yyyy-MM-dd HH:mm:ss.SSS)
-  String refreshTokenExpireWhen; // 리플레시 토큰 만료 시간 (yyyy-MM-dd HH:mm:ss.SSS)
+  String accessTokenExpireWhen; // 엑세스 토큰 만료 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
+  String
+      refreshTokenExpireWhen; // 리플레시 토큰 만료 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
 }
 
 ////
@@ -1732,8 +1652,6 @@ class GetService1TkV1AuthForLoggedInAsyncResponseHeaderVo {
   // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
   // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
   // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
-  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
-  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
   String? apiResultCode;
 }
 
@@ -1821,8 +1739,6 @@ class GetService1TkV1AuthForDeveloperAsyncResponseHeaderVo {
   // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
   // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
   // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
-  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
-  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
   String? apiResultCode;
 }
 
@@ -1910,8 +1826,6 @@ class GetService1TkV1AuthForAdminAsyncResponseHeaderVo {
   // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
   // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
   // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
-  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
-  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
   String? apiResultCode;
 }
 
@@ -2621,8 +2535,6 @@ class PutService1TkV1AuthChangeAccountPasswordAsyncResponseHeaderVo {
   // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
   // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
   // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
-  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
-  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
   String? apiResultCode;
 }
 

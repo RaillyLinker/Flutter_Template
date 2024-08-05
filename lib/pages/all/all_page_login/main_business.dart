@@ -371,6 +371,29 @@ class MainBusiness {
                       accountLoginAsyncClicked = false;
                     }
                     break;
+                  case "3":
+                    {
+                      // 계정이 정지된 상태입니다.
+                      final GlobalKey<all_dialog_info.MainWidgetState>
+                          allDialogInfoStateGk =
+                          GlobalKey<all_dialog_info.MainWidgetState>();
+                      if (!mainContext.mounted) return;
+                      showDialog(
+                          barrierDismissible: true,
+                          context: mainContext,
+                          builder: (context) => all_dialog_info.MainWidget(
+                                key: allDialogInfoStateGk,
+                                inputVo: all_dialog_info.InputVo(
+                                  dialogTitle: "로그인 실패",
+                                  dialogContent: "회원님의 계정이\n"
+                                      "관리자에 의해 정지되었습니다.",
+                                  checkBtnTitle: "확인",
+                                  onDialogCreated: () {},
+                                ),
+                              ));
+                      accountLoginAsyncClicked = false;
+                    }
+                    break;
                   default:
                     {
                       // 비정상 응답이면서 서버에서 에러 원인 코드가 전달되지 않았을 때

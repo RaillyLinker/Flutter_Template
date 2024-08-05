@@ -86,6 +86,8 @@ void setDioObjects() {
 
         // !!!매 네트워크 응답마다 수행할 로직 설정!!!
 
+        // 아래 처리는 토큰 재발급 처리만을 자동으로 처리합니다.
+        // 즉, API 요청 코드에서 응답으로 401 을 받았다면 토큰 재발급을 고려하지 않고 무조건 로그인이 필요한 상황이라 인지하여 처리하면 됩니다.
         if (responseStatusCode == 401) {
           // 미인증 응답 신호 발생
 
@@ -101,8 +103,6 @@ void setDioObjects() {
           // 반환 안됨 : 인증 토큰을 입력하지 않았습니다. (로그인 필요)
           // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
           // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
-          // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
-          // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
           if (responseHeaderMap.containsKey("api-result-code")) {
             // JWT 토큰 관련 서버 에러 발생
             String apiResultCode = responseHeaderMap["api-result-code"][0];
@@ -203,7 +203,7 @@ void setDioObjects() {
                         ),
                       );
 
-                      // 재요청이 정상 완료 되었으므로 결과를 본 request 코드에 넘겨주기
+                      // 재요청이 401 에 걸리지 않고 완료 되었으므로 결과를 본 request 코드에 넘겨주기
                       handler.resolve(retryResponse);
                       return;
                     } on DioException {
@@ -215,6 +215,8 @@ void setDioObjects() {
                     }
                   }
 
+                  // todo 리플레시 안 된 각 상황에 대한 처리
+
                   // reissue API 정상 처리 안됨
                   // login_user_info SSW 비우기 (= 로그아웃 처리)
                   spw_auth_info.SharedPreferenceWrapper.set(value: null);
@@ -225,8 +227,6 @@ void setDioObjects() {
                 {
                   // 처리할 필요가 없는 401 결과 코드
                   // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
-                  // 3 : Request Header 에 Authorization 키로 넣어준 토큰의 멤버가 탈퇴 된 상태입니다. (다른 계정으로 재 로그인 필요)
-                  // 4 : Request Header 에 Authorization 키로 넣어준 토큰이 로그아웃 처리된 상태입니다. (재 로그인 필요)
                   // login_user_info SSW 비우기 (= 로그아웃 처리)
                   spw_auth_info.SharedPreferenceWrapper.set(value: null);
                   handler.next(response);
@@ -235,6 +235,7 @@ void setDioObjects() {
             }
           } else {
             // 반환 안됨 : 인증 토큰을 입력하지 않았습니다. (로그인 필요)
+            spw_auth_info.SharedPreferenceWrapper.set(value: null);
             handler.next(response);
             return;
           }
