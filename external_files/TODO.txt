@@ -4,7 +4,6 @@
     mobile_page_permission_sample_list
     pc_page_flutter_resource_image_resize
 
-- 아이디 비번 브라우저 저장
 - SSE샘플
 - websocket샘플
 - websocketstomp샘플
