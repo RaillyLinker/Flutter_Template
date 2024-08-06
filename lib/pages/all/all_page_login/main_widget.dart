@@ -153,140 +153,149 @@ class MainWidgetState extends State<MainWidget> with WidgetsBindingObserver {
                 size: 100.0,
               ),
               const SizedBox(height: 20.0),
-              Container(
-                width: 220.0,
-                padding: const EdgeInsets.only(top: 5, bottom: 5),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: gw_sfw_wrapper.SfwRefreshWrapper(
-                  key: mainBusiness.idTextFieldAreaGk,
-                  widgetBuild: (context) {
-                    mainBusiness.idTextFieldContext = context;
+              AutofillGroup(
+                  child: Column(
+                children: [
+                  Container(
+                    width: 220.0,
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: gw_sfw_wrapper.SfwRefreshWrapper(
+                      key: mainBusiness.idTextFieldAreaGk,
+                      widgetBuild: (context) {
+                        mainBusiness.idTextFieldContext = context;
 
-                    return TextFormField(
-                      autofocus: true,
-                      keyboardType: TextInputType.emailAddress,
-                      autofillHints: const [AutofillHints.username],
-                      controller: mainBusiness.idTextFieldController,
-                      focusNode: mainBusiness.idTextFieldFocus,
-                      decoration: InputDecoration(
-                        labelText: "이메일 입력",
-                        floatingLabelStyle: const TextStyle(color: Colors.blue),
-                        hintText: 'user@email.com',
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10.0),
-                        filled: true,
-                        fillColor: Colors.white,
-                        errorText: mainBusiness.idTextFieldErrorMsg,
-                        prefixIcon: const InkWell(
-                          child: Icon(
-                            Icons.email,
-                            color: Colors.blue,
-                            size: 24.0, // 아이콘 크기 조정
+                        return TextFormField(
+                          autofocus: true,
+                          keyboardType: TextInputType.emailAddress,
+                          autofillHints: const [AutofillHints.username],
+                          controller: mainBusiness.idTextFieldController,
+                          focusNode: mainBusiness.idTextFieldFocus,
+                          decoration: InputDecoration(
+                            labelText: "이메일 입력",
+                            floatingLabelStyle:
+                                const TextStyle(color: Colors.blue),
+                            hintText: 'user@email.com',
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            filled: true,
+                            fillColor: Colors.white,
+                            errorText: mainBusiness.idTextFieldErrorMsg,
+                            prefixIcon: const InkWell(
+                              child: Icon(
+                                Icons.email,
+                                color: Colors.blue,
+                                size: 24.0, // 아이콘 크기 조정
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                mainBusiness.idTextFieldController.text = "";
+                              },
+                              icon: const Icon(Icons.clear),
+                            ),
                           ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            mainBusiness.idTextFieldController.text = "";
+                          onChanged: (value) {
+                            // 입력값 변경시 에러 메세지 삭제
+                            if (mainBusiness.idTextFieldErrorMsg != null) {
+                              mainBusiness.idTextFieldErrorMsg = null;
+                              mainBusiness.idTextFieldAreaGk.currentState
+                                  ?.refreshUi();
+                            }
                           },
-                          icon: const Icon(Icons.clear),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        // 입력값 변경시 에러 메세지 삭제
-                        if (mainBusiness.idTextFieldErrorMsg != null) {
-                          mainBusiness.idTextFieldErrorMsg = null;
-                          mainBusiness.idTextFieldAreaGk.currentState
-                              ?.refreshUi();
-                        }
+                          onEditingComplete: () {
+                            mainBusiness.onIdFieldSubmitted();
+                          },
+                        );
                       },
-                      onEditingComplete: () {
-                        mainBusiness.onIdFieldSubmitted();
-                      },
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 10.0),
-              Container(
-                width: 220.0,
-                padding: const EdgeInsets.only(top: 5, bottom: 5),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: gw_sfw_wrapper.SfwRefreshWrapper(
-                  key: mainBusiness.passwordTextFieldAreaGk,
-                  widgetBuild: (context) {
-                    mainBusiness.passwordTextFieldContext = context;
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Container(
+                    width: 220.0,
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: gw_sfw_wrapper.SfwRefreshWrapper(
+                      key: mainBusiness.passwordTextFieldAreaGk,
+                      widgetBuild: (context) {
+                        mainBusiness.passwordTextFieldContext = context;
 
-                    return TextFormField(
-                      keyboardType: TextInputType.text,
-                      controller: mainBusiness.passwordTextFieldController,
-                      focusNode: mainBusiness.passwordTextFieldFocus,
-                      obscureText: mainBusiness.passwordTextFieldHide,
-                      autofillHints: const [AutofillHints.password],
-                      decoration: InputDecoration(
-                        labelText: "비밀번호 입력",
-                        floatingLabelStyle: const TextStyle(color: Colors.blue),
-                        hintText: 'xxxxxxxxxxx',
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 10.0),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        prefixIcon: const Icon(
-                          Icons.key,
-                          color: Colors.grey,
-                          size: 24.0, // 아이콘 크기 조정
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            mainBusiness.passwordTextFieldHide
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                        return TextFormField(
+                          keyboardType: TextInputType.text,
+                          controller: mainBusiness.passwordTextFieldController,
+                          focusNode: mainBusiness.passwordTextFieldFocus,
+                          obscureText: mainBusiness.passwordTextFieldHide,
+                          autofillHints: const [AutofillHints.password],
+                          decoration: InputDecoration(
+                            labelText: "비밀번호 입력",
+                            floatingLabelStyle:
+                                const TextStyle(color: Colors.blue),
+                            hintText: 'xxxxxxxxxxx',
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.key,
+                              color: Colors.grey,
+                              size: 24.0, // 아이콘 크기 조정
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                mainBusiness.passwordTextFieldHide
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                mainBusiness.passwordTextFieldHide =
+                                    !mainBusiness.passwordTextFieldHide;
+                                mainBusiness
+                                    .passwordTextFieldAreaGk.currentState
+                                    ?.refreshUi();
+                              },
+                            ),
+                            errorText: mainBusiness.passwordTextFieldErrorMsg,
                           ),
-                          onPressed: () {
-                            mainBusiness.passwordTextFieldHide =
-                                !mainBusiness.passwordTextFieldHide;
-                            mainBusiness.passwordTextFieldAreaGk.currentState
-                                ?.refreshUi();
+                          onChanged: (value) {
+                            // 입력값 변경시 에러 메세지 삭제
+                            if (mainBusiness.passwordTextFieldErrorMsg !=
+                                null) {
+                              mainBusiness.passwordTextFieldErrorMsg = null;
+                              mainBusiness.passwordTextFieldAreaGk.currentState
+                                  ?.refreshUi();
+                            }
                           },
-                        ),
-                        errorText: mainBusiness.passwordTextFieldErrorMsg,
-                      ),
-                      onChanged: (value) {
-                        // 입력값 변경시 에러 메세지 삭제
-                        if (mainBusiness.passwordTextFieldErrorMsg != null) {
-                          mainBusiness.passwordTextFieldErrorMsg = null;
-                          mainBusiness.passwordTextFieldAreaGk.currentState
-                              ?.refreshUi();
-                        }
+                          onEditingComplete: () {
+                            mainBusiness.onPasswordFieldSubmitted();
+                          },
+                        );
                       },
-                      onEditingComplete: () {
-                        mainBusiness.onPasswordFieldSubmitted();
-                      },
-                    );
-                  },
-                ),
-              ),
+                    ),
+                  )
+                ],
+              )),
               const SizedBox(height: 20.0),
               MouseRegion(
                 cursor: SystemMouseCursors.click,
