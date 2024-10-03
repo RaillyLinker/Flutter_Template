@@ -282,17 +282,52 @@ class MainBusiness {
                               .responseBody! as api_main_server
                           .PostService1TkV1AuthReissueAsyncResponseBodyVo;
 
+                      if (postReissueResponseBody.lockedOutputList != null) {
+                        var lockedInfo =
+                            postReissueResponseBody.lockedOutputList![0];
+
+                        allDialogLoadingSpinnerStateGk
+                            .currentState?.mainBusiness
+                            .closeDialog();
+
+                        // Dio 네트워크 에러
+                        final GlobalKey<all_dialog_info.MainWidgetState>
+                            allDialogInfoStateGk =
+                            GlobalKey<all_dialog_info.MainWidgetState>();
+                        if (!mainContext.mounted) return;
+                        showDialog(
+                            barrierDismissible: false,
+                            context: mainContext,
+                            builder: (context) => all_dialog_info.MainWidget(
+                                  key: allDialogInfoStateGk,
+                                  inputVo: all_dialog_info.InputVo(
+                                    dialogTitle: "계정 정지",
+                                    dialogContent: "회원님의 계정이\n"
+                                        "관리자에 의해 정지되었습니다.\n"
+                                        "계정 정리 시작 시간 : ${lockedInfo.lockStart}\n"
+                                        "계정 정리 만료 시간 : ${lockedInfo.lockBefore}\n"
+                                        "계정 정지 이유 :\n"
+                                        "${lockedInfo.lockReason}",
+                                    checkBtnTitle: "확인",
+                                    onDialogCreated: () {},
+                                  ),
+                                ));
+                        return;
+                      }
+
                       // SPW 정보 갱신
-                      authInfo.memberUid = postReissueResponseBody.memberUid;
-                      authInfo.tokenType = postReissueResponseBody.tokenType;
+                      authInfo.memberUid =
+                          postReissueResponseBody.loggedInOutput!.memberUid;
+                      authInfo.tokenType =
+                          postReissueResponseBody.loggedInOutput!.tokenType;
                       authInfo.accessToken =
-                          postReissueResponseBody.accessToken;
-                      authInfo.accessTokenExpireWhen =
-                          postReissueResponseBody.accessTokenExpireWhen;
+                          postReissueResponseBody.loggedInOutput!.accessToken;
+                      authInfo.accessTokenExpireWhen = postReissueResponseBody
+                          .loggedInOutput!.accessTokenExpireWhen;
                       authInfo.refreshToken =
-                          postReissueResponseBody.refreshToken;
-                      authInfo.refreshTokenExpireWhen =
-                          postReissueResponseBody.refreshTokenExpireWhen;
+                          postReissueResponseBody.loggedInOutput!.refreshToken;
+                      authInfo.refreshTokenExpireWhen = postReissueResponseBody
+                          .loggedInOutput!.refreshTokenExpireWhen;
 
                       spw_auth_info.SharedPreferenceWrapper.set(
                           value: authInfo);

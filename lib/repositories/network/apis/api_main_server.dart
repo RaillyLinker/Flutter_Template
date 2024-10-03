@@ -1236,13 +1236,52 @@ Future<
       // Object 타입이 넘어오면 Map<String, dynamic> 으로 받고,
       // Object List 타입이 넘어오면 List<Map<String, dynamic>> 으로 받아서 처리
 
+      Map<String, dynamic>? loggedInOutputResponse =
+          responseBodyMap["loggedInOutput"];
+
+      PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVoLoggedInOutput?
+          loggedInOutput;
+
+      if (loggedInOutputResponse != null) {
+        loggedInOutput =
+            PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVoLoggedInOutput(
+          memberUid: loggedInOutputResponse["memberUid"],
+          tokenType: loggedInOutputResponse["tokenType"],
+          accessToken: loggedInOutputResponse["accessToken"],
+          refreshToken: loggedInOutputResponse["refreshToken"],
+          accessTokenExpireWhen:
+              loggedInOutputResponse["accessTokenExpireWhen"],
+          refreshTokenExpireWhen:
+              loggedInOutputResponse["refreshTokenExpireWhen"],
+        );
+      }
+
+      List<Map<String, dynamic>>? lockedOutputListResponse =
+          (responseBodyMap["lockedOutputList"] == null)
+              ? null
+              : List<Map<String, dynamic>>.from(
+                  responseBodyMap["lockedOutputList"]);
+
+      List<PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVoLockedOutput>?
+          lockedOutputList;
+
+      if (lockedOutputListResponse != null) {
+        lockedOutputList = [];
+        for (var lockedOutput in lockedOutputListResponse) {
+          lockedOutputList.add(
+              PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVoLockedOutput(
+            memberUid: lockedOutput["memberUid"],
+            lockStart: lockedOutput["lockStart"],
+            lockBefore: lockedOutput["lockBefore"],
+            lockReasonCode: lockedOutput["lockReasonCode"],
+            lockReason: lockedOutput["lockReason"],
+          ));
+        }
+      }
+
       responseBody = PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVo(
-        memberUid: responseBodyMap["memberUid"],
-        tokenType: responseBodyMap["tokenType"],
-        accessToken: responseBodyMap["accessToken"],
-        refreshToken: responseBodyMap["refreshToken"],
-        accessTokenExpireWhen: responseBodyMap["accessTokenExpireWhen"],
-        refreshTokenExpireWhen: responseBodyMap["refreshTokenExpireWhen"],
+        loggedInOutput: loggedInOutput,
+        lockedOutputList: lockedOutputList,
       );
     }
 
@@ -1279,12 +1318,23 @@ class PostService1TkV1AuthLoginWithPasswordAsyncResponseHeaderVo {
   // (204 api-result-code)
   // 1 : 입력한 id 로 가입된 회원 정보가 없습니다.
   // 2 : 입력한 password 가 일치하지 않습니다.
-  // 3 : 계정이 정지된 상태입니다.
   String? apiResultCode;
 }
 
 class PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVo {
   PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVo({
+    required this.loggedInOutput,
+    required this.lockedOutputList,
+  });
+
+  PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVoLoggedInOutput?
+      loggedInOutput; // 로그인 성공 정보 (이 변수가 Null 이 아니라면 lockedOutputList 가 Null 입니다.)
+  List<PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVoLockedOutput>?
+      lockedOutputList; // 계정 잠김 정보 리스트 (이 변수가 Null 이 아니라면 loggedInOutput 이 Null 입니다.)
+}
+
+class PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVoLoggedInOutput {
+  PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVoLoggedInOutput({
     required this.memberUid,
     required this.tokenType,
     required this.accessToken,
@@ -1300,6 +1350,23 @@ class PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVo {
   String accessTokenExpireWhen; // 엑세스 토큰 만료 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
   String
       refreshTokenExpireWhen; // 리플레시 토큰 만료 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
+}
+
+class PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVoLockedOutput {
+  PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVoLockedOutput({
+    required this.memberUid,
+    required this.lockStart,
+    required this.lockBefore,
+    required this.lockReasonCode,
+    required this.lockReason,
+  });
+
+  int memberUid; // 멤버 고유값
+  String lockStart; // 계정 정지 시작 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
+  String?
+      lockBefore; // 계정 정지 만료 시간 (이 시간이 지나기 전까지 계정 정지 상태, null 이라면 무기한 정지) (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
+  int lockReasonCode; // 계정 정지 이유 코드(0 : 기타, 1 : 휴면계정, 2 : 패널티)
+  String lockReason; // 계정 정지 이유 상세(시스템 악용 패널티, 1년 이상 미접속 휴면계정 등...)
 }
 
 ////
@@ -1335,16 +1402,13 @@ Future<
         options: Options(headers: requestHeaders), data: requestBody);
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo responseHeader;
     DeleteService1TkV1AuthLogoutAsyncResponseBodyVo? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
-    responseHeader = DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo(
-        apiResultCode: responseHeaderMap.containsKey("api-result-code")
-            ? responseHeaderMap["api-result-code"][0]
-            : null);
+    responseHeader = DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo();
     return gc_template_classes.NetworkResponseObject(
         networkResponseObjectOk: gc_template_classes.NetworkResponseObjectOk(
             responseStatusCode: statusCode,
@@ -1368,14 +1432,7 @@ class DeleteService1TkV1AuthLogoutAsyncRequestHeaderVo {
 }
 
 class DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo {
-  DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (401 api-result-code)
-  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
-  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
-  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
-  String? apiResultCode;
+  DeleteService1TkV1AuthLogoutAsyncResponseHeaderVo();
 }
 
 class DeleteService1TkV1AuthLogoutAsyncResponseBodyVo {}
@@ -1437,13 +1494,52 @@ Future<
       // Object 타입이 넘어오면 Map<String, dynamic> 으로 받고,
       // Object List 타입이 넘어오면 List<Map<String, dynamic>> 으로 받아서 처리
 
+      Map<String, dynamic>? loggedInOutputResponse =
+          responseBodyMap["loggedInOutput"];
+
+      PostService1TkV1AuthReissueAsyncResponseBodyVoLoggedInOutput?
+          loggedInOutput;
+
+      if (loggedInOutputResponse != null) {
+        loggedInOutput =
+            PostService1TkV1AuthReissueAsyncResponseBodyVoLoggedInOutput(
+          memberUid: loggedInOutputResponse["memberUid"],
+          tokenType: loggedInOutputResponse["tokenType"],
+          accessToken: loggedInOutputResponse["accessToken"],
+          refreshToken: loggedInOutputResponse["refreshToken"],
+          accessTokenExpireWhen:
+              loggedInOutputResponse["accessTokenExpireWhen"],
+          refreshTokenExpireWhen:
+              loggedInOutputResponse["refreshTokenExpireWhen"],
+        );
+      }
+
+      List<Map<String, dynamic>>? lockedOutputListResponse =
+          (responseBodyMap["lockedOutputList"] == null)
+              ? null
+              : List<Map<String, dynamic>>.from(
+                  responseBodyMap["lockedOutputList"]);
+
+      List<PostService1TkV1AuthReissueAsyncResponseBodyVoLockedOutput>?
+          lockedOutputList;
+
+      if (lockedOutputListResponse != null) {
+        lockedOutputList = [];
+        for (var lockedOutput in lockedOutputListResponse) {
+          lockedOutputList
+              .add(PostService1TkV1AuthReissueAsyncResponseBodyVoLockedOutput(
+            memberUid: lockedOutput["memberUid"],
+            lockStart: lockedOutput["lockStart"],
+            lockBefore: lockedOutput["lockBefore"],
+            lockReasonCode: lockedOutput["lockReasonCode"],
+            lockReason: lockedOutput["lockReason"],
+          ));
+        }
+      }
+
       responseBody = PostService1TkV1AuthReissueAsyncResponseBodyVo(
-        memberUid: responseBodyMap["memberUid"],
-        tokenType: responseBodyMap["tokenType"],
-        accessToken: responseBodyMap["accessToken"],
-        refreshToken: responseBodyMap["refreshToken"],
-        accessTokenExpireWhen: responseBodyMap["accessTokenExpireWhen"],
-        refreshTokenExpireWhen: responseBodyMap["refreshTokenExpireWhen"],
+        loggedInOutput: loggedInOutput,
+        lockedOutputList: lockedOutputList,
       );
     }
 
@@ -1476,9 +1572,8 @@ class PostService1TkV1AuthReissueAsyncRequestBodyVo {
 }
 
 class PostService1TkV1AuthReissueAsyncResponseHeaderVo {
-  PostService1TkV1AuthReissueAsyncResponseHeaderVo({
-    required this.apiResultCode
-  });
+  PostService1TkV1AuthReissueAsyncResponseHeaderVo(
+      {required this.apiResultCode});
 
   // (204 api-result-code)
   // 1 : 유효하지 않은 Refresh Token 입니다.
@@ -1486,12 +1581,23 @@ class PostService1TkV1AuthReissueAsyncResponseHeaderVo {
   // 3 : 올바르지 않은 Access Token 입니다.
   // 4 : 탈퇴된 회원입니다.
   // 5 : 로그아웃 처리된 Access Token 입니다.(갱신 불가)
-  // 6 : Access Token 의 멤버가 계정 정지 처리된 상태입니다.(갱신 불가)
   String? apiResultCode;
 }
 
 class PostService1TkV1AuthReissueAsyncResponseBodyVo {
   PostService1TkV1AuthReissueAsyncResponseBodyVo({
+    required this.loggedInOutput,
+    required this.lockedOutputList,
+  });
+
+  PostService1TkV1AuthReissueAsyncResponseBodyVoLoggedInOutput?
+      loggedInOutput; // 로그인 성공 정보 (이 변수가 Null 이 아니라면 lockedOutputList 가 Null 입니다.)
+  List<PostService1TkV1AuthReissueAsyncResponseBodyVoLockedOutput>?
+      lockedOutputList; // 계정 잠김 정보 리스트 (이 변수가 Null 이 아니라면 loggedInOutput 이 Null 입니다.)
+}
+
+class PostService1TkV1AuthReissueAsyncResponseBodyVoLoggedInOutput {
+  PostService1TkV1AuthReissueAsyncResponseBodyVoLoggedInOutput({
     required this.memberUid,
     required this.tokenType,
     required this.accessToken,
@@ -1507,6 +1613,23 @@ class PostService1TkV1AuthReissueAsyncResponseBodyVo {
   String accessTokenExpireWhen; // 엑세스 토큰 만료 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
   String
       refreshTokenExpireWhen; // 리플레시 토큰 만료 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
+}
+
+class PostService1TkV1AuthReissueAsyncResponseBodyVoLockedOutput {
+  PostService1TkV1AuthReissueAsyncResponseBodyVoLockedOutput({
+    required this.memberUid,
+    required this.lockStart,
+    required this.lockBefore,
+    required this.lockReasonCode,
+    required this.lockReason,
+  });
+
+  int memberUid; // 멤버 고유값
+  String lockStart; // 계정 정지 시작 시간 (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
+  String?
+      lockBefore; // 계정 정지 만료 시간 (이 시간이 지나기 전까지 계정 정지 상태, null 이라면 무기한 정지) (yyyy_MM_dd_'T'_HH_mm_ss_SSS_z)
+  int lockReasonCode; // 계정 정지 이유 코드(0 : 기타, 1 : 휴면계정, 2 : 패널티)
+  String lockReason; // 계정 정지 이유 상세(시스템 악용 패널티, 1년 이상 미접속 휴면계정 등...)
 }
 
 ////
@@ -1606,16 +1729,13 @@ Future<
         options: Options(headers: requestHeaders));
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     GetService1TkV1AuthForLoggedInAsyncResponseHeaderVo responseHeader;
     String? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
-    responseHeader = GetService1TkV1AuthForLoggedInAsyncResponseHeaderVo(
-        apiResultCode: (responseHeaderMap.containsKey("api-result-code"))
-            ? responseHeaderMap["api-result-code"][0]
-            : null);
+    responseHeader = GetService1TkV1AuthForLoggedInAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
 
@@ -1645,14 +1765,7 @@ class GetService1TkV1AuthForLoggedInAsyncRequestHeaderVo {
 }
 
 class GetService1TkV1AuthForLoggedInAsyncResponseHeaderVo {
-  GetService1TkV1AuthForLoggedInAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (401 api-result-code)
-  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
-  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
-  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
-  String? apiResultCode;
+  GetService1TkV1AuthForLoggedInAsyncResponseHeaderVo();
 }
 
 class GetService1TkV1AuthForLoggedInAsyncResponseBodyVo {
@@ -1693,16 +1806,13 @@ Future<
         options: Options(headers: requestHeaders));
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     GetService1TkV1AuthForDeveloperAsyncResponseHeaderVo responseHeader;
     String? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
-    responseHeader = GetService1TkV1AuthForDeveloperAsyncResponseHeaderVo(
-        apiResultCode: (responseHeaderMap.containsKey("api-result-code"))
-            ? responseHeaderMap["api-result-code"][0]
-            : null);
+    responseHeader = GetService1TkV1AuthForDeveloperAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
 
@@ -1732,14 +1842,7 @@ class GetService1TkV1AuthForDeveloperAsyncRequestHeaderVo {
 }
 
 class GetService1TkV1AuthForDeveloperAsyncResponseHeaderVo {
-  GetService1TkV1AuthForDeveloperAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (401 api-result-code)
-  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
-  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
-  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
-  String? apiResultCode;
+  GetService1TkV1AuthForDeveloperAsyncResponseHeaderVo();
 }
 
 class GetService1TkV1AuthForDeveloperAsyncResponseBodyVo {
@@ -1780,16 +1883,13 @@ Future<
         options: Options(headers: requestHeaders));
 
     int statusCode = response.statusCode!;
-    Map<String, dynamic> responseHeaderMap = response.headers.map;
+    // Map<String, dynamic> responseHeaderMap = response.headers.map;
 
     GetService1TkV1AuthForAdminAsyncResponseHeaderVo responseHeader;
     String? responseBody;
 
     // !!!Response Map 을 Response Object 로 변경!!!
-    responseHeader = GetService1TkV1AuthForAdminAsyncResponseHeaderVo(
-        apiResultCode: (responseHeaderMap.containsKey("api-result-code"))
-            ? responseHeaderMap["api-result-code"][0]
-            : null);
+    responseHeader = GetService1TkV1AuthForAdminAsyncResponseHeaderVo();
     if (statusCode == 200) {
       // responseBody 가 반환되는 조건
 
@@ -1819,14 +1919,7 @@ class GetService1TkV1AuthForAdminAsyncRequestHeaderVo {
 }
 
 class GetService1TkV1AuthForAdminAsyncResponseHeaderVo {
-  GetService1TkV1AuthForAdminAsyncResponseHeaderVo(
-      {required this.apiResultCode});
-
-  // (401 api-result-code)
-  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
-  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
-  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
-  String? apiResultCode;
+  GetService1TkV1AuthForAdminAsyncResponseHeaderVo();
 }
 
 class GetService1TkV1AuthForAdminAsyncResponseBodyVo {
@@ -2530,11 +2623,6 @@ class PutService1TkV1AuthChangeAccountPasswordAsyncResponseHeaderVo {
   // (204 api-result-code)
   // 1 : 기존 비밀번호가 일치하지 않습니다.
   // 2 : 비밀번호를 null 로 만들려고 할 때, 이외에 로그인할 수단이 없으므로 비밀번호 제거가 불가능합니다.
-
-  // (401 api-result-code)
-  // 반환 안됨 : 인증 토큰을 입력하지 않았습니다.
-  // 1 : Request Header 에 Authorization 키로 넣어준 토큰이 올바르지 않습니다. (재 로그인 필요)
-  // 2 : Request Header 에 Authorization 키로 넣어준 토큰의 유효시간이 만료되었습니다. (Refresh Token 으로 재발급 필요)
   String? apiResultCode;
 }
 

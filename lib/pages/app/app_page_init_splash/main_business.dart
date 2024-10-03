@@ -157,8 +157,6 @@ class MainBusiness {
   late VoidCallback refreshUi;
 
   // [private 함수]
-  void _doNothing() {}
-
   // (앱 버전 확인)
   Future<void> _checkAppVersionAsync() async {
     // 플랫폼 코드 (1 : web, 2 : android, 3 : ios, 4 : windows, 5 : macos, 6 : linux)
@@ -387,23 +385,57 @@ class MainBusiness {
 
           if (networkResponseObjectOk.responseStatusCode == 200) {
             // 액세스 토큰 재발급 정상 응답
-
             var postReissueResponseBody = networkResponseObjectOk.responseBody!
                 as api_main_server
                 .PostService1TkV1AuthReissueAsyncResponseBodyVo;
 
             signInRetryCount = 0;
 
-            // SSW 정보 갱신
+            if (postReissueResponseBody.lockedOutputList != null) {
+              // 계정 정지 상태
+              var lockedInfo = postReissueResponseBody.lockedOutputList![0];
+              final GlobalKey<all_dialog_info.MainWidgetState>
+                  allDialogInfoStateGk =
+                  GlobalKey<all_dialog_info.MainWidgetState>();
+              if (!mainContext.mounted) return;
+              await showDialog(
+                  barrierDismissible: true,
+                  context: mainContext,
+                  builder: (context) => all_dialog_info.MainWidget(
+                        key: allDialogInfoStateGk,
+                        inputVo: all_dialog_info.InputVo(
+                          dialogTitle: "계정 정지",
+                          dialogContent: "회원님의 계정이\n"
+                              "관리자에 의해 정지되었습니다.\n"
+                              "계정 정리 시작 시간 : ${lockedInfo.lockStart}\n"
+                              "계정 정리 만료 시간 : ${lockedInfo.lockBefore}\n"
+                              "계정 정지 이유 :\n"
+                              "${lockedInfo.lockReason}",
+                          checkBtnTitle: "확인",
+                          onDialogCreated: () {},
+                        ),
+                      ));
 
-            authInfo.memberUid = postReissueResponseBody.memberUid;
-            authInfo.tokenType = postReissueResponseBody.tokenType;
-            authInfo.accessToken = postReissueResponseBody.accessToken;
+              // login_user_info SSW 비우기 (= 로그아웃 처리)
+              spw_auth_info.SharedPreferenceWrapper.set(value: null);
+              initLogicComplete = true;
+              _onApplicationInitLogicComplete();
+              return;
+            }
+
+            // SSW 정보 갱신
+            authInfo.memberUid =
+                postReissueResponseBody.loggedInOutput!.memberUid;
+            authInfo.tokenType =
+                postReissueResponseBody.loggedInOutput!.tokenType;
+            authInfo.accessToken =
+                postReissueResponseBody.loggedInOutput!.accessToken;
             authInfo.accessTokenExpireWhen =
-                postReissueResponseBody.accessTokenExpireWhen;
-            authInfo.refreshToken = postReissueResponseBody.refreshToken;
+                postReissueResponseBody.loggedInOutput!.accessTokenExpireWhen;
+            authInfo.refreshToken =
+                postReissueResponseBody.loggedInOutput!.refreshToken;
             authInfo.refreshTokenExpireWhen =
-                postReissueResponseBody.refreshTokenExpireWhen;
+                postReissueResponseBody.loggedInOutput!.refreshTokenExpireWhen;
 
             spw_auth_info.SharedPreferenceWrapper.set(value: authInfo);
 
@@ -478,9 +510,11 @@ class MainBusiness {
               String apiResultCode = responseHeaders.apiResultCode!;
 
               switch (apiResultCode) {
-                case "1": // 올바르지 않은 Authorization Token 입니다.
-                case "2": // 유효하지 않은 Refresh Token 입니다.
-                case "3": // Refresh Token 이 만료되었습니다.
+                case "1": // 유효하지 않은 Refresh Token 입니다.
+                case "2": // Refresh Token 이 만료되었습니다.
+                case "3": // 올바르지 않은 Access Token 입니다.
+                case "4": // 탈퇴된 회원입니다.
+                case "5": // 로그아웃 처리된 Access Token 입니다.(갱신 불가)
                   {
                     // 리플래시 토큰이 사용 불가이므로 로그아웃 처리
 

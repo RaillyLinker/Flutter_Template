@@ -301,14 +301,43 @@ class MainBusiness {
                         .responseBody! as api_main_server
                     .PostService1TkV1AuthLoginWithPasswordAsyncResponseBodyVo;
 
+                if (responseBody.lockedOutputList != null) {
+                  var lockedInfo = responseBody.lockedOutputList![0];
+
+                  // 계정이 정지된 상태입니다.
+                  final GlobalKey<all_dialog_info.MainWidgetState>
+                      allDialogInfoStateGk =
+                      GlobalKey<all_dialog_info.MainWidgetState>();
+                  if (!mainContext.mounted) return;
+                  showDialog(
+                      barrierDismissible: true,
+                      context: mainContext,
+                      builder: (context) => all_dialog_info.MainWidget(
+                            key: allDialogInfoStateGk,
+                            inputVo: all_dialog_info.InputVo(
+                              dialogTitle: "계정 정지",
+                              dialogContent: "회원님의 계정이\n"
+                                  "관리자에 의해 정지되었습니다.\n"
+                                  "계정 정리 시작 시간 : ${lockedInfo.lockStart}\n"
+                                  "계정 정리 만료 시간 : ${lockedInfo.lockBefore}\n"
+                                  "계정 정지 이유 :\n"
+                                  "${lockedInfo.lockReason}",
+                              checkBtnTitle: "확인",
+                              onDialogCreated: () {},
+                            ),
+                          ));
+                  accountLoginAsyncClicked = false;
+                  return;
+                }
+
                 spw_auth_info.SharedPreferenceWrapper.set(
                     value: spw_auth_info.SharedPreferenceWrapperVo(
-                  responseBody.memberUid,
-                  responseBody.tokenType,
-                  responseBody.accessToken,
-                  responseBody.accessTokenExpireWhen,
-                  responseBody.refreshToken,
-                  responseBody.refreshTokenExpireWhen,
+                  responseBody.loggedInOutput!.memberUid,
+                  responseBody.loggedInOutput!.tokenType,
+                  responseBody.loggedInOutput!.accessToken,
+                  responseBody.loggedInOutput!.accessTokenExpireWhen,
+                  responseBody.loggedInOutput!.refreshToken,
+                  responseBody.loggedInOutput!.refreshTokenExpireWhen,
                 ));
 
                 accountLoginAsyncClicked = false;
@@ -364,29 +393,6 @@ class MainBusiness {
                                 inputVo: all_dialog_info.InputVo(
                                   dialogTitle: "로그인 실패",
                                   dialogContent: "비밀번호가 일치하지 않습니다.",
-                                  checkBtnTitle: "확인",
-                                  onDialogCreated: () {},
-                                ),
-                              ));
-                      accountLoginAsyncClicked = false;
-                    }
-                    break;
-                  case "3":
-                    {
-                      // 계정이 정지된 상태입니다.
-                      final GlobalKey<all_dialog_info.MainWidgetState>
-                          allDialogInfoStateGk =
-                          GlobalKey<all_dialog_info.MainWidgetState>();
-                      if (!mainContext.mounted) return;
-                      showDialog(
-                          barrierDismissible: true,
-                          context: mainContext,
-                          builder: (context) => all_dialog_info.MainWidget(
-                                key: allDialogInfoStateGk,
-                                inputVo: all_dialog_info.InputVo(
-                                  dialogTitle: "로그인 실패",
-                                  dialogContent: "회원님의 계정이\n"
-                                      "관리자에 의해 정지되었습니다.",
                                   checkBtnTitle: "확인",
                                   onDialogCreated: () {},
                                 ),
