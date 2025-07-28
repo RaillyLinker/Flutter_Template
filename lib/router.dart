@@ -80,6 +80,8 @@ import 'package:flutter_template/pages/app/app_page_init_splash/main_widget.dart
     as app_page_init_splash;
 import 'package:flutter_template/pages/app/app_page_server_sample/main_widget.dart'
     as app_page_server_sample;
+import 'package:flutter_template/pages/app/app_page_drift_export_sample/main_widget.dart'
+    as app_page_drift_export_sample;
 
 // (mobile)
 import 'package:flutter_template/pages/mobile/mobile_page_permission_sample_list/main_widget.dart'
@@ -131,9 +133,10 @@ GoRouter getRouter() {
       name: all_page_home.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_home.MainWidget(goRouterState: s),
-            transitionsBuilder: all_page_home.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_home.MainWidget(goRouterState: s),
+          transitionsBuilder: all_page_home.pageTransitionsBuilder,
+        );
       },
       routes: subRouteList,
     ),
@@ -145,11 +148,13 @@ GoRouter getRouter() {
       name: all_page_page_and_router_sample_list.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_page_and_router_sample_list.MainWidget(
-                goRouterState: s),
-            transitionsBuilder:
-                all_page_page_and_router_sample_list.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_page_and_router_sample_list.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder:
+              all_page_page_and_router_sample_list.pageTransitionsBuilder,
+        );
       },
       routes: subRouteListPageAndRouterSampleList,
     ),
@@ -161,11 +166,13 @@ GoRouter getRouter() {
       name: all_page_stateful_and_lifecycle_test.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_stateful_and_lifecycle_test.MainWidget(
-                goRouterState: s),
-            transitionsBuilder:
-                all_page_stateful_and_lifecycle_test.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_stateful_and_lifecycle_test.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder:
+              all_page_stateful_and_lifecycle_test.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -176,9 +183,10 @@ GoRouter getRouter() {
       name: all_page_template.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_template.MainWidget(goRouterState: s),
-            transitionsBuilder: all_page_template.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_template.MainWidget(goRouterState: s),
+          transitionsBuilder: all_page_template.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -189,11 +197,13 @@ GoRouter getRouter() {
       name: all_page_input_and_output_push_test.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_input_and_output_push_test.MainWidget(
-                goRouterState: s),
-            transitionsBuilder:
-                all_page_input_and_output_push_test.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_input_and_output_push_test.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder:
+              all_page_input_and_output_push_test.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -204,11 +214,13 @@ GoRouter getRouter() {
       name: all_page_page_transition_animation_sample_list.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_page_transition_animation_sample_list.MainWidget(
-                goRouterState: s),
-            transitionsBuilder: all_page_page_transition_animation_sample_list
-                .pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_page_transition_animation_sample_list.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder: all_page_page_transition_animation_sample_list
+              .pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -219,9 +231,10 @@ GoRouter getRouter() {
       name: all_page_grid_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_grid_sample.MainWidget(goRouterState: s),
-            transitionsBuilder: all_page_grid_sample.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_grid_sample.MainWidget(goRouterState: s),
+          transitionsBuilder: all_page_grid_sample.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -232,10 +245,11 @@ GoRouter getRouter() {
       name: all_page_dialog_sample_list.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_dialog_sample_list.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_dialog_sample_list.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_dialog_sample_list.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_dialog_sample_list.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -246,11 +260,13 @@ GoRouter getRouter() {
       name: all_page_dialog_animation_sample_list.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_dialog_animation_sample_list.MainWidget(
-                goRouterState: s),
-            transitionsBuilder:
-                all_page_dialog_animation_sample_list.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_dialog_animation_sample_list.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder:
+              all_page_dialog_animation_sample_list.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -261,11 +277,13 @@ GoRouter getRouter() {
       name: all_page_network_request_sample_list.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_network_request_sample_list.MainWidget(
-                goRouterState: s),
-            transitionsBuilder:
-                all_page_network_request_sample_list.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_network_request_sample_list.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder:
+              all_page_network_request_sample_list.pageTransitionsBuilder,
+        );
       },
       routes: subRouteListNetworkRequestSampleList,
     ),
@@ -277,10 +295,11 @@ GoRouter getRouter() {
       name: all_page_get_request_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_get_request_sample.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_get_request_sample.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_get_request_sample.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_get_request_sample.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -291,10 +310,11 @@ GoRouter getRouter() {
       name: all_page_post_request_sample1.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_post_request_sample1.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_post_request_sample1.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_post_request_sample1.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_post_request_sample1.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -305,10 +325,11 @@ GoRouter getRouter() {
       name: all_page_post_request_sample2.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_post_request_sample2.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_post_request_sample2.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_post_request_sample2.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_post_request_sample2.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -319,10 +340,11 @@ GoRouter getRouter() {
       name: all_page_post_request_sample3.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_post_request_sample3.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_post_request_sample3.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_post_request_sample3.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_post_request_sample3.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -333,10 +355,11 @@ GoRouter getRouter() {
       name: all_page_post_request_sample4.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_post_request_sample4.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_post_request_sample4.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_post_request_sample4.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_post_request_sample4.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -347,9 +370,10 @@ GoRouter getRouter() {
       name: all_page_auth_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_auth_sample.MainWidget(goRouterState: s),
-            transitionsBuilder: all_page_auth_sample.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_auth_sample.MainWidget(goRouterState: s),
+          transitionsBuilder: all_page_auth_sample.pageTransitionsBuilder,
+        );
       },
       routes: subRouteListAuthSample,
     ),
@@ -361,11 +385,13 @@ GoRouter getRouter() {
       name: all_page_authorization_test_sample_list.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_authorization_test_sample_list.MainWidget(
-                goRouterState: s),
-            transitionsBuilder:
-                all_page_authorization_test_sample_list.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_authorization_test_sample_list.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder:
+              all_page_authorization_test_sample_list.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -376,9 +402,10 @@ GoRouter getRouter() {
       name: all_page_login.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_login.MainWidget(goRouterState: s),
-            transitionsBuilder: all_page_login.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_login.MainWidget(goRouterState: s),
+          transitionsBuilder: all_page_login.pageTransitionsBuilder,
+        );
       },
       routes: subRouteListAuthSampleAuthLogin,
     ),
@@ -390,11 +417,13 @@ GoRouter getRouter() {
       name: all_page_join_the_membership_email_verification.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_join_the_membership_email_verification.MainWidget(
-                goRouterState: s),
-            transitionsBuilder: all_page_join_the_membership_email_verification
-                .pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_join_the_membership_email_verification.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder: all_page_join_the_membership_email_verification
+              .pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -405,11 +434,11 @@ GoRouter getRouter() {
       name: all_page_find_password_with_email.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child:
-                all_page_find_password_with_email.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_find_password_with_email.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_find_password_with_email.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_find_password_with_email.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -420,11 +449,13 @@ GoRouter getRouter() {
       name: all_page_join_the_membership_edit_member_info.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_join_the_membership_edit_member_info.MainWidget(
-                goRouterState: s),
-            transitionsBuilder: all_page_join_the_membership_edit_member_info
-                .pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_join_the_membership_edit_member_info.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder: all_page_join_the_membership_edit_member_info
+              .pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -435,10 +466,10 @@ GoRouter getRouter() {
       name: all_page_etc_sample_list.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_etc_sample_list.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_etc_sample_list.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_etc_sample_list.MainWidget(goRouterState: s),
+          transitionsBuilder: all_page_etc_sample_list.pageTransitionsBuilder,
+        );
       },
       routes: subRouteListEtcSampleList,
     ),
@@ -450,11 +481,13 @@ GoRouter getRouter() {
       name: all_page_shared_preferences_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child:
-                all_page_shared_preferences_sample.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_shared_preferences_sample.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_shared_preferences_sample.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder:
+              all_page_shared_preferences_sample.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -465,10 +498,11 @@ GoRouter getRouter() {
       name: all_page_url_launcher_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_url_launcher_sample.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_url_launcher_sample.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_url_launcher_sample.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_url_launcher_sample.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -479,11 +513,13 @@ GoRouter getRouter() {
       name: all_page_global_variable_state_test_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_global_variable_state_test_sample.MainWidget(
-                goRouterState: s),
-            transitionsBuilder: all_page_global_variable_state_test_sample
-                .pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_global_variable_state_test_sample.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder:
+              all_page_global_variable_state_test_sample.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -494,11 +530,13 @@ GoRouter getRouter() {
       name: all_page_widget_change_animation_sample_list.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_widget_change_animation_sample_list.MainWidget(
-                goRouterState: s),
-            transitionsBuilder: all_page_widget_change_animation_sample_list
-                .pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_widget_change_animation_sample_list.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder: all_page_widget_change_animation_sample_list
+              .pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -509,9 +547,10 @@ GoRouter getRouter() {
       name: all_page_crypt_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_crypt_sample.MainWidget(goRouterState: s),
-            transitionsBuilder: all_page_crypt_sample.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_crypt_sample.MainWidget(goRouterState: s),
+          transitionsBuilder: all_page_crypt_sample.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -522,9 +561,10 @@ GoRouter getRouter() {
       name: all_page_gif_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_gif_sample.MainWidget(goRouterState: s),
-            transitionsBuilder: all_page_gif_sample.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_gif_sample.MainWidget(goRouterState: s),
+          transitionsBuilder: all_page_gif_sample.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -535,10 +575,11 @@ GoRouter getRouter() {
       name: all_page_image_selector_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_image_selector_sample.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_image_selector_sample.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_image_selector_sample.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_image_selector_sample.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -549,10 +590,11 @@ GoRouter getRouter() {
       name: all_page_image_loading_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_image_loading_sample.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_image_loading_sample.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_image_loading_sample.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_image_loading_sample.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -563,10 +605,11 @@ GoRouter getRouter() {
       name: all_page_context_menu_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_context_menu_sample.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_context_menu_sample.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_context_menu_sample.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_context_menu_sample.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -577,11 +620,13 @@ GoRouter getRouter() {
       name: all_page_gesture_area_overlap_test.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child:
-                all_page_gesture_area_overlap_test.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_gesture_area_overlap_test.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_gesture_area_overlap_test.MainWidget(
+            goRouterState: s,
+          ),
+          transitionsBuilder:
+              all_page_gesture_area_overlap_test.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -592,9 +637,10 @@ GoRouter getRouter() {
       name: all_page_form_sample.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_form_sample.MainWidget(goRouterState: s),
-            transitionsBuilder: all_page_form_sample.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_form_sample.MainWidget(goRouterState: s),
+          transitionsBuilder: all_page_form_sample.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -605,10 +651,11 @@ GoRouter getRouter() {
       name: all_page_horizontal_scroll_test.pageName,
       pageBuilder: (c, s) {
         return CustomTransitionPage(
-            key: s.pageKey,
-            child: all_page_horizontal_scroll_test.MainWidget(goRouterState: s),
-            transitionsBuilder:
-                all_page_horizontal_scroll_test.pageTransitionsBuilder);
+          key: s.pageKey,
+          child: all_page_horizontal_scroll_test.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_horizontal_scroll_test.pageTransitionsBuilder,
+        );
       },
     ),
   );
@@ -634,9 +681,10 @@ GoRouter getRouter() {
         name: app_page_init_splash.pageName,
         pageBuilder: (c, s) {
           return CustomTransitionPage(
-              key: s.pageKey,
-              child: app_page_init_splash.MainWidget(goRouterState: s),
-              transitionsBuilder: app_page_init_splash.pageTransitionsBuilder);
+            key: s.pageKey,
+            child: app_page_init_splash.MainWidget(goRouterState: s),
+            transitionsBuilder: app_page_init_splash.pageTransitionsBuilder,
+          );
         },
       ),
     );
@@ -647,10 +695,24 @@ GoRouter getRouter() {
         name: app_page_server_sample.pageName,
         pageBuilder: (c, s) {
           return CustomTransitionPage(
-              key: s.pageKey,
-              child: app_page_server_sample.MainWidget(goRouterState: s),
-              transitionsBuilder:
-                  app_page_server_sample.pageTransitionsBuilder);
+            key: s.pageKey,
+            child: app_page_server_sample.MainWidget(goRouterState: s),
+            transitionsBuilder: app_page_server_sample.pageTransitionsBuilder,
+          );
+        },
+      ),
+    );
+
+    subRouteListEtcSampleList.add(
+      GoRoute(
+        path: "drift-export-sample",
+        name: app_page_drift_export_sample.pageName,
+        pageBuilder: (c, s) {
+          return CustomTransitionPage(
+            key: s.pageKey,
+            child: app_page_drift_export_sample.MainWidget(goRouterState: s),
+            transitionsBuilder: app_page_drift_export_sample.pageTransitionsBuilder,
+          );
         },
       ),
     );
@@ -666,11 +728,13 @@ GoRouter getRouter() {
           name: mobile_page_permission_sample_list.pageName,
           pageBuilder: (c, s) {
             return CustomTransitionPage(
-                key: s.pageKey,
-                child: mobile_page_permission_sample_list.MainWidget(
-                    goRouterState: s),
-                transitionsBuilder:
-                    mobile_page_permission_sample_list.pageTransitionsBuilder);
+              key: s.pageKey,
+              child: mobile_page_permission_sample_list.MainWidget(
+                goRouterState: s,
+              ),
+              transitionsBuilder:
+                  mobile_page_permission_sample_list.pageTransitionsBuilder,
+            );
           },
         ),
       );
@@ -700,11 +764,13 @@ GoRouter getRouter() {
           name: pc_page_flutter_resource_image_resize.pageName,
           pageBuilder: (c, s) {
             return CustomTransitionPage(
-                key: s.pageKey,
-                child: pc_page_flutter_resource_image_resize.MainWidget(
-                    goRouterState: s),
-                transitionsBuilder: pc_page_flutter_resource_image_resize
-                    .pageTransitionsBuilder);
+              key: s.pageKey,
+              child: pc_page_flutter_resource_image_resize.MainWidget(
+                goRouterState: s,
+              ),
+              transitionsBuilder:
+                  pc_page_flutter_resource_image_resize.pageTransitionsBuilder,
+            );
           },
         ),
       );
@@ -733,8 +799,5 @@ GoRouter getRouter() {
   }
 
   // 라우터 객체 생성
-  return GoRouter(
-    initialLocation: initialLocation,
-    routes: routeList,
-  );
+  return GoRouter(initialLocation: initialLocation, routes: routeList);
 }
