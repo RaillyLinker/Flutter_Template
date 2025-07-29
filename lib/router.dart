@@ -82,6 +82,8 @@ import 'package:flutter_template/pages/app/app_page_server_sample/main_widget.da
     as app_page_server_sample;
 import 'package:flutter_template/pages/app/app_page_drift_export_sample/main_widget.dart'
     as app_page_drift_export_sample;
+import 'package:flutter_template/pages/app/app_page_tflite_simple/main_widget.dart'
+    as app_page_tflite_simple;
 
 // (mobile)
 import 'package:flutter_template/pages/mobile/mobile_page_permission_sample_list/main_widget.dart'
@@ -711,7 +713,22 @@ GoRouter getRouter() {
           return CustomTransitionPage(
             key: s.pageKey,
             child: app_page_drift_export_sample.MainWidget(goRouterState: s),
-            transitionsBuilder: app_page_drift_export_sample.pageTransitionsBuilder,
+            transitionsBuilder:
+                app_page_drift_export_sample.pageTransitionsBuilder,
+          );
+        },
+      ),
+    );
+
+    subRouteListEtcSampleList.add(
+      GoRoute(
+        path: "app_page_tflite_simple",
+        name: app_page_tflite_simple.pageName,
+        pageBuilder: (c, s) {
+          return CustomTransitionPage(
+            key: s.pageKey,
+            child: app_page_tflite_simple.MainWidget(goRouterState: s),
+            transitionsBuilder: app_page_tflite_simple.pageTransitionsBuilder,
           );
         },
       ),

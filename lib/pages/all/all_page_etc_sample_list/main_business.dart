@@ -43,6 +43,8 @@ import 'package:flutter_template/pages/app/app_page_server_sample/main_widget.da
     as app_page_server_sample;
 import 'package:flutter_template/pages/app/app_page_drift_export_sample/main_widget.dart'
     as app_page_drift_export_sample;
+import 'package:flutter_template/pages/app/app_page_tflite_simple/main_widget.dart'
+    as app_page_tflite_simple;
 
 // (pc)
 import 'package:flutter_template/pages/pc/pc_page_flutter_resource_image_resize/main_widget.dart'
@@ -194,6 +196,16 @@ class MainBusiness {
           itemDescription: "Drift SQL 파일 Export 샘플",
           onItemClicked: () {
             mainContext.pushNamed(app_page_drift_export_sample.pageName);
+          },
+        ),
+      );
+
+      hoveringListTileViewModel.add(
+        HoveringListTileViewModel(
+          itemTitle: "TFLite 간단 샘플",
+          itemDescription: "TFLite 간단 이미지 분류 샘플",
+          onItemClicked: () {
+            mainContext.pushNamed(app_page_tflite_simple.pageName);
           },
         ),
       );
