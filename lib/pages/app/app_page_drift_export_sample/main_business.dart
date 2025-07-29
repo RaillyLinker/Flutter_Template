@@ -158,17 +158,27 @@ class MainBusiness {
   Future<void> importDatabase() async {
     final result = await FilePicker.platform.pickFiles(
       dialogTitle: 'Import SQLite DB',
-      type: FileType.custom,
-      allowedExtensions: ['sqlite', 'db'],
+      type: FileType.any, // 커스텀 확장자 지원 안되면 any로 둠
     );
 
     if (result != null && result.files.single.path != null) {
       final importPath = result.files.single.path!;
+
+      // 확장자 직접 체크
+      if (!(importPath.endsWith('.sqlite') || importPath.endsWith('.db'))) {
+        showToast(
+          "지원하지 않는 파일 형식입니다.",
+          context: mainContext,
+          position: StyledToastPosition.center,
+          animation: StyledToastAnimation.scale,
+        );
+        return;
+      }
+
       final dbFile = await getDatabaseFile();
 
       await DatabaseProvider.instance.close(); // 현재 DB 연결 닫기
 
-      // todo : 안정성 재고
       while (true) {
         try {
           if (await dbFile.exists()) {
