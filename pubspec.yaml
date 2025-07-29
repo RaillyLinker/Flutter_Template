@@ -96,6 +96,11 @@ dependencies:
   path: ^1.9.1
 
   ####
+  # [App]
+  # tflite
+  tflite_flutter: ^0.11.0
+
+  ####
   # [Mobile]
   # 앱 스토어 이동
   store_redirect: ^2.0.2
@@ -121,6 +126,9 @@ flutter:
   assets:
     # 이미지 파일
     - lib/assets/images/
+    - lib/assets/tflite/mobilevit_small.tflite
+    - lib/assets/tflite/mobilevit_small.json
+    - lib/assets/tflite/test.jpg
 
   # 폰트 리소스 설정
   # weight :
