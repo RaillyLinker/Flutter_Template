@@ -127,18 +127,27 @@ class MainBusiness {
   Future<void> exportDatabase() async {
     final dbFile = await getDatabaseFile();
 
+    // 원본 파일 바이트 읽기
+    final bytes = await dbFile.readAsBytes();
+
     final savePath = await FilePicker.platform.saveFile(
       dialogTitle: 'Export SQLite DB',
       fileName: 'backup.sqlite',
       type: FileType.custom,
       allowedExtensions: ['sqlite', 'db'],
+      bytes: bytes, // 여기서 bytes 넣기 (Android/iOS 필수)
     );
 
     if (savePath != null) {
-      await dbFile.copy(savePath);
-
       showToast(
-        "Export 완료",
+        "Export 완료: $savePath",
+        context: mainContext,
+        position: StyledToastPosition.center,
+        animation: StyledToastAnimation.scale,
+      );
+    } else {
+      showToast(
+        "Export 취소됨",
         context: mainContext,
         position: StyledToastPosition.center,
         animation: StyledToastAnimation.scale,
