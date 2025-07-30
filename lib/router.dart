@@ -88,6 +88,8 @@ import 'package:flutter_template/pages/app/app_page_tflite_simple/main_widget.da
 // (mobile)
 import 'package:flutter_template/pages/mobile/mobile_page_permission_sample_list/main_widget.dart'
     as mobile_page_permission_sample_list;
+import 'package:flutter_template/pages/mobile/mobile_page_simple_camera/main_widget.dart'
+    as mobile_page_simple_camera;
 
 // [프로그램 라우터 설정 파일]
 // main.dart 에서 라우팅 설정에 사용되는 GoRouter 를 정의합니다.
@@ -751,6 +753,21 @@ GoRouter getRouter() {
               ),
               transitionsBuilder:
                   mobile_page_permission_sample_list.pageTransitionsBuilder,
+            );
+          },
+        ),
+      );
+
+      subRouteList.add(
+        GoRoute(
+          path: "mobile-page-simple-camera",
+          name: mobile_page_simple_camera.pageName,
+          pageBuilder: (c, s) {
+            return CustomTransitionPage(
+              key: s.pageKey,
+              child: mobile_page_simple_camera.MainWidget(goRouterState: s),
+              transitionsBuilder:
+                  mobile_page_simple_camera.pageTransitionsBuilder,
             );
           },
         ),

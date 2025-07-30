@@ -111,6 +111,11 @@ dependencies:
   # 모바일 권한 처리
   permission_handler: ^12.0.1
 
+  ####
+  # [Mobile & Web]
+  # 카메라
+  camera: ^0.11.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

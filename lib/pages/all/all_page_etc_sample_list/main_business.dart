@@ -46,6 +46,10 @@ import 'package:flutter_template/pages/app/app_page_drift_export_sample/main_wid
 import 'package:flutter_template/pages/app/app_page_tflite_simple/main_widget.dart'
     as app_page_tflite_simple;
 
+// (mobile)
+import 'package:flutter_template/pages/mobile/mobile_page_simple_camera/main_widget.dart'
+    as mobile_page_simple_camera;
+
 // (pc)
 import 'package:flutter_template/pages/pc/pc_page_flutter_resource_image_resize/main_widget.dart'
     as pc_page_flutter_resource_image_resize;
@@ -304,6 +308,18 @@ class MainBusiness {
         },
       ),
     );
+
+    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+      hoveringListTileViewModel.add(
+        HoveringListTileViewModel(
+          itemTitle: "Simple Camera 샘플",
+          itemDescription: "Simple Camera 샘플",
+          onItemClicked: () {
+            mainContext.pushNamed(mobile_page_simple_camera.pageName);
+          },
+        ),
+      );
+    }
 
     if (!kIsWeb && !Platform.isAndroid && !Platform.isIOS) {
       // pc
