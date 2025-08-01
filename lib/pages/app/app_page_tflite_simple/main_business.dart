@@ -37,13 +37,24 @@ class MainBusiness {
   }
 
   // (진입 최초 단 한번 실행) - 아직 위젯이 생성 되기 전
-  void initState() {
+  void initState() async {
     // !!!initState 로직 작성!!!
+
+    // TFLite 모델 로드
+    interpreter = await Interpreter.fromAsset(
+      'lib/assets/tflite/mobilevit_small.tflite',
+    );
+
+    // Interpreter 입력 형태 확인
+    print(interpreter!.getInputTensor(0).shape); // [1, 3, 256, 256]
+    print(interpreter!.getInputTensor(0).type); // float32
   }
 
   // (종료 시점 단 한번 실행)
   void dispose() {
     // !!!dispose 로직 작성!!!
+    interpreter?.close();
+    interpreter = null;
   }
 
   // (최초 실행시 단 한번 실행) - 위젯 build 바로 직전, 모든 것이 준비 되었을 때
@@ -98,10 +109,14 @@ class MainBusiness {
   final gw_slw_page_outer_frame.SlwPageOuterFrameBusiness pageOutFrameBusiness =
       gw_slw_page_outer_frame.SlwPageOuterFrameBusiness();
 
-  late Interpreter interpreter;
-  late List<String> labels;
-  String result = "분류 중...";
+  // Tflite Interpreter 객체
+  Interpreter? interpreter = null;
+
+  // 입력 이미지 사이즈
   final int inputSize = 256;
+
+  // 분석 결과 ViewModel 변수
+  String result = "분류 중...";
 
   // [private 변수]
 
@@ -122,15 +137,9 @@ class MainBusiness {
   }
 
   Future<void> _classifyImage() async {
-    // 1. 모델 로드
-    interpreter = await Interpreter.fromAsset(
-      'lib/assets/tflite/mobilevit_small.tflite',
-    );
+    List<String> labels;
 
-    print(interpreter.getInputTensor(0).shape);
-    print(interpreter.getInputTensor(0).type);
-
-    // 2. 라벨 로드
+    // 라벨 로드
     final labelData = await rootBundle.loadString(
       'lib/assets/tflite/mobilevit_small.json',
     );
@@ -143,7 +152,7 @@ class MainBusiness {
       throw Exception('Unexpected label file format');
     }
 
-    // 3. 이미지 로드 및 리사이즈
+    // 이미지 로드 및 리사이즈
     final imageData = await rootBundle.load('lib/assets/tflite/test.jpg');
     final image = img.decodeImage(imageData.buffer.asUint8List())!;
     final resizedImage = img.copyResize(
@@ -152,11 +161,10 @@ class MainBusiness {
       height: inputSize,
     );
 
-    // 4. 입력 전처리 (Pixel.r / g / b 사용)
+    // 입력 전처리 (Pixel.r / g / b 사용)
     final input = List.generate(
       3,
-      (c) => // Channel: 0 - R, 1 - G, 2 - B
-      List.generate(
+      (c) => List.generate(
         inputSize,
         (y) => List.generate(inputSize, (x) {
           final pixel = resizedImage.getPixel(x, y);
@@ -167,13 +175,13 @@ class MainBusiness {
       ),
     );
 
-    final inputTensor = [input]; // shape: [1, 3, 256, 256]
+    final inputTensor = [input];
 
-    // 5. 추론 실행
+    // 추론 실행
     var output = List.filled(labels.length, 0.0).reshape([1, labels.length]);
-    interpreter.run(inputTensor, output);
+    interpreter?.run(inputTensor, output);
 
-    // 6. Top-3 결과 추출
+    // Top-3 결과 추출
     final outputList = output[0] as List<double>;
     final topK = getTopK(outputList, labels, 3);
 
@@ -186,8 +194,8 @@ class MainBusiness {
 }
 
 class LabelScore {
+  LabelScore(this.label, this.score);
+
   final String label;
   final double score;
-
-  LabelScore(this.label, this.score);
 }
