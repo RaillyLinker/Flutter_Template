@@ -21,10 +21,10 @@ packages:
     dependency: transitive
     description:
       name: analyzer
-      sha256: b1ade5707ab7a90dfd519eaac78a7184341d19adb6096c68d499b59c7c6cf880
+      sha256: "974859dc0ff5f37bc4313244b3218c791810d03ab3470a579580279ba971a48d"
       url: "https://pub.dev"
     source: hosted
-    version: "7.7.0"
+    version: "7.7.1"
   archive:
     dependency: "direct main"
     description:
@@ -141,18 +141,18 @@ packages:
     dependency: transitive
     description:
       name: camera_android_camerax
-      sha256: "4b6c1bef4270c39df96402c4d62f2348c3bb2bbaefd0883b9dbd58f426306ad0"
+      sha256: "58b8fe843a3c83fd1273c00cb35f5a8ae507f6cc9b2029bcf7e2abba499e28d8"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.19"
+    version: "0.6.19+1"
   camera_avfoundation:
     dependency: transitive
     description:
       name: camera_avfoundation
-      sha256: cabc6cbdeadca9cbcac178110c9d5e87bde5c646c3b8c9c4c2747fc500a12432
+      sha256: "04e1f052ef268085a4f0550389211cc46005a9af015e444c7b1ee7aa19332e5d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.20+5"
+    version: "0.9.20+6"
   camera_platform_interface:
     dependency: transitive
     description:
@@ -309,18 +309,18 @@ packages:
     dependency: "direct main"
     description:
       name: drift
-      sha256: dce2723fb0dd03563af21f305f8f96514c27f870efba934b4fe84d4fedb4eff7
+      sha256: "6aaea757f53bb035e8a3baedf3d1d53a79d6549a6c13d84f7546509da9372c7c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.28.0"
+    version: "2.28.1"
   drift_dev:
     dependency: "direct dev"
     description:
       name: drift_dev
-      sha256: dce092d556aa11ee808537ab32e0657f235dc20ccfc300320e916461ae88abcc
+      sha256: "2fc05ad458a7c562755bf0cae11178dfc58387a416829b78d4da5155a61465fd"
       url: "https://pub.dev"
     source: hosted
-    version: "2.28.1-dev.0"
+    version: "2.28.1"
   ed25519_edwards:
     dependency: transitive
     description:
@@ -1022,10 +1022,10 @@ packages:
     dependency: transitive
     description:
       name: sqlite3
-      sha256: "608b56d594e4c8498c972c8f1507209f9fd74939971b948ddbbfbfd1c9cb3c15"
+      sha256: dd806fff004a0aeb01e208b858dbc649bc72104670d425a81a6dd17698535f6e
       url: "https://pub.dev"
     source: hosted
-    version: "2.7.7"
+    version: "2.8.0"
   sqlite3_flutter_libs:
     dependency: "direct main"
     description:

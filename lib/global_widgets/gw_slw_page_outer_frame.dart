@@ -99,7 +99,7 @@ class SlwPageOuterFrameBusiness {
                     )),
         backgroundColor: widget.backgroundColor,
         floatingActionButton: widget.floatingActionButton,
-        body: widget.child);
+        body: SafeArea(child: widget.child));
   }
 }
 
