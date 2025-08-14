@@ -83,10 +83,16 @@ import 'package:flutter_template/pages/app/app_page_init_splash/main_widget.dart
 import 'package:flutter_template/pages/app/app_page_server_sample/main_widget.dart'
     as app_page_server_sample;
 import 'package:flutter_template/pages/app/app_page_drift_export_sample/main_widget.dart'
+    if (dart.library.html)
+    'package:flutter_template/pages/app/app_page_drift_export_sample/main_widget_stub.dart'
     as app_page_drift_export_sample;
 import 'package:flutter_template/pages/app/app_page_tflite_simple/main_widget.dart'
+    if (dart.library.html)
+    'package:flutter_template/pages/app/app_page_tflite_simple/main_widget_stub.dart'
     as app_page_tflite_simple;
 import 'package:flutter_template/pages/app/app_page_yolo_sample/main_widget.dart'
+    if (dart.library.html)
+    'package:flutter_template/pages/app/app_page_yolo_sample/main_widget_stub.dart'
     as app_page_yolo_sample;
 
 // (mobile)

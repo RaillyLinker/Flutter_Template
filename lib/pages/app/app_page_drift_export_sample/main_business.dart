@@ -17,6 +17,10 @@ import 'package:flutter_template/global_widgets/gw_sfw_wrapper.dart'
 import 'package:flutter_template/repositories/drift_db/data_provider.dart';
 import 'package:flutter_template/repositories/drift_db/daos/dao_todos.dart';
 import 'package:flutter_template/repositories/drift_db/app_database.dart';
+// For import/export utilities on IO platforms
+import 'package:flutter_template/repositories/drift_db/app_database_impl_io.dart'
+    if (dart.library.html)
+    'package:flutter_template/repositories/drift_db/app_database_impl_web.dart';
 
 // [위젯 비즈니스]
 

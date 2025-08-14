@@ -1,6 +1,4 @@
 // (external)
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
@@ -44,10 +42,16 @@ import 'package:flutter_template/pages/all/all_page_horizontal_scroll_test/main_
 import 'package:flutter_template/pages/app/app_page_server_sample/main_widget.dart'
     as app_page_server_sample;
 import 'package:flutter_template/pages/app/app_page_drift_export_sample/main_widget.dart'
+    if (dart.library.html)
+    'package:flutter_template/pages/app/app_page_drift_export_sample/main_widget_stub.dart'
     as app_page_drift_export_sample;
 import 'package:flutter_template/pages/app/app_page_tflite_simple/main_widget.dart'
+    if (dart.library.html)
+    'package:flutter_template/pages/app/app_page_tflite_simple/main_widget_stub.dart'
     as app_page_tflite_simple;
 import 'package:flutter_template/pages/app/app_page_yolo_sample/main_widget.dart'
+    if (dart.library.html)
+    'package:flutter_template/pages/app/app_page_yolo_sample/main_widget_stub.dart'
     as app_page_yolo_sample;
 
 // (mobile)
@@ -333,7 +337,8 @@ class MainBusiness {
       ),
     );
 
-    if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+    if (!kIsWeb && (defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS)) {
       hoveringListTileViewModel.add(
         HoveringListTileViewModel(
           itemTitle: "Simple Camera 샘플",
@@ -345,7 +350,8 @@ class MainBusiness {
       );
     }
 
-    if (!kIsWeb && !Platform.isAndroid && !Platform.isIOS) {
+    if (!kIsWeb && defaultTargetPlatform != TargetPlatform.android &&
+        defaultTargetPlatform != TargetPlatform.iOS) {
       // pc
       hoveringListTileViewModel.add(
         HoveringListTileViewModel(
