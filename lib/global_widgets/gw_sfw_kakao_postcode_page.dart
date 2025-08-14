@@ -25,6 +25,21 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
   bool _controllerReady = false;
   Timer? _pollTimer; // Windows 폴링
 
+  void _safePop(Map<String, dynamic> data, {String via = '', bool deferToFrame = true}) {
+    if (_popped || !mounted) return;
+    _popped = true;
+    debugPrint('[Kakao] popping via: ' + via);
+    if (deferToFrame) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          Navigator.pop<Map<String, dynamic>>(context, data);
+        }
+      });
+    } else {
+      Navigator.pop<Map<String, dynamic>>(context, data);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -50,64 +65,56 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
   void _startWindowsPolling() {
     // 주기적으로 window.name 또는 전역 변수(__kakaoPayload)를 확인하여 결과 회수
     _pollTimer?.cancel();
-    _pollTimer = Timer.periodic(const Duration(milliseconds: 200), (t) async {
+    final intervalMs = kIsWeb ? 50 : 200;
+    _pollTimer = Timer.periodic(Duration(milliseconds: intervalMs), (t) async {
       if (!mounted || _popped || !_controllerReady) return;
       try {
-        // document.title 확인 (kakao_result:...)
-        final titleRes = await _controller.evaluateJavascript(
-          source: 'document.title || ""',
-        );
-        if (titleRes is String && titleRes.startsWith('kakao_result:')) {
-          final enc = titleRes.substring('kakao_result:'.length);
-          final jsonStr = Uri.decodeComponent(enc);
-          final data = jsonDecode(jsonStr);
-          if (!_popped && mounted) {
-            _popped = true;
-            Navigator.pop<Map<String, dynamic>>(context, data);
+        // Web에서는 localStorage만 확인하여 중복 pop을 방지
+        if (!kIsWeb) {
+          // document.title 확인 (kakao_result:...)
+          final titleRes = await _controller.evaluateJavascript(
+            source: 'document.title || ""',
+          );
+          if (titleRes is String && titleRes.startsWith('kakao_result:')) {
+            final enc = titleRes.substring('kakao_result:'.length);
+            final jsonStr = Uri.decodeComponent(enc);
+            final data = jsonDecode(jsonStr);
+            _safePop(data, via: 'poll:title');
+            return;
           }
-          return;
-        }
 
-        // location.hash 확인 (#kakao_result=...)
-        final hashRes = await _controller.evaluateJavascript(
-          source: 'location.hash || ""',
-        );
-        if (hashRes is String && hashRes.startsWith('#kakao_result=')) {
-          final enc = hashRes.substring('#kakao_result='.length);
-          final jsonStr = Uri.decodeComponent(enc);
-          final data = jsonDecode(jsonStr);
-          if (!_popped && mounted) {
-            _popped = true;
-            Navigator.pop<Map<String, dynamic>>(context, data);
+          // location.hash 확인 (#kakao_result=...)
+          final hashRes = await _controller.evaluateJavascript(
+            source: 'location.hash || ""',
+          );
+          if (hashRes is String && hashRes.startsWith('#kakao_result=')) {
+            final enc = hashRes.substring('#kakao_result='.length);
+            final jsonStr = Uri.decodeComponent(enc);
+            final data = jsonDecode(jsonStr);
+            _safePop(data, via: 'poll:payload');
+            return;
           }
-          return;
-        }
 
-        // window.name 확인
-        final nameRes = await _controller.evaluateJavascript(
-          source: 'window.name || ""',
-        );
-        if (nameRes is String && nameRes.startsWith('kakao_result:')) {
-          final enc = nameRes.substring('kakao_result:'.length);
-          final jsonStr = Uri.decodeComponent(enc);
-          final data = jsonDecode(jsonStr);
-          if (!_popped && mounted) {
-            _popped = true;
-            Navigator.pop<Map<String, dynamic>>(context, data);
+          // window.name 확인
+          final nameRes = await _controller.evaluateJavascript(
+            source: 'window.name || ""',
+          );
+          if (nameRes is String && nameRes.startsWith('kakao_result:')) {
+            final enc = nameRes.substring('kakao_result:'.length);
+            final jsonStr = Uri.decodeComponent(enc);
+            final data = jsonDecode(jsonStr);
+            _safePop(data, via: 'poll:name');
+            return;
           }
-          return;
-        }
-        // 전역 변수 확인
-        final payloadRes = await _controller.evaluateJavascript(
-          source: 'window.__kakaoPayload || null',
-        );
-        if (payloadRes is String && payloadRes.isNotEmpty) {
-          final data = jsonDecode(payloadRes);
-          if (!_popped && mounted) {
-            _popped = true;
-            Navigator.pop<Map<String, dynamic>>(context, data);
+          // 전역 변수 확인
+          final payloadRes = await _controller.evaluateJavascript(
+            source: 'window.__kakaoPayload || null',
+          );
+          if (payloadRes is String && payloadRes.isNotEmpty) {
+            final data = jsonDecode(payloadRes);
+            _safePop(data, via: 'poll:payload');
+            return;
           }
-          return;
         }
         // Web: localStorage 검사
         if (kIsWeb) {
@@ -120,10 +127,7 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
             await _controller.evaluateJavascript(
               source: 'localStorage.removeItem("kakao_result")',
             );
-            if (!_popped && mounted) {
-              _popped = true;
-              Navigator.pop<Map<String, dynamic>>(context, data);
-            }
+            _safePop(data, via: 'poll:localStorage');
             return;
           }
         }
@@ -216,17 +220,9 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
                   callback: (args) {
                     try {
                       final data = jsonDecode(args.first);
-                      if (!_popped && mounted) {
-                        _popped = true;
-                        Navigator.pop<Map<String, dynamic>>(context, data);
-                      }
+                      _safePop(data, via: 'handler:SendMessage');
                     } catch (_) {
-                      if (!_popped && mounted) {
-                        _popped = true;
-                        Navigator.pop<Map<String, dynamic>>(context, {
-                          'raw': args,
-                        });
-                      }
+                      _safePop({'raw': args}, via: 'handler:SendMessage(raw)');
                     }
                   },
                 );
@@ -245,10 +241,8 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
                           'try{localStorage.removeItem("kakao_result")}catch(e){}',
                     );
                   } catch (_) {}
-                  _popped = true;
-                  if (mounted) {
-                    Navigator.pop<Map<String, dynamic>>(context, data);
-                  }
+                  // Web에서는 postMessage 수신 즉시 pop하여 지연 최소화
+                  _safePop(data, via: 'postMessage', deferToFrame: false);
                 });
               }
 
@@ -291,6 +285,10 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
             shouldOverrideUrlLoading: (controller, navigationAction) async {
               final req = navigationAction.request;
               final u = req.url;
+              // Web: 내부 네비게이션은 허용 (우리가 parent hash/title 변경을 막았으므로 안전)
+              if (kIsWeb) {
+                return NavigationActionPolicy.ALLOW;
+              }
               if (u != null &&
                   (u.scheme == 'kakao' || u.scheme == 'postmessage')) {
                 try {
@@ -300,10 +298,7 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
                   if (payload != null && payload.isNotEmpty) {
                     final decoded = Uri.decodeComponent(payload);
                     final data = jsonDecode(decoded);
-                    if (!_popped && mounted) {
-                      _popped = true;
-                      Navigator.pop<Map<String, dynamic>>(context, data);
-                    }
+                    _safePop(data, via: 'scheme:kakao|postmessage');
                   } else {
                     if (!_popped && mounted) {
                       _popped = true;
@@ -323,17 +318,14 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
                 return NavigationActionPolicy.CANCEL;
               }
               // HTTPS sentinel host fallback
-              if (u != null && u.host == 'kakao.result.local') {
+              if (!kIsWeb && u != null && u.host == 'kakao.result.local') {
                 try {
                   final frag = u.fragment; // e.g., kakao_result=%7B...%7D
                   if (frag.startsWith('kakao_result=')) {
                     final enc = frag.substring('kakao_result='.length);
                     final jsonStr = Uri.decodeComponent(enc);
                     final data = jsonDecode(jsonStr);
-                    if (!_popped && mounted) {
-                      _popped = true;
-                      Navigator.pop<Map<String, dynamic>>(context, data);
-                    }
+                    _safePop(data, via: 'visitedHistory');
                   }
                 } catch (_) {}
                 return NavigationActionPolicy.CANCEL;
@@ -342,15 +334,13 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
             },
             onTitleChanged: (controller, title) {
               if (title == null) return;
+              if (kIsWeb) return; // Web에서는 title 기반 pop 금지
               if (title.startsWith('kakao_result:')) {
                 try {
                   final enc = title.substring('kakao_result:'.length);
                   final jsonStr = Uri.decodeComponent(enc);
                   final data = jsonDecode(jsonStr);
-                  if (!_popped && mounted) {
-                    _popped = true;
-                    Navigator.pop<Map<String, dynamic>>(context, data);
-                  }
+                  _safePop(data, via: 'https:sentinel');
                 } catch (_) {
                   // ignore parsing errors
                 }
@@ -363,6 +353,7 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
               _pullToRefreshController?.endRefreshing();
             },
             onUpdateVisitedHistory: (controller, url, androidIsReload) {
+              if (kIsWeb) return; // Web에서는 hash 기반 pop 금지
               try {
                 final u = url?.toString() ?? '';
                 final idx = u.indexOf('#');
@@ -386,6 +377,7 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
               debugPrint(
                 '[WebView][${consoleMessage.messageLevel}] ${consoleMessage.message}',
               );
+              if (kIsWeb) return; // Web에서는 console 기반 pop 금지
               final msg = consoleMessage.message;
               const pfx = 'KAKAO_RESULT:';
               if (msg.startsWith(pfx)) {
@@ -394,10 +386,7 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
                     msg.substring(pfx.length),
                   );
                   final data = jsonDecode(jsonStr);
-                  if (!_popped && mounted) {
-                    _popped = true;
-                    Navigator.pop<Map<String, dynamic>>(context, data);
-                  }
+                  _safePop(data, via: 'console');
                 } catch (_) {}
               }
             },

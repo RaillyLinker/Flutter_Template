@@ -18,18 +18,8 @@
         try { window.name = 'kakao_result:' + encodeURIComponent(payload); } catch (e) { console.log('name fallback failed', e); }
         // try parent (if callback is running inside inner frame)
         try { if (window.parent && window.parent !== window) { window.parent.name = 'kakao_result:' + encodeURIComponent(payload); } } catch (e) {}
-        try {
-          if (window.parent && window.parent !== window) {
-            window.parent.document.title = 'kakao_result:' + encodeURIComponent(payload);
-          }
-        } catch (e) {}
-        try {
-          if (window.parent && window.parent !== window) {
-            const h = 'kakao_result=' + encodeURIComponent(payload);
-            const cur = window.parent.location.hash || '';
-            if (cur !== '#' + h) window.parent.location.hash = h;
-          }
-        } catch (e) {}
+        // Avoid mutating parent document title or hash to prevent Flutter Web router changes
+        // (parent postMessage and localStorage are sufficient on Web)
         try { if (window.parent && window.parent !== window) { window.parent.postMessage({ type: 'kakao_result', payload }, '*'); } } catch (e) { console.log('postMessage to parent failed', e); }
         try { localStorage.setItem('kakao_result', payload); } catch (e) { console.log('localStorage failed', e); }
         try { if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) { window.flutter_inappwebview.callHandler('SendMessage', payload); } } catch (e) { console.log('callHandler failed', e); }
@@ -53,11 +43,8 @@
             try {
               if (window.parent && window.parent !== window) {
                 window.parent.postMessage({ type: 'kakao_result', payload }, '*');
+                // do not modify parent title/hash on Web
                 window.parent.name = 'kakao_result:' + encodeURIComponent(payload);
-                window.parent.document.title = 'kakao_result:' + encodeURIComponent(payload);
-                const h = 'kakao_result=' + encodeURIComponent(payload);
-                const cur = window.parent.location.hash || '';
-                if (cur !== '#' + h) window.parent.location.hash = h;
               }
             } catch (e) {}
             if (count >= 20) clearInterval(timer); // ~4s
