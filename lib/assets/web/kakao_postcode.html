@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오 주소 검색</title>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body style="margin:0;padding:0;height:100vh;">
+<div id="wrap" style="width:100%;height:100vh;"></div>
+
+<script>
+    function sendToFlutter(data) {
+      try {
+        const payload = JSON.stringify(data);
+        // Try multiple channels to maximize delivery across platforms
+        try { window.__kakaoPayload = payload; } catch (e) {}
+        try { window.name = 'kakao_result:' + encodeURIComponent(payload); } catch (e) { console.log('name fallback failed', e); }
+        // try parent (if callback is running inside inner frame)
+        try { if (window.parent && window.parent !== window) { window.parent.name = 'kakao_result:' + encodeURIComponent(payload); } } catch (e) {}
+        try {
+          if (window.parent && window.parent !== window) {
+            window.parent.document.title = 'kakao_result:' + encodeURIComponent(payload);
+          }
+        } catch (e) {}
+        try {
+          if (window.parent && window.parent !== window) {
+            const h = 'kakao_result=' + encodeURIComponent(payload);
+            const cur = window.parent.location.hash || '';
+            if (cur !== '#' + h) window.parent.location.hash = h;
+          }
+        } catch (e) {}
+        try { if (window.parent && window.parent !== window) { window.parent.postMessage({ type: 'kakao_result', payload }, '*'); } } catch (e) { console.log('postMessage to parent failed', e); }
+        try { localStorage.setItem('kakao_result', payload); } catch (e) { console.log('localStorage failed', e); }
+        try { if (window.flutter_inappwebview && window.flutter_inappwebview.callHandler) { window.flutter_inappwebview.callHandler('SendMessage', payload); } } catch (e) { console.log('callHandler failed', e); }
+        try { console.log('KAKAO_RESULT:' + encodeURIComponent(payload)); } catch (e) {}
+        try { document.title = 'kakao_result:' + encodeURIComponent(payload); } catch (e) { console.log('title fallback failed', e); }
+        try { location.hash = 'kakao_result=' + encodeURIComponent(payload); } catch (e) { console.log('hash fallback failed', e); }
+        // NOTE(Web): Navigating away breaks iframe and prevents polling; disable external navigations
+        // try { location.href = 'postmessage://send?payload=' + encodeURIComponent(payload); } catch (e) { console.log('postmessage scheme failed', e); }
+        // try { location.href = 'https://kakao.result.local/#kakao_result=' + encodeURIComponent(payload); } catch (e) { console.log('https fallback failed', e); }
+
+        // reinforce by repeating for a short time to beat async/sandbox timing
+        try {
+          let count = 0;
+          const timer = setInterval(() => {
+            count++;
+            try { window.__kakaoPayload = payload; } catch (e) {}
+            try { window.name = 'kakao_result:' + encodeURIComponent(payload); } catch (e) {}
+            try { localStorage.setItem('kakao_result', payload); } catch (e) {}
+            try { document.title = 'kakao_result:' + encodeURIComponent(payload); } catch (e) {}
+            try { location.hash = 'kakao_result=' + encodeURIComponent(payload); } catch (e) {}
+            try {
+              if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ type: 'kakao_result', payload }, '*');
+                window.parent.name = 'kakao_result:' + encodeURIComponent(payload);
+                window.parent.document.title = 'kakao_result:' + encodeURIComponent(payload);
+                const h = 'kakao_result=' + encodeURIComponent(payload);
+                const cur = window.parent.location.hash || '';
+                if (cur !== '#' + h) window.parent.location.hash = h;
+              }
+            } catch (e) {}
+            if (count >= 20) clearInterval(timer); // ~4s
+          }, 200);
+        } catch (e) {}
+      } catch (e) {
+        console.log('Failed to compose payload:', e);
+      }
+    }
+
+    // embed 방식: 팝업 없이 화면 안에 바로 표시
+    new daum.Postcode({
+      oncomplete: function(data) {
+        sendToFlutter(data); // Flutter로 전달
+      },
+      width: '100%',
+      height: '100%',
+    }).embed(document.getElementById('wrap'));
+</script>
+</body>
+</html>

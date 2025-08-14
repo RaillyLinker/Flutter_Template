@@ -3,6 +3,7 @@
     <!-- 암묵적 권한 -->
     <!-- 인터넷 권한 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <!-- permission_handler.bluetooth -->
     <uses-permission android:name="android.permission.BLUETOOTH" />

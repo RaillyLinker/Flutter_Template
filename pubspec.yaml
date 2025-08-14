@@ -95,6 +95,9 @@ dependencies:
 
   path: ^1.9.1
 
+  # webView
+  flutter_inappwebview: ^6.1.5
+
   ####
   # [App]
   # tflite
@@ -140,6 +143,7 @@ flutter:
     - lib/assets/tflite/yolo11n.yaml
     - lib/assets/tflite/yolo11n_float32.tflite
     - lib/assets/tflite/bus.jpg
+    - lib/assets/web/kakao_postcode.html
 
   # 폰트 리소스 설정
   # weight :
