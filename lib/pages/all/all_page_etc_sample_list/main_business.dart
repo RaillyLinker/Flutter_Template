@@ -45,6 +45,8 @@ import 'package:flutter_template/pages/app/app_page_drift_export_sample/main_wid
     as app_page_drift_export_sample;
 import 'package:flutter_template/pages/app/app_page_tflite_simple/main_widget.dart'
     as app_page_tflite_simple;
+import 'package:flutter_template/pages/app/app_page_yolo_sample/main_widget.dart'
+    as app_page_yolo_sample;
 
 // (mobile)
 import 'package:flutter_template/pages/mobile/mobile_page_simple_camera/main_widget.dart'
@@ -210,6 +212,16 @@ class MainBusiness {
           itemDescription: "TFLite 간단 이미지 분류 샘플",
           onItemClicked: () {
             mainContext.pushNamed(app_page_tflite_simple.pageName);
+          },
+        ),
+      );
+
+      hoveringListTileViewModel.add(
+        HoveringListTileViewModel(
+          itemTitle: "YOLO 샘플",
+          itemDescription: "YOLO 객체 탐지 샘플",
+          onItemClicked: () {
+            mainContext.pushNamed(app_page_yolo_sample.pageName);
           },
         ),
       );

@@ -137,6 +137,9 @@ flutter:
     - lib/assets/tflite/mobilevit_small.tflite
     - lib/assets/tflite/mobilevit_small.json
     - lib/assets/tflite/test.jpg
+    - lib/assets/tflite/yolo11n.yaml
+    - lib/assets/tflite/yolo11n_float32.tflite
+    - lib/assets/tflite/bus.jpg
 
   # 폰트 리소스 설정
   # weight :

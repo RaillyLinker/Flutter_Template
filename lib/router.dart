@@ -84,6 +84,8 @@ import 'package:flutter_template/pages/app/app_page_drift_export_sample/main_wid
     as app_page_drift_export_sample;
 import 'package:flutter_template/pages/app/app_page_tflite_simple/main_widget.dart'
     as app_page_tflite_simple;
+import 'package:flutter_template/pages/app/app_page_yolo_sample/main_widget.dart'
+    as app_page_yolo_sample;
 
 // (mobile)
 import 'package:flutter_template/pages/mobile/mobile_page_permission_sample_list/main_widget.dart'
@@ -731,6 +733,20 @@ GoRouter getRouter() {
             key: s.pageKey,
             child: app_page_tflite_simple.MainWidget(goRouterState: s),
             transitionsBuilder: app_page_tflite_simple.pageTransitionsBuilder,
+          );
+        },
+      ),
+    );
+
+    subRouteListEtcSampleList.add(
+      GoRoute(
+        path: "app_page_yolo_sample",
+        name: app_page_yolo_sample.pageName,
+        pageBuilder: (c, s) {
+          return CustomTransitionPage(
+            key: s.pageKey,
+            child: app_page_yolo_sample.MainWidget(goRouterState: s),
+            transitionsBuilder: app_page_yolo_sample.pageTransitionsBuilder,
           );
         },
       ),
