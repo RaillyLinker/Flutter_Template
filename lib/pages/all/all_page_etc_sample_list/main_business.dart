@@ -31,6 +31,8 @@ import 'package:flutter_template/pages/all/all_page_image_loading_sample/main_wi
     as all_page_image_loading_sample;
 import 'package:flutter_template/pages/all/all_page_context_menu_sample/main_widget.dart'
     as all_page_context_menu_sample;
+import 'package:flutter_template/pages/all/all_page_kakao_address_sample/main_widget.dart'
+    as all_page_kakao_address_sample;
 import 'package:flutter_template/pages/all/all_page_gesture_area_overlap_test/main_widget.dart'
     as all_page_gesture_area_overlap_test;
 import 'package:flutter_template/pages/all/all_page_form_sample/main_widget.dart'
@@ -297,6 +299,16 @@ class MainBusiness {
         itemDescription: "마우스 우클릭시(모바일에서는 롱 클릭) 나타나는 메뉴 샘플",
         onItemClicked: () {
           mainContext.pushNamed(all_page_context_menu_sample.pageName);
+        },
+      ),
+    );
+
+    hoveringListTileViewModel.add(
+      HoveringListTileViewModel(
+        itemTitle: "카카오 주소 검색 샘플",
+        itemDescription: "카카오 우편번호 검색 위젯을 열고 선택 결과를 표시합니다.",
+        onItemClicked: () {
+          mainContext.pushNamed(all_page_kakao_address_sample.pageName);
         },
       ),
     );

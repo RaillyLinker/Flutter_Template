@@ -66,6 +66,8 @@ import 'package:flutter_template/pages/all/all_page_image_loading_sample/main_wi
     as all_page_image_loading_sample;
 import 'package:flutter_template/pages/all/all_page_context_menu_sample/main_widget.dart'
     as all_page_context_menu_sample;
+import 'package:flutter_template/pages/all/all_page_kakao_address_sample/main_widget.dart'
+    as all_page_kakao_address_sample;
 import 'package:flutter_template/pages/all/all_page_gesture_area_overlap_test/main_widget.dart'
     as all_page_gesture_area_overlap_test;
 import 'package:flutter_template/pages/all/all_page_form_sample/main_widget.dart'
@@ -615,6 +617,21 @@ GoRouter getRouter() {
           child: all_page_context_menu_sample.MainWidget(goRouterState: s),
           transitionsBuilder:
               all_page_context_menu_sample.pageTransitionsBuilder,
+        );
+      },
+    ),
+  );
+
+  subRouteListEtcSampleList.add(
+    GoRoute(
+      path: "kakao-address-sample",
+      name: all_page_kakao_address_sample.pageName,
+      pageBuilder: (c, s) {
+        return CustomTransitionPage(
+          key: s.pageKey,
+          child: all_page_kakao_address_sample.MainWidget(goRouterState: s),
+          transitionsBuilder:
+              all_page_kakao_address_sample.pageTransitionsBuilder,
         );
       },
     ),
