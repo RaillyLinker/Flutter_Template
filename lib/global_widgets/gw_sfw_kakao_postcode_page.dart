@@ -220,9 +220,9 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
                   callback: (args) {
                     try {
                       final data = jsonDecode(args.first);
-                      _safePop(data, via: 'handler:SendMessage');
+                      _safePop(data, via: 'handler:SendMessage', deferToFrame: false);
                     } catch (_) {
-                      _safePop({'raw': args}, via: 'handler:SendMessage(raw)');
+                      _safePop({'raw': args}, via: 'handler:SendMessage(raw)', deferToFrame: false);
                     }
                   },
                 );
@@ -298,7 +298,7 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
                   if (payload != null && payload.isNotEmpty) {
                     final decoded = Uri.decodeComponent(payload);
                     final data = jsonDecode(decoded);
-                    _safePop(data, via: 'scheme:kakao|postmessage');
+                    _safePop(data, via: 'scheme:kakao|postmessage', deferToFrame: false);
                   } else {
                     if (!_popped && mounted) {
                       _popped = true;
@@ -325,7 +325,7 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
                     final enc = frag.substring('kakao_result='.length);
                     final jsonStr = Uri.decodeComponent(enc);
                     final data = jsonDecode(jsonStr);
-                    _safePop(data, via: 'visitedHistory');
+                    _safePop(data, via: 'visitedHistory', deferToFrame: false);
                   }
                 } catch (_) {}
                 return NavigationActionPolicy.CANCEL;
@@ -340,7 +340,7 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
                   final enc = title.substring('kakao_result:'.length);
                   final jsonStr = Uri.decodeComponent(enc);
                   final data = jsonDecode(jsonStr);
-                  _safePop(data, via: 'https:sentinel');
+                  _safePop(data, via: 'https:sentinel', deferToFrame: false);
                 } catch (_) {
                   // ignore parsing errors
                 }
@@ -386,7 +386,7 @@ class _GwSfwKakaoPostcodePageState extends State<GwSfwKakaoPostcodePage> {
                     msg.substring(pfx.length),
                   );
                   final data = jsonDecode(jsonStr);
-                  _safePop(data, via: 'console');
+                  _safePop(data, via: 'console', deferToFrame: false);
                 } catch (_) {}
               }
             },
